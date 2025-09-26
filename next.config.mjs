@@ -11,23 +11,6 @@ const nextConfig = {
   turbopack: {
     root: path.join(__dirname, '.'),
   },
-  async rewrites() {
-    return [
-      {
-        source: '/api/superinterface/assistants/:path*',
-        destination: 'https://superinterface.ai/api/cloud/assistants/:path*',
-      },
-      {
-        source: '/api/superinterface/threads/:path*',
-        destination: 'https://superinterface.ai/api/cloud/threads/:path*',
-      },
-      {
-        source: '/api/superinterface/files/:fileId/contents',
-        destination:
-          'https://superinterface.ai/api/cloud/files/:fileId/contents',
-      },
-    ]
-  },
   images: {
     remotePatterns: [
       {
@@ -46,8 +29,8 @@ export default withNextVideo(withNextIntl(nextConfig), {
     'cloudflare-r2': {
       endpoint:
         'https://ccdfd7313264accfec08849748233475.r2.cloudflarestorage.com',
-      bucket: 'superhero-mini-app-videos',
-      bucketUrlPublic: 'https://mini-app-videos.superhero.sh',
+      bucket: 'superstream-mini-app-videos',
+      bucketUrlPublic: 'https://mini-app-videos.superstream.sh',
     },
   },
 })
