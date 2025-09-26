@@ -14,7 +14,7 @@ import { routing } from '@/i18n/routing'
 type Props = {
   params: Promise<{
     streamId: string
-    locale: Locale
+    locale: string
   }>
   children: React.ReactNode
 }
@@ -24,7 +24,7 @@ export default async function StreamLayout(props: Props) {
   const { user } = await getCurrentUser()
 
   if (!user) {
-    return redirect({ href: '/', locale: params.locale })
+    return redirect({ href: '/', locale: params.locale as Locale })
   }
 
   const { worldcoinUser } = await getWorldcoinUser({

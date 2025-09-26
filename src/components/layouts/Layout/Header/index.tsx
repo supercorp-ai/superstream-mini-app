@@ -1,10 +1,8 @@
 'use client'
 import { useTranslations } from 'next-intl'
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 import { Link } from '@/i18n/navigation'
-import type { Workspace, Thread, Prisma } from '@prisma/client'
 import {
-  Heading,
   Flex,
   Box,
   Button,
@@ -17,12 +15,10 @@ import {
   Cross1Icon,
   CalendarIcon,
 } from '@radix-ui/react-icons'
-import type { WorldcoinUser, Assistant } from '@/types'
+import type { WorldcoinUser } from '@/types'
 import { Menu } from '@/components/menus/Menu'
-import BackgroundVideo from 'next-video/background-video'
 import { SuperstreamLogo } from '@/components/logos/SuperstreamLogo'
 import { LocaleInput } from '@/components/locales/LocaleInput'
-import { useAssistantConfigs } from '@/hooks/assistants/useAssistantConfigs'
 import { SupertokensButton } from './SupertokensButton'
 import { useRouter } from '@/i18n/navigation'
 import { useTransition } from 'react'

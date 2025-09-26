@@ -1,5 +1,3 @@
-import type { StaticImageData } from 'next/image'
-import type { PlanType } from '@prisma/client'
 import type { themePropDefs } from '@radix-ui/themes/props'
 import type { Currency } from '@/enums'
 

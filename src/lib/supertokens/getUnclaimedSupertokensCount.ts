@@ -11,11 +11,6 @@ export const getUnclaimedSupertokensCount = async ({
     },
     select: {
       claimedSupertokensCount: true,
-      _count: {
-        select: {
-          userMessageLogs: true,
-        },
-      },
     },
   })
 
@@ -23,5 +18,5 @@ export const getUnclaimedSupertokensCount = async ({
     throw new Error('User not found')
   }
 
-  return user._count.userMessageLogs - user.claimedSupertokensCount
+  return 100 - user.claimedSupertokensCount
 }
