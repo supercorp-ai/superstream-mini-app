@@ -1,0 +1,21 @@
+{
+  "status": "ready",
+  "originalFilePath": "videos/assistants/supa.mp4",
+  "provider": "cloudflare-r2",
+  "providerMetadata": {
+    "cloudflare-r2": {
+      "endpoint": "https://ccdfd7313264accfec08849748233475.r2.cloudflarestorage.com",
+      "bucketUrlPublic": "https://mini-app-videos.superstream.sh",
+      "bucket": "superstream-mini-app-videos",
+      "key": "videos/assistants/supa.mp4"
+    }
+  },
+  "createdAt": 1758918636491,
+  "updatedAt": 1758918638067,
+  "size": 220735,
+  "sources": [
+    {
+      "src": "https://mini-app-videos.superstream.sh/videos/assistants/supa.mp4"
+    }
+  ]
+}

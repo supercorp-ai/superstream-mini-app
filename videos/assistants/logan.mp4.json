@@ -1,0 +1,21 @@
+{
+  "status": "ready",
+  "originalFilePath": "videos/assistants/logan.mp4",
+  "provider": "cloudflare-r2",
+  "providerMetadata": {
+    "cloudflare-r2": {
+      "endpoint": "https://ccdfd7313264accfec08849748233475.r2.cloudflarestorage.com",
+      "bucketUrlPublic": "https://mini-app-videos.superstream.sh",
+      "bucket": "superstream-mini-app-videos",
+      "key": "videos/assistants/logan.mp4"
+    }
+  },
+  "createdAt": 1758918636491,
+  "updatedAt": 1758918637932,
+  "size": 226225,
+  "sources": [
+    {
+      "src": "https://mini-app-videos.superstream.sh/videos/assistants/logan.mp4"
+    }
+  ]
+}
