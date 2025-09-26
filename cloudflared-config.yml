@@ -1,0 +1,8 @@
+tunnel: 837fc2db-6d75-4421-babc-11a1ae380937
+credentials-file: /Users/domas/.cloudflared/837fc2db-6d75-4421-babc-11a1ae380937.json
+warp-routing:
+  enabled: true
+ingress:
+  - hostname: superstream-mini-app-dev.supercorp.ai
+    service: http://localhost:3000
+  - service: http_status:404

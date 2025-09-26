@@ -1,0 +1,119 @@
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+
+  margin: 0;
+  padding: 0;
+  /* font-family: inherit; */
+  font-weight: inherit;
+  font-size: inherit;
+  text-decoration: none;
+  color: inherit;
+  background-color: transparent;
+  border: 0;
+  box-sizing: border-box;
+  outline: 0;
+  text-transform: none;
+  -webkit-appearance: inherit;
+  /* Safari 12 calc + vw resize fix */
+  min-height: 0vw;
+}
+
+@import '@radix-ui/themes/styles.css';
+
+:root {
+  --font-display: var(--font-inter) !important;
+  --font-sans: var(--font-inter) !important;
+  --font-mono: var(--font-inter) !important;
+}
+
+html,
+body {
+  overscroll-behavior: none;
+}
+
+:root,
+.radix-themes,
+.light,
+.light-theme {
+  --violet-1: #fdfcff;
+  --violet-2: #f9f8ff;
+  --violet-3: #f1eeff;
+  --violet-4: #e8e3ff;
+  --violet-5: #ddd6ff;
+  --violet-6: #d0c6ff;
+  --violet-7: #bfb0ff;
+  --violet-8: #aa92ff;
+  --violet-9: #441d90;
+  --violet-10: #5433a5;
+  --violet-11: #6c48cb;
+  --violet-12: #3a0982;
+
+  --violet-a1: #5500ff03;
+  --violet-a2: #2500ff07;
+  --violet-a3: #2d00ff11;
+  --violet-a4: #2e00ff1c;
+  --violet-a5: #2c00ff29;
+  --violet-a6: #2d00ff39;
+  --violet-a7: #3100ff4f;
+  --violet-a8: #3900ff6d;
+  --violet-a9: #2c0082e2;
+  --violet-a10: #29008fcc;
+  --violet-a11: #3200b7b7;
+  --violet-a12: #33007df6;
+
+  --violet-contrast: #fff;
+  --violet-surface: #f8f6ffcc;
+  --violet-indicator: #441d90;
+  --violet-track: #441d90;
+}
+
+@supports (color: color(display-p3 1 1 1)) {
+  @media (color-gamut: p3) {
+    :root,
+    .radix-themes,
+    .light,
+    .light-theme {
+      --violet-1: oklch(99.3% 0.006 290.6);
+      --violet-2: oklch(98.2% 0.0143 290.6);
+      --violet-3: oklch(95.9% 0.0381 290.6);
+      --violet-4: oklch(93.3% 0.0608 290.6);
+      --violet-5: oklch(90.1% 0.0845 290.6);
+      --violet-6: oklch(86% 0.1107 290.6);
+      --violet-7: oklch(80.4% 0.1455 290.6);
+      --violet-8: oklch(73.3% 0.1924 290.6);
+      --violet-9: oklch(36.6% 0.1725 290.6);
+      --violet-10: oklch(43% 0.1725 290.6);
+      --violet-11: oklch(51.6% 0.1924 290.6);
+      --violet-12: oklch(32.2% 0.1725 290.6);
+
+      --violet-a1: color(display-p3 0.349 0.0235 1 / 0.012);
+      --violet-a2: color(display-p3 0.1608 0.0235 0.8627 / 0.028);
+      --violet-a3: color(display-p3 0.1255 0.0078 0.9451 / 0.067);
+      --violet-a4: color(display-p3 0.1451 0.0039 0.9294 / 0.11);
+      --violet-a5: color(display-p3 0.149 0.0039 0.9294 / 0.161);
+      --violet-a6: color(display-p3 0.1451 0.0039 0.9333 / 0.224);
+      --violet-a7: color(display-p3 0.1451 0.0039 0.9255 / 0.306);
+      --violet-a8: color(display-p3 0.1765 0.0039 0.9373 / 0.424);
+      --violet-a9: color(display-p3 0.1412 0 0.4784 / 0.879);
+      --violet-a10: color(display-p3 0.1333 0 0.5255 / 0.797);
+      --violet-a11: color(display-p3 0.1608 0 0.6745 / 0.71);
+      --violet-a12: color(display-p3 0.1647 0 0.4627 / 0.95);
+
+      --violet-contrast: #fff;
+      --violet-surface: color(display-p3 0.9725 0.9686 1 / 0.8);
+      --violet-indicator: oklch(36.6% 0.1725 290.6);
+      --violet-track: oklch(36.6% 0.1725 290.6);
+    }
+  }
+}
+
+.radix-themes {
+  --default-font-family: var(--font-sans);
+  --heading-font-family: var(--font-display);
+  --code-font-family: var(--font-mono);
+  --em-font-family: var(--font-sans);
+  --strong-font-family: var(--font-sans);
+  --quote-font-family: var(--font-sans);
+}

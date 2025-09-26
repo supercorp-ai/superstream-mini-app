@@ -1,0 +1,986 @@
+{
+  "app": {
+    "callbacks": {
+      "googleDrive": {
+        "Content": {
+          "title": "Escolher arquivos",
+          "description": "O assistente só poderá acessar as pastas e os arquivos que você selecionar.",
+          "buttonLabel": "Selecionar arquivos e pastas"
+        }
+      }
+    },
+    "miniApp": {
+      "Content": {
+        "heading": "Ganhe dinheiro com trabalhadores de IA",
+        "AuthButton": {
+          "text": "Entrar com sua carteira"
+        }
+      },
+      "dashboard": {
+        "tasks": {
+          "title": "Tarefas agendadas",
+          "Content": {
+            "NoTasks": {
+              "title": "Nenhuma tarefa agendada",
+              "description": "Tarefas agendadas são trabalhos executados automaticamente conforme uma programação. Converse com qualquer super-herói que tenha o superpoder <strong>Tarefas Agendadas</strong> e peça para ele agendar tarefas para você.",
+              "availabilityNote": "Disponível apenas no plano <strong>Pro</strong>.",
+              "newThreadButtonLabel": "Iniciar novo chat",
+              "upgradeButtonLabel": "Atualizar para {planName}"
+            },
+            "Item": {
+              "pastLabel": "Passadas",
+              "threadLabel": "Chat",
+              "DeleteButton": {
+                "label": "Excluir",
+                "dialogTitle": "Excluir tarefa?",
+                "dialogDescription": "Tem certeza de que deseja excluir esta tarefa?",
+                "cancelButtonLabel": "Cancelar",
+                "successMessage": "Tarefa excluída com sucesso.",
+                "errorMessage": "Falha ao excluir a tarefa. Por favor, tente novamente mais tarde."
+              }
+            }
+          }
+        },
+        "supertokens": {
+          "Content": {
+            "title": "Supertoken",
+            "subtitle": "Token de Computação Básica Universal",
+            "balanceTitle": "Seu saldo",
+            "balanceValue": "{balance, number, ::precision-integer} SUPER",
+            "noUnclaimedSupertokens": "Nenhum Supertoken para reivindicar",
+            "upgradeButtonLabel": "Atualize para desbloquear mais",
+            "claimNote": "Para cada mensagem que você enviar, você pode reivindicar 1 token <strong>SUPER</strong>.",
+            "spendNote": "Use <strong>SUPER</strong> para obter acesso a IA mais poderosa.",
+            "ClaimSupertokensButton": {
+              "buttonLabel": "Reivindicar {totalClaimable, number} Supertokens",
+              "dialogTitle": "Reivindicar Supertokens",
+              "dialogDescription": "Você reivindicará <strong>{pendingClaimQuantity, number} SUPER</strong> agora. Depois poderá reivindicar <strong>{additionalClaimable, number} SUPER</strong>.",
+              "confirmButtonLabel": "Iniciar",
+              "claimSupertokensErrorMessage": "Ops, não foi possível resgatar seus Supertokens. Por favor, tente novamente mais tarde."
+            },
+            "pendingClaimMessage": "{pendingClaimQuantity, number} SUPER pendentes. {additionalClaimable, number} mais depois desta reivindicação."
+          }
+        },
+        "upgrade": {
+          "Content": {
+            "PeriodInput": {
+              "day": "Dia",
+              "week": "Semana",
+              "month": "Mês"
+            },
+            "Plan": {
+              "dailyMessagesLimitDescription": "{dailyMessagesLimit} mensagens por dia",
+              "pricesLabel": "{period, select, DAY {Dia} WEEK {Semana} MONTH {Mês} other {Período desconhecido}} de {planName} para",
+              "PlanButton": {
+                "currentButtonLabel": "Plano atual",
+                "previousButtonLabel": "Plano anterior"
+              },
+              "UpgradeButton": {
+                "contactButtonLabel": "Entre em contato para atualizar",
+                "label": "Atualizar para {planName}",
+                "dialogTitle": "Atualizar para {planName} por 1 {period, select, DAY {Dia} WEEK {Semana} MONTH {Mês} other {Período desconhecido}}",
+                "dialogDescription": "Escolha um dos seguintes métodos para atualizar seu plano.",
+                "UpgradeSupertokenButton": {
+                  "errorMessage": "Falha ao atualizar seu plano. Por favor, tente novamente ou entre em contato com o suporte.",
+                  "successMessage": "Seu plano foi atualizado com sucesso. Os super-heróis estão comemorando!"
+                },
+                "UpgradeWorldPayButton": {
+                  "errorMessage": "Falha ao atualizar seu plano. Por favor, tente novamente ou entre em contato com o suporte.",
+                  "successMessage": "Seu plano foi atualizado com sucesso. Os super-heróis estão comemorando!",
+                  "buttonLabel": "{formattedPrice} ou USDC"
+                }
+              }
+            }
+          }
+        },
+        "threads": {
+          "Content": {
+            "lib": {
+              "createThread": {
+                "onboardingThreadTitle": "Integração"
+              }
+            }
+          },
+          "new": {
+            "Content": {
+              "title": "Converse com o trabalhador de IA",
+              "Assistant": {
+                "toolsHeading": "Superpoderes",
+                "truncatedToolsTitle": "Integrações de {assistantName}",
+                "truncatedToolsDescription": "{assistantName} usa os modelos e ferramentas de IA mais recentes para ajudá‑lo em suas tarefas diárias.",
+                "newThreadButtonLabel": "Iniciar chat",
+                "upgradeButtonLabel": "Atualizar"
+              }
+            }
+          },
+          "threadId": {
+            "Content": {
+              "Chat": {
+                "MessageForm": {
+                  "controlPlaceholder": "Pergunte qualquer coisa"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "layout": {
+      "metadata": {
+        "description": "Ganhe dinheiro com trabalhadores de IA"
+      }
+    }
+  },
+  "components": {
+    "plans": {
+      "PlanBenefits": {
+        "assistantsDescription": "{assistantsCount, number} agentes poderosos",
+        "toolsDescription": "{toolsCount, number} agente {toolsCount, plural, =1 {ferramenta} other {ferramentas}}",
+        "truncatedToolsTitle": "{planName} inclui {toolsCount, plural, =1 {ferramenta} other {ferramentas}}",
+        "truncatedToolsDescription": "Agentes super-heróis têm acesso a todas as ferramentas de que precisam para ajudá-lo a ter sucesso.",
+        "tokensDescription": "Até <supertoken></supertoken> {supertokensCount, number} tokens por dia"
+      }
+    },
+    "errors": {
+      "FullScreenError": {
+        "title": "Encontramos um erro",
+        "description": "Não temos certeza se a culpa é da IA ou dos humanos, mas algo deu errado. Tente novamente ou entre em contato com nossa equipe de suporte se o problema persistir.",
+        "resetButtonLabel": "Tentar novamente",
+        "contactButtonLabel": "Contatar suporte"
+      }
+    },
+    "locales": {
+      "LocaleInput": {
+        "title": "Selecione seu idioma",
+        "description": "Selecione seu idioma preferido para o aplicativo"
+      }
+    },
+    "layouts": {
+      "Layout": {
+        "Header": {
+          "threadsLinkLabel": "Voltar a todos os chats",
+          "DialogAction": {
+            "title": "Menu",
+            "description": "Menu do aplicativo Super‑herói"
+          }
+        }
+      }
+    },
+    "validations": {
+      "ValidationError": {
+        "title": "Quase lá",
+        "description": "Toque abaixo para buscar este conteúdo mais uma vez.",
+        "retryButtonLabel": "Tentar novamente",
+        "retryMessageContent": "Tentar novamente"
+      }
+    },
+    "markdown": {
+      "markdownComponents": {
+        "Assistant": {
+          "ActionButton": {
+            "buttonLabel": "Iniciar um novo chat com {assistantName}",
+            "upgradeButtonLabel": "Atualizar para conversar com {assistantName}",
+            "onboardingButtonLabel": "{assistantName} disponível após a integração"
+          }
+        },
+        "FreelancerProject": {
+          "title": "Bico",
+          "openButtonLabel": "Pré-visualizar"
+        },
+        "FreelancerProjectProposal": {
+          "title": "Proposta de bico",
+          "openButtonLabel": "Enviar esta proposta",
+          "bidAmountTitle": "Valor da proposta",
+          "contentTitle": "Conteúdo"
+        },
+        "WorldAppMiniApp": {
+          "logoAlt": "Logotipo",
+          "openButtonLabel": "Abrir {name}"
+        },
+        "ClaimSupertokens": {
+          "claimSupertokensErrorMessage": "Ops, não foi possível resgatar seus Supertokens. Por favor, tente novamente mais tarde.",
+          "successMessageContent": "Supertokens reivindicados",
+          "title": "Ganhe Supertokens",
+          "description": "Para cada mensagem que você enviar aos super‑heróis de IA, você poderá reivindicar 1 token <strong>SUPER</strong>.",
+          "buttonLabel": "Reivindicar Supertokens"
+        },
+        "AssistantsList": {
+          "newThreadButtonLabel": "Contrate seus trabalhadores de IA"
+        },
+        "CaldavAuthentication": {
+          "GoogleCalendarAuth": {
+            "title": "Autenticação do Google Agenda",
+            "doneMessageContent": "Concluído.",
+            "description": "Autentique seu Google Agenda para permitir que o assistente leia e escreva eventos de calendário em seu nome.",
+            "emailLabel": "E‑mail da conta",
+            "submitButtonLabel": "Autenticar",
+            "doneButtonLabel": "Concluído"
+          },
+          "AppleCalendarAuth": {
+            "title": "Autenticação do Calendário Apple",
+            "doneMessageContent": "Autenticação bem‑sucedida.",
+            "description": "Para autenticar com o Apple iCal, você precisa gerar uma senha específica de aplicativo.",
+            "instructionsTitle": "Instruções",
+            "instructionsContent": "1. Visite a página da sua conta Apple ID e verifique se a autenticação de dois fatores está ativada.<br></br>2. Gere uma senha específica de aplicativo para o iCal. Veja <link>este guia</link>.<br></br>3. Insira abaixo seu Apple ID e a senha específica de aplicativo.",
+            "usernameLabel": "Apple ID",
+            "usernamePlaceholder": "Insira seu Apple ID",
+            "usernameRequiredMessage": "Apple ID é obrigatório",
+            "appSpecificPasswordLabel": "Senha específica de aplicativo",
+            "appSpecificPasswordPlaceholder": "Insira sua senha específica de aplicativo",
+            "appSpecificPasswordRequiredMessage": "Senha específica de aplicativo é obrigatória",
+            "submitButtonLabel": "Autenticar"
+          }
+        },
+        "BlogPost": {
+          "title": "Título",
+          "contentTitle": "Conteúdo"
+        },
+        "Email": {
+          "title": "Assunto",
+          "contentTitle": "Conteúdo"
+        },
+        "FacebookAuthentication": {
+          "doneMessageContent": "Concluído.",
+          "title": "Autenticação do Facebook",
+          "description": "Autentique sua conta do Facebook para permitir que o assistente gerencie suas atividades.",
+          "submitButtonLabel": "Autenticar",
+          "doneButtonLabel": "Concluído"
+        },
+        "FacebookPost": {
+          "title": "Publicação no Facebook",
+          "contentTitle": "Conteúdo",
+          "author": "Você"
+        },
+        "GmailAuthentication": {
+          "doneMessageContent": "Concluído.",
+          "title": "Autenticação do Gmail",
+          "description": "Autentique seu Gmail para permitir que o assistente leia e envie e‑mails em seu nome.",
+          "submitButtonLabel": "Autenticar",
+          "doneButtonLabel": "Concluído"
+        },
+        "GoogleDrivePicker": {
+          "doneMessageContent": "Concluído.",
+          "title": "Seletor do Google Drive",
+          "description": "Selecione arquivos do seu Google Drive.",
+          "submitButtonLabel": "Selecionar arquivos",
+          "doneButtonLabel": "Concluído"
+        },
+        "Image": {
+          "downloadButtonLabel": "Baixar"
+        },
+        "InstagramAuthentication": {
+          "doneMessageContent": "Concluído.",
+          "title": "Autenticação do Instagram",
+          "description": "Autentique sua conta do Instagram para permitir que o assistente gerencie suas atividades.",
+          "submitButtonLabel": "Autenticar",
+          "doneButtonLabel": "Concluído"
+        },
+        "InstagramPost": {
+          "title": "Publicação no Instagram",
+          "contentTitle": "Conteúdo",
+          "author": "Você"
+        },
+        "LinkedInAuthentication": {
+          "doneMessageContent": "Concluído.",
+          "title": "Autenticação do LinkedIn",
+          "description": "Autentique sua conta do LinkedIn para permitir que o assistente gerencie suas atividades.",
+          "submitButtonLabel": "Autenticar",
+          "doneButtonLabel": "Concluído"
+        },
+        "LinkedInPost": {
+          "title": "Publicação no LinkedIn",
+          "contentTitle": "Conteúdo",
+          "author": "Você"
+        },
+        "Logo": {
+          "title": "Logotipo",
+          "description": "Aqui está um logotipo criado para você.",
+          "downloadButtonLabel": "Baixar"
+        },
+        "Paraphrase": {
+          "title": "Texto Parafraseado"
+        },
+        "Persona": {
+          "title": "Persona"
+        },
+        "SalesPage": {
+          "title": "Página de Vendas",
+          "contentTitle": "Conteúdo"
+        },
+        "SocialMediaStrategy": {
+          "title": "Estratégia de Mídia Social"
+        },
+        "Task": {
+          "title": "Tarefa agendada",
+          "time": "Horário: {time}",
+          "manageTasksButtonLabel": "Gerenciar tarefas"
+        },
+        "Upgrade": {
+          "title": "Atualize para {planName} para continuar",
+          "dailyMessagesLimitDescription": "{dailyMessagesLimit} mensagens por dia",
+          "pricesTitle": "As atualizações começam a partir de",
+          "buttonLabel": "Atualizar"
+        },
+        "XAuthentication": {
+          "doneMessageContent": "Concluído.",
+          "title": "Autenticação do X",
+          "description": "Autentique sua conta do X para permitir que o assistente gerencie suas atividades.",
+          "submitButtonLabel": "Autenticar",
+          "doneButtonLabel": "Concluído"
+        },
+        "XTweet": {
+          "title": "Tweet",
+          "contentTitle": "Conteúdo",
+          "author": "Você"
+        }
+      }
+    },
+    "menus": {
+      "Menu": {
+        "BottomMenu": {
+          "contactButtonLabel": "Contatar suporte",
+          "planDescription": "Plano {planName}",
+          "avatarAlt": "Seu avatar",
+          "Supertokens": {
+            "imageAlt": "Supertokens",
+            "buttonLabel": "Supertokens"
+          },
+          "SignOutButton": {
+            "label": "Sair"
+          },
+          "UpgradeButton": {
+            "label": "Atualizar"
+          }
+        },
+        "Threads": {
+          "RecentThreads": {
+            "title": "Chats recentes"
+          },
+          "Onboarding": {
+            "Root": {
+              "title": "Converse com Boardy primeiro",
+              "description": "Boardy é seu super‑herói de integração"
+            },
+            "ActionButton": {
+              "label": "Continuar chat com Boardy"
+            }
+          },
+          "Thread": {
+            "description": "Criado {relativeTime}",
+            "notification": "Nova mensagem"
+          }
+        },
+        "Content": {
+          "Header": {
+            "NewThreadButton": {
+              "label": "Iniciar um novo chat"
+            },
+            "TasksButton": {
+              "label": "Tarefas agendadas"
+            }
+          }
+        }
+      }
+    },
+    "misc": {
+      "FullPageNotFound": {
+        "homeButtonLabel": "Abrir início"
+      }
+    },
+    "superinterface": {
+      "components": {
+        "MessageAttachments": {
+          "label": "Anexado {attachmentsCount, plural, =1 {um arquivo} other {{attachmentsCount, number} arquivos}}"
+        },
+        "StartingToolCalls": {
+          "inProgress": "Trabalhando"
+        },
+        "Function": {
+          "completed": "Trabalho concluído",
+          "inProgress": "Trabalhando",
+          "failed": "Falha ao concluir o trabalho",
+          "cancelled": "Cancelado",
+          "expired": "Expirado"
+        },
+        "FileSearchToolCall": {
+          "completed": "Arquivos pesquisados",
+          "inProgress": "Pesquisando arquivos",
+          "failed": "Falha ao pesquisar arquivos",
+          "cancelled": "Cancelado",
+          "expired": "Expirado"
+        }
+      }
+    },
+    "tools": {
+      "Tool": {
+        "soonBadgeLabel": "(em breve)"
+      },
+      "TruncatedTools": {
+        "suffix": "+{toolsCount, number} mais",
+        "cancelButtonLabel": "Fechar"
+      }
+    },
+    "workspaces": {
+      "WorkspaceNotFound": {
+        "title": "Espaço de trabalho não encontrado",
+        "subtitle": "Não está claro como você chegou aqui, mas o espaço de trabalho que você procura não existe."
+      }
+    },
+    "callbacks": {
+      "CodeNotFound": {
+        "title": "Código de autenticação não encontrado",
+        "subtitle": "Não está claro como você chegou aqui, mas o código de autenticação está ausente. Tente autenticar novamente."
+      },
+      "StateNotFound": {
+        "title": "Estado de autenticação não encontrado",
+        "subtitle": "Não está claro como você chegou aqui, mas o estado de autenticação está ausente. Tente autenticar novamente."
+      },
+      "VariablesNotFound": {
+        "title": "Variáveis não encontradas",
+        "subtitle": "Não está claro como você chegou aqui, mas as variáveis estão ausentes. Tente autenticar novamente."
+      },
+      "UserIdNotFound": {
+        "title": "Informações do usuário não encontradas",
+        "subtitle": "Não está claro como você chegou aqui, mas as informações do usuário estão ausentes. Tente autenticar novamente."
+      },
+      "Success": {
+        "title": "Autenticação bem‑sucedida",
+        "subtitle": "Você se autenticou com sucesso. Você pode fechar esta guia agora."
+      },
+      "EmailNotFound": {
+        "title": "E‑mail não encontrado",
+        "subtitle": "Não está claro como você chegou aqui, mas as variáveis estão ausentes. Tente autenticar novamente."
+      }
+    },
+    "worldcoinUsers": {
+      "WorldcoinUserNotFound": {
+        "title": "Usuário Worldcoin não encontrado",
+        "subtitle": "Não está claro como você chegou aqui, mas seu usuário Worldcoin atual não existe."
+      }
+    },
+    "threads": {
+      "ThreadNotFound": {
+        "title": "Chat não encontrado",
+        "subtitle": "Não está claro como você chegou aqui, mas o chat que você procura não existe."
+      }
+    },
+    "groups": {
+      "GroupNotFound": {
+        "title": "Grupo não encontrado",
+        "subtitle": "Não está claro como você chegou aqui, mas o grupo que você procura não existe."
+      }
+    },
+    "functionComponents": {
+      "functionComponents": {
+        "AuthUrl": {
+          "completed": "Informações de autenticação obtidas",
+          "inProgress": "Obtendo informações de autenticação",
+          "failed": "Falha ao obter informações de autenticação",
+          "cancelled": "Cancelado",
+          "expired": "Expirado"
+        },
+        "CreateCalendarObject": {
+          "completed": "Evento de calendário criado",
+          "inProgress": "Criando evento de calendário",
+          "failed": "Falha ao criar evento de calendário",
+          "cancelled": "Cancelado",
+          "expired": "Expirado"
+        },
+        "CreateFile": {
+          "completed": "Arquivo criado",
+          "inProgress": "Criando arquivo",
+          "failed": "Falha ao criar arquivo",
+          "cancelled": "Cancelado",
+          "expired": "Expirado"
+        },
+        "CreateImage": {
+          "completed": "Imagem criada",
+          "inProgress": "Criando imagem",
+          "failed": "Falha ao criar imagem",
+          "cancelled": "Cancelado",
+          "expired": "Expirado"
+        },
+        "CreateLogo": {
+          "completed": "Logotipo criado",
+          "inProgress": "Criando logotipo",
+          "failed": "Falha ao criar logotipo",
+          "cancelled": "Cancelado",
+          "expired": "Expirado"
+        },
+        "DeleteCalendarObject": {
+          "completed": "Evento de calendário excluído",
+          "inProgress": "Excluindo evento de calendário",
+          "failed": "Falha ao excluir evento de calendário",
+          "cancelled": "Cancelado",
+          "expired": "Expirado"
+        },
+        "DeleteFile": {
+          "completed": "Arquivo excluído",
+          "inProgress": "Excluindo arquivo",
+          "failed": "Falha ao excluir arquivo",
+          "cancelled": "Cancelado",
+          "expired": "Expirado"
+        },
+        "FetchCalendarObjects": {
+          "completed": "Eventos de calendário obtidos",
+          "inProgress": "Obtendo eventos de calendário",
+          "failed": "Falha ao obter eventos de calendário",
+          "cancelled": "Cancelado",
+          "expired": "Expirado"
+        },
+        "FetchCalendars": {
+          "completed": "Calendários obtidos",
+          "inProgress": "Obtendo calendários",
+          "failed": "Falha ao obter calendários",
+          "cancelled": "Cancelado",
+          "expired": "Expirado"
+        },
+        "FreelancerSearchProjects": {
+          "completed": "Bicos encontrados",
+          "inProgress": "Procurando bicos",
+          "failed": "Falha ao encontrar bicos",
+          "cancelled": "Cancelado",
+          "expired": "Expirado"
+        },
+        "FreelancerGetProject": {
+          "completed": "Informações do bico obtidas",
+          "inProgress": "Obtendo informações do bico",
+          "failed": "Falha ao obter informações do bico",
+          "cancelled": "Cancelado",
+          "expired": "Expirado"
+        },
+        "GetPlan": {
+          "completed": "Informações do plano obtidas",
+          "inProgress": "Obtendo informações do plano",
+          "failed": "Falha ao obter informações do plano",
+          "cancelled": "Cancelado",
+          "expired": "Expirado"
+        },
+        "GetFileMetadata": {
+          "completed": "Metadados do arquivo obtidos",
+          "inProgress": "Obtendo metadados do arquivo",
+          "failed": "Falha ao obter metadados do arquivo",
+          "cancelled": "Cancelado",
+          "expired": "Expirado"
+        },
+        "GetTime": {
+          "completed": "Hora obtida",
+          "inProgress": "Obtendo hora",
+          "failed": "Falha ao obter hora",
+          "cancelled": "Cancelado",
+          "expired": "Expirado"
+        },
+        "GetLocale": {
+          "completed": "Idioma obtido",
+          "inProgress": "Obtendo seu idioma",
+          "failed": "Falha ao obter seu idioma",
+          "cancelled": "Cancelado",
+          "expired": "Expirado"
+        },
+        "ListAssistants": {
+          "completed": "Seus super‑heróis de IA foram encontrados",
+          "inProgress": "Encontrando seus super‑heróis de IA",
+          "failed": "Falha ao encontrar seus super‑heróis de IA",
+          "cancelled": "Cancelado",
+          "expired": "Expirado"
+        },
+        "ListFiles": {
+          "completed": "Arquivos listados",
+          "inProgress": "Listando arquivos",
+          "failed": "Falha ao listar arquivos",
+          "cancelled": "Cancelado",
+          "expired": "Expirado"
+        },
+        "MoveFile": {
+          "completed": "Arquivo movido",
+          "inProgress": "Movendo arquivo",
+          "failed": "Falha ao mover arquivo",
+          "cancelled": "Cancelado",
+          "expired": "Expirado"
+        },
+        "ReadFile": {
+          "completed": "Arquivo lido",
+          "inProgress": "Lendo arquivo",
+          "failed": "Falha ao ler arquivo",
+          "cancelled": "Cancelado",
+          "expired": "Expirado"
+        },
+        "ReadMemory": {
+          "completed": "Memória acessada",
+          "inProgress": "Acessando memória",
+          "failed": "Falha ao acessar memória",
+          "cancelled": "Cancelado",
+          "expired": "Expirado"
+        },
+        "RequestNotificationsPermission": {
+          "completed": "Permissão de notificações solicitada",
+          "inProgress": "Solicitando permissão de notificações",
+          "failed": "Falha ao solicitar permissão de notificações",
+          "cancelled": "Cancelado",
+          "expired": "Expirado"
+        },
+        "Search": {
+          "completed": "Pesquisa na internet concluída",
+          "inProgress": "Pesquisando na internet",
+          "failed": "Falha ao pesquisar na internet",
+          "cancelled": "Cancelado",
+          "expired": "Expirado"
+        },
+        "SearchWorldAppMiniApps": {
+          "completed": "World pesquisado",
+          "inProgress": "Pesquisando World",
+          "failed": "Falha ao pesquisar World",
+          "cancelled": "Cancelado",
+          "expired": "Expirado"
+        },
+        "SendEmail": {
+          "completed": "E‑mail enviado",
+          "inProgress": "Enviando e‑mail",
+          "failed": "Falha ao enviar e‑mail",
+          "cancelled": "Cancelado",
+          "expired": "Expirado"
+        },
+        "UpdateCalendarObject": {
+          "completed": "Evento de calendário atualizado",
+          "inProgress": "Atualizando evento de calendário",
+          "failed": "Falha ao atualizar evento de calendário",
+          "cancelled": "Cancelado",
+          "expired": "Expirado"
+        },
+        "UpdateFile": {
+          "completed": "Arquivo atualizado",
+          "inProgress": "Atualizando arquivo",
+          "failed": "Falha ao atualizar arquivo",
+          "cancelled": "Cancelado",
+          "expired": "Expirado"
+        },
+        "UpdateMemory": {
+          "completed": "Memória atualizada",
+          "inProgress": "Atualizando memória",
+          "failed": "Falha ao atualizar memória",
+          "cancelled": "Cancelado",
+          "expired": "Expirado"
+        },
+        "UpdateTitle": {
+          "completed": "Nosso chat foi nomeado",
+          "inProgress": "Nomeando nosso chat",
+          "failed": "Falha ao nomear nosso chat",
+          "cancelled": "Cancelado",
+          "expired": "Expirado"
+        },
+        "FacebookCreatePagePost": {
+          "completed": "Publicação na página do Facebook criada",
+          "inProgress": "Criando publicação na página do Facebook",
+          "failed": "Falha ao criar publicação na página do Facebook",
+          "cancelled": "Cancelado",
+          "expired": "Expirado"
+        },
+        "FacebookListPages": {
+          "completed": "Páginas do Facebook listadas",
+          "inProgress": "Listando páginas do Facebook",
+          "failed": "Falha ao listar páginas do Facebook",
+          "cancelled": "Cancelado",
+          "expired": "Expirado"
+        },
+        "FacebookReadPageInsights": {
+          "completed": "Insights da página do Facebook lidos",
+          "inProgress": "Lendo insights da página do Facebook",
+          "failed": "Falha ao ler insights da página do Facebook",
+          "cancelled": "Cancelado",
+          "expired": "Expirado"
+        },
+        "FacebookReadPagePosts": {
+          "completed": "Publicações da página do Facebook lidas",
+          "inProgress": "Lendo publicações da página do Facebook",
+          "failed": "Falha ao ler publicações da página do Facebook",
+          "cancelled": "Cancelado",
+          "expired": "Expirado"
+        },
+        "InstagramAuthUrl": {
+          "completed": "URL de autenticação do Instagram obtida",
+          "inProgress": "Obtendo URL de autenticação do Instagram",
+          "failed": "Falha ao obter URL de autenticação do Instagram",
+          "cancelled": "Cancelado",
+          "expired": "Expirado"
+        },
+        "InstagramCreatePost": {
+          "completed": "Publicação no Instagram criada",
+          "inProgress": "Criando publicação no Instagram",
+          "failed": "Falha ao criar publicação no Instagram",
+          "cancelled": "Cancelado",
+          "expired": "Expirado"
+        },
+        "LinkedInAuthUrl": {
+          "completed": "URL de autenticação do LinkedIn obtida",
+          "inProgress": "Obtendo URL de autenticação do LinkedIn",
+          "failed": "Falha ao obter URL de autenticação do LinkedIn",
+          "cancelled": "Cancelado",
+          "expired": "Expirado"
+        },
+        "LinkedInCreatePost": {
+          "completed": "Publicação no LinkedIn criada",
+          "inProgress": "Criando publicação no LinkedIn",
+          "failed": "Falha ao criar publicação no LinkedIn",
+          "cancelled": "Cancelado",
+          "expired": "Expirado"
+        },
+        "Wait": {
+          "completed": "Esperou com sucesso",
+          "inProgress": "Aguardando",
+          "failed": "Falha ao esperar",
+          "cancelled": "Cancelado",
+          "expired": "Expirado"
+        },
+        "XAuthUrl": {
+          "completed": "URL de autenticação do X obtida",
+          "inProgress": "Obtendo URL de autenticação do X",
+          "failed": "Falha ao obter URL de autenticação do X",
+          "cancelled": "Cancelado",
+          "expired": "Expirado"
+        },
+        "XCreateTweet": {
+          "completed": "Tweet criado",
+          "inProgress": "Criando tweet",
+          "failed": "Falha ao criar tweet",
+          "cancelled": "Cancelado",
+          "expired": "Expirado"
+        },
+        "XGetTweets": {
+          "completed": "Tweets obtidos",
+          "inProgress": "Obtendo tweets",
+          "failed": "Falha ao obter tweets",
+          "cancelled": "Cancelado",
+          "expired": "Expirado"
+        },
+        "CreateTask": {
+          "completed": "Tarefa agendada",
+          "inProgress": "Agendando tarefa",
+          "failed": "Falha ao agendar tarefa",
+          "cancelled": "Cancelado",
+          "expired": "Expirado"
+        },
+        "UpdateTask": {
+          "completed": "Tarefa atualizada",
+          "inProgress": "Atualizando tarefa",
+          "failed": "Falha ao atualizar tarefa",
+          "cancelled": "Cancelado",
+          "expired": "Expirado"
+        },
+        "DeleteTask": {
+          "completed": "Tarefa excluída",
+          "inProgress": "Excluindo tarefa",
+          "failed": "Falha ao excluir tarefa",
+          "cancelled": "Cancelado",
+          "expired": "Expirado"
+        },
+        "ListTasks": {
+          "completed": "Lista de tarefas obtida",
+          "inProgress": "Obtendo lista de tarefas",
+          "failed": "Falha ao obter lista de tarefas",
+          "cancelled": "Cancelado",
+          "expired": "Expirado"
+        },
+        "Notify": {
+          "completed": "Notificação enviada",
+          "inProgress": "Enviando notificação",
+          "failed": "Falha ao enviar notificação",
+          "cancelled": "Cancelado",
+          "expired": "Expirado"
+        }
+      }
+    }
+  },
+  "lib": {
+    "tasks": {
+      "formatSchedule": {
+        "once": "Uma vez em {time}",
+        "tz": "({tz})",
+
+        "until": " até {date}",
+        "occurrences": " por {count} ocorrências",
+
+        "secondly": {
+          "every": "A cada segundo",
+          "everyInterval": "A cada {interval} segundos"
+        },
+        "minutely": {
+          "every": "A cada minuto no segundo{seconds, plural, one {} other {s}} {seconds}",
+          "everyInterval": "A cada {interval} minutos no segundo{seconds, plural, one {} other {s}} {seconds}"
+        },
+        "hourly": {
+          "every": "A cada hora em {mmss}",
+          "everyInterval": "A cada {interval} horas em {mmss}"
+        },
+        "daily": {
+          "every": "Diariamente em {times}",
+          "everyInterval": "A cada {interval} dias em {times}"
+        },
+        "weekly": {
+          "every": "Semanalmente em {days} às {times}",
+          "everyInterval": "A cada {interval} semanas em {days} às {times}"
+        },
+        "monthly": {
+          "every": "Mensalmente no dia {dayNum} às {times}",
+          "everyInterval": "A cada {interval} meses no dia {dayNum} às {times}"
+        },
+        "yearly": {
+          "every": "Anualmente em {onDate} às {times}",
+          "everyInterval": "A cada {interval} anos em {onDate} às {times}"
+        }
+      }
+    },
+    "threads": {
+      "formatThreadTitle": {
+        "fallback": "Chat sem título",
+        "fallbackWithAssistantName": "Chat com {assistantName}"
+      }
+    },
+    "plans": {
+      "upgradePlanWorldPay": {
+        "payloadDescription": "Atualizar para {planName} por 1 {period, select, DAY {Dia} WEEK {Semana} MONTH {Mês} other {Período desconhecido}}"
+      },
+      "planConfigs": {
+        "basic": {
+          "name": "Básico"
+        },
+        "starter": {
+          "name": "Inicial"
+        },
+        "pro": {
+          "name": "Pro"
+        },
+        "enterprise": {
+          "name": "Enterprise"
+        }
+      }
+    },
+    "tools": {
+      "toolConfigs": {
+        "search": {
+          "name": "Pesquisar na internet"
+        },
+        "images": {
+          "name": "Criar imagens"
+        },
+        "files": {
+          "name": "Arquivos"
+        },
+        "gmail": {
+          "name": "Gmail"
+        },
+        "appleCalendar": {
+          "name": "Calendário Apple"
+        },
+        "googleCalendar": {
+          "name": "Google Agenda"
+        },
+        "googleDrive": {
+          "name": "Google Drive"
+        },
+        "linkedin": {
+          "name": "LinkedIn"
+        },
+        "facebook": {
+          "name": "Facebook"
+        },
+        "instagram": {
+          "name": "Instagram"
+        },
+        "x": {
+          "name": "X/Twitter"
+        },
+        "voice": {
+          "name": "Voz"
+        },
+        "searchWorld": {
+          "name": "Pesquisar World"
+        },
+        "searchSideGigs": {
+          "name": "Buscar bicos"
+        },
+        "tasks": {
+          "name": "Tarefas agendadas"
+        }
+      }
+    },
+    "assistants": {
+      "assistantConfigs": {
+        "boardy": {
+          "description": "Super‑herói de integração"
+        },
+        "logan": {
+          "description": "Super‑herói de logotipos"
+        },
+        "emma": {
+          "description": "Super‑herói de e‑mails frios"
+        },
+        "supa": {
+          "description": "Super-herói de distribuição de tokens"
+        },
+        "mark": {
+          "description": "Localizador de Persona de Marketing"
+        },
+        "quilla": {
+          "description": "Super‑herói de newsletters de marketing"
+        },
+        "parry": {
+          "description": "Super‑herói de paráfrase"
+        },
+        "charlie": {
+          "description": "Super‑herói de crescimento em mídias sociais"
+        },
+        "sia": {
+          "description": "Estrategista de mídias sociais"
+        },
+        "sunny": {
+          "description": "Super‑herói de afirmações positivas"
+        },
+        "adam": {
+          "description": "Super-herói freelance de bicos"
+        },
+        "shoppy": {
+          "description": "Super‑herói de otimização de e‑commerce"
+        },
+        "vita": {
+          "description": "Super‑herói de melhoria de CV"
+        },
+        "jobo": {
+          "description": "Super‑herói de entrevistas de emprego"
+        },
+        "zena": {
+          "description": "Super‑herói de hipnoterapia"
+        },
+        "lista": {
+          "description": "Super‑herói de marketing por e‑mail"
+        },
+        "aida": {
+          "description": "Super‑herói de funis de vendas"
+        },
+        "kairos": {
+          "description": "Super‑herói de gestão do tempo"
+        },
+        "reev": {
+          "description": "Super‑herói de feedback empresarial (negativo)"
+        },
+        "copia": {
+          "description": "Super‑herói de posts de blog"
+        }
+      }
+    }
+  },
+  "hooks": {
+    "threads": {
+      "useThreads": {
+        "fallbackErrorMessage": "Ocorreu um erro desconhecido."
+      },
+      "useUpdateThread": {
+        "fallbackErrorMessage": "Ocorreu um erro desconhecido."
+      }
+    },
+    "worldAppMiniApps": {
+      "useSearchWorldAppMiniApps": {
+        "fallbackErrorMessage": "Ocorreu um erro desconhecido."
+      }
+    }
+  }
+}

@@ -1,0 +1,910 @@
+{
+  "app": {
+    "callbacks": {
+      "googleDrive": {
+        "Content": {
+          "title": "เลือกไฟล์",
+          "description": "ผู้ช่วยจะเข้าถึงได้เฉพาะโฟลเดอร์และไฟล์ที่คุณเลือก",
+          "buttonLabel": "เลือกไฟล์และโฟลเดอร์"
+        }
+      }
+    },
+    "miniApp": {
+      "Content": {
+        "heading": "สร้างรายได้กับแรงงาน AI",
+        "AuthButton": {
+          "text": "เข้าสู่ระบบด้วยวอลเล็ตของคุณ"
+        }
+      },
+      "dashboard": {
+        "tasks": {
+          "title": "งานที่ตั้งเวลาไว้",
+          "Content": {
+            "NoTasks": {
+              "title": "ไม่มีงานที่ตั้งเวลาไว้",
+              "description": "งานที่ตั้งเวลาไว้คือการทำงานที่จะดำเนินการโดยอัตโนมัติตามกำหนดเวลา พูดคุยกับซูเปอร์ฮีโร่ใดก็ได้ที่มีพลังวิเศษ <strong>งานที่ตั้งเวลาไว้</strong> และขอให้พวกเขาช่วยตั้งเวลางานให้กับคุณ",
+              "availabilityNote": "ใช้ได้เฉพาะในแผน <strong>Pro</strong>",
+              "newThreadButtonLabel": "เริ่มแชทใหม่",
+              "upgradeButtonLabel": "อัปเกรดเป็น {planName}"
+            },
+            "Item": {
+              "pastLabel": "ที่ผ่านมา",
+              "threadLabel": "แชท",
+              "DeleteButton": {
+                "label": "ลบ",
+                "dialogTitle": "ลบงาน?",
+                "dialogDescription": "คุณแน่ใจหรือไม่ว่าต้องการลบงานนี้?",
+                "cancelButtonLabel": "ยกเลิก",
+                "successMessage": "ลบงานเรียบร้อยแล้ว",
+                "errorMessage": "ไม่สามารถลบงานได้ กรุณาลองใหม่ในภายหลัง"
+              }
+            }
+          }
+        },
+        "supertokens": {
+          "Content": {
+            "title": "ซูเปอร์โทเคน",
+            "subtitle": "โทเคน Universal Basic Compute",
+            "balanceTitle": "ยอดคงเหลือของคุณ",
+            "balanceValue": "{balance, number, ::precision-integer} SUPER",
+            "noUnclaimedSupertokens": "ไม่มีซูเปอร์โทเคนให้รับ",
+            "upgradeButtonLabel": "อัปเกรดเพื่อปลดล็อกเพิ่มเติม",
+            "claimNote": "ทุกข้อความที่คุณส่ง คุณจะสามารถรับโทเคน <strong>SUPER</strong> ได้ 1 เหรียญ",
+            "spendNote": "ใช้ <strong>SUPER</strong> เพื่อเข้าถึง AI ที่ทรงพลังยิ่งขึ้น",
+            "pendingClaimMessage": "{pendingClaimQuantity, number} SUPER อยู่ระหว่างดำเนินการ จะมีอีก {additionalClaimable, number} หลังจากครั้งนี้",
+            "ClaimSupertokensButton": {
+              "buttonLabel": "รับซูเปอร์โทเคน {totalClaimable, number} เหรียญ",
+              "dialogTitle": "รับซูเปอร์โทเคน",
+              "dialogDescription": "คุณจะรับ <strong>{pendingClaimQuantity, number} SUPER</strong> ตอนนี้ หลังจากเสร็จสิ้น คุณสามารถรับ <strong>{additionalClaimable, number} SUPER</strong> เพิ่มได้",
+              "confirmButtonLabel": "เริ่มการรับ",
+              "claimSupertokensErrorMessage": "ขออภัย รับซูเปอร์โทเคนไม่สำเร็จ โปรดลองใหม่ภายหลัง"
+            }
+          }
+        },
+        "upgrade": {
+          "Content": {
+            "PeriodInput": {
+              "day": "วัน",
+              "week": "สัปดาห์",
+              "month": "เดือน"
+            },
+            "Plan": {
+              "dailyMessagesLimitDescription": "{dailyMessagesLimit, number} ข้อความต่อวัน",
+              "pricesLabel": "{period, select, DAY {วัน} WEEK {สัปดาห์} MONTH {เดือน} other {ระยะเวลาไม่ทราบ}} ของ {planName} ราคา",
+              "PlanButton": {
+                "currentButtonLabel": "แผนปัจจุบัน",
+                "previousButtonLabel": "แผนก่อนหน้า"
+              },
+              "UpgradeButton": {
+                "contactButtonLabel": "ติดต่อเราเพื่ออัปเกรด",
+                "label": "อัปเกรดเป็น {planName}",
+                "dialogTitle": "อัปเกรดเป็น {planName} เป็นเวลา 1 {period, select, DAY {วัน} WEEK {สัปดาห์} MONTH {เดือน} other {ระยะเวลาไม่ทราบ}}",
+                "dialogDescription": "เลือกวิธีใดวิธีหนึ่งต่อไปนี้เพื่ออัปเกรดแผนของคุณ",
+                "UpgradeSupertokenButton": {
+                  "errorMessage": "อัปเกรดแผนไม่สำเร็จ โปรดลองใหม่หรือติดต่อฝ่ายสนับสนุน",
+                  "successMessage": "อัปเกรดแผนสำเร็จแล้ว เหล่าซูเปอร์ฮีโร่ปลื้มใจ!"
+                },
+                "UpgradeWorldPayButton": {
+                  "errorMessage": "อัปเกรดแผนไม่สำเร็จ โปรดลองใหม่หรือติดต่อฝ่ายสนับสนุน",
+                  "successMessage": "อัปเกรดแผนสำเร็จแล้ว เหล่าซูเปอร์ฮีโร่ปลื้มใจ!",
+                  "buttonLabel": "{formattedPrice} หรือ USDC"
+                }
+              }
+            }
+          }
+        },
+        "threads": {
+          "Content": {
+            "lib": {
+              "createThread": {
+                "onboardingThreadTitle": "การเริ่มต้นใช้งาน"
+              }
+            }
+          },
+          "new": {
+            "Content": {
+              "title": "พูดคุยกับแรงงาน AI",
+              "Assistant": {
+                "toolsHeading": "พลังพิเศษ",
+                "truncatedToolsTitle": "การผสานรวมของ {assistantName}",
+                "truncatedToolsDescription": "{assistantName} ใช้โมเดล AI และเครื่องมือล่าสุดเพื่อช่วยงานประจำวันของคุณ",
+                "newThreadButtonLabel": "เริ่มแชท",
+                "upgradeButtonLabel": "อัปเกรด"
+              }
+            }
+          },
+          "threadId": {
+            "Content": {
+              "Chat": {
+                "MessageForm": {
+                  "controlPlaceholder": "ถามอะไรก็ได้"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "layout": {
+      "metadata": {
+        "description": "สร้างรายได้กับแรงงาน AI"
+      }
+    }
+  },
+  "components": {
+    "plans": {
+      "PlanBenefits": {
+        "assistantsDescription": "{assistantsCount, number} เอเจนต์ทรงพลัง",
+        "toolsDescription": "{toolsCount, number} {toolsCount, plural, =1 {เครื่องมือ} other {เครื่องมือ}}",
+        "truncatedToolsTitle": "{planName} มี {toolsCount, plural, =1 {เครื่องมือ} other {เครื่องมือ}}",
+        "truncatedToolsDescription": "เอเจนต์ซูเปอร์ฮีโร่มีเครื่องมือครบครันเพื่อช่วยให้คุณสำเร็จ",
+        "tokensDescription": "สูงสุด <supertoken></supertoken> {supertokensCount, number} โทเคนต่อวัน"
+      }
+    },
+    "errors": {
+      "FullScreenError": {
+        "title": "เกิดข้อผิดพลาด",
+        "description": "ไม่แน่ใจว่าเป็นความผิดของ AI หรือมนุษย์ แต่บางอย่างผิดพลาด โปรดลองใหม่หรือติดต่อฝ่ายสนับสนุนหากปัญหายังไม่หาย",
+        "resetButtonLabel": "ลองอีกครั้ง",
+        "contactButtonLabel": "ติดต่อฝ่ายสนับสนุน"
+      }
+    },
+    "locales": {
+      "LocaleInput": {
+        "title": "เลือกภาษา",
+        "description": "เลือกภาษาที่ต้องการใช้ภายในแอป"
+      }
+    },
+    "layouts": {
+      "Layout": {
+        "Header": {
+          "threadsLinkLabel": "กลับไปยังทุกแชท",
+          "DialogAction": {
+            "title": "เมนู",
+            "description": "เมนูแอปซูเปอร์ฮีโร่"
+          }
+        }
+      }
+    },
+    "validations": {
+      "ValidationError": {
+        "title": "เกือบเสร็จแล้ว",
+        "description": "แตะด้านล่างเพื่อดึงข้อมูลนี้อีกครั้ง",
+        "retryButtonLabel": "ลองใหม่",
+        "retryMessageContent": "ลองใหม่"
+      }
+    },
+    "markdown": {
+      "markdownComponents": {
+        "Assistant": {
+          "ActionButton": {
+            "buttonLabel": "เริ่มแชทใหม่กับ {assistantName}",
+            "upgradeButtonLabel": "อัปเกรดเพื่อแชทกับ {assistantName}",
+            "onboardingButtonLabel": "{assistantName} จะพร้อมใช้งานหลังจบขั้นตอนเริ่มต้น"
+          }
+        },
+        "FreelancerProject": {
+          "title": "งานพิเศษ",
+          "openButtonLabel": "ดูตัวอย่าง"
+        },
+        "FreelancerProjectProposal": {
+          "title": "ข้อเสนองานพิเศษ",
+          "openButtonLabel": "ส่งประมูลนี้",
+          "bidAmountTitle": "จำนวนเงินประมูล",
+          "contentTitle": "เนื้อหา"
+        },
+        "WorldAppMiniApp": {
+          "logoAlt": "โลโก้",
+          "openButtonLabel": "เปิด {name}"
+        },
+        "ClaimSupertokens": {
+          "claimSupertokensErrorMessage": "ขออภัย รับซูเปอร์โทเคนไม่สำเร็จ โปรดลองใหม่ภายหลัง",
+          "successMessageContent": "รับซูเปอร์โทเคนแล้ว",
+          "title": "รับซูเปอร์โทเคน",
+          "description": "ทุกข้อความที่คุณส่งถึงซูเปอร์ฮีโร่ AI คุณจะรับโทเคน <strong>SUPER</strong> 1 เหรียญ",
+          "buttonLabel": "รับซูเปอร์โทเคน"
+        },
+        "AssistantsList": {
+          "newThreadButtonLabel": "จ้างแรงงาน AI ของคุณ"
+        },
+        "CaldavAuthentication": {
+          "GoogleCalendarAuth": {
+            "title": "ยืนยันตัวตน Google Calendar",
+            "doneMessageContent": "เสร็จสิ้น",
+            "description": "ยืนยัน Google Calendar เพื่อให้ผู้ช่วยอ่านและเขียนกิจกรรมปฏิทินแทนคุณ",
+            "emailLabel": "อีเมลบัญชี",
+            "submitButtonLabel": "ยืนยันตัวตน",
+            "doneButtonLabel": "เสร็จสิ้น"
+          },
+          "AppleCalendarAuth": {
+            "title": "ยืนยันตัวตน Apple Calendar",
+            "doneMessageContent": "ยืนยันสำเร็จ",
+            "description": "ในการยืนยันกับ Apple iCal คุณต้องสร้างรหัสผ่านสำหรับแอป",
+            "instructionsTitle": "คำแนะนำ",
+            "instructionsContent": "1. ไปที่หน้า Apple ID และเปิดการยืนยันสองขั้นตอน<br></br>2. สร้างรหัสผ่านสำหรับแอป iCal ดู <link>คู่มือนี้</link><br></br>3. ป้อน Apple ID และรหัสผ่านสำหรับแอปด้านล่าง",
+            "usernameLabel": "Apple ID",
+            "usernamePlaceholder": "ป้อน Apple ID ของคุณ",
+            "usernameRequiredMessage": "ต้องกรอก Apple ID",
+            "appSpecificPasswordLabel": "รหัสผ่านสำหรับแอป",
+            "appSpecificPasswordPlaceholder": "ป้อนรหัสผ่านสำหรับแอป",
+            "appSpecificPasswordRequiredMessage": "ต้องกรอกรหัสผ่านสำหรับแอป",
+            "submitButtonLabel": "ยืนยันตัวตน"
+          }
+        },
+        "BlogPost": {
+          "title": "ชื่อเรื่อง",
+          "contentTitle": "เนื้อหา"
+        },
+        "Email": {
+          "title": "หัวข้อ",
+          "contentTitle": "เนื้อหา"
+        },
+        "FacebookAuthentication": {
+          "doneMessageContent": "เสร็จสิ้น",
+          "title": "ยืนยันตัวตน Facebook",
+          "description": "ยืนยันบัญชี Facebook เพื่อให้ผู้ช่วยจัดการกิจกรรมบัญชีของคุณ",
+          "submitButtonLabel": "ยืนยันตัวตน",
+          "doneButtonLabel": "เสร็จสิ้น"
+        },
+        "FacebookPost": {
+          "title": "โพสต์ Facebook",
+          "contentTitle": "เนื้อหา",
+          "author": "คุณ"
+        },
+        "GmailAuthentication": {
+          "doneMessageContent": "เสร็จสิ้น",
+          "title": "ยืนยันตัวตน Gmail",
+          "description": "ยืนยัน Gmail เพื่อให้ผู้ช่วยอ่านและส่งอีเมลแทนคุณ",
+          "submitButtonLabel": "ยืนยันตัวตน",
+          "doneButtonLabel": "เสร็จสิ้น"
+        },
+        "GoogleDrivePicker": {
+          "doneMessageContent": "เสร็จสิ้น",
+          "title": "ตัวเลือก Google Drive",
+          "description": "เลือกไฟล์จาก Google Drive ของคุณ",
+          "submitButtonLabel": "เลือกไฟล์",
+          "doneButtonLabel": "เสร็จสิ้น"
+        },
+        "Image": {
+          "downloadButtonLabel": "ดาวน์โหลด"
+        },
+        "InstagramAuthentication": {
+          "doneMessageContent": "เสร็จสิ้น",
+          "title": "ยืนยันตัวตน Instagram",
+          "description": "ยืนยันบัญชี Instagram เพื่อให้ผู้ช่วยจัดการกิจกรรมบัญชีของคุณ",
+          "submitButtonLabel": "ยืนยันตัวตน",
+          "doneButtonLabel": "เสร็จสิ้น"
+        },
+        "InstagramPost": {
+          "title": "โพสต์ Instagram",
+          "contentTitle": "เนื้อหา",
+          "author": "คุณ"
+        },
+        "LinkedInAuthentication": {
+          "doneMessageContent": "เสร็จสิ้น",
+          "title": "ยืนยันตัวตน LinkedIn",
+          "description": "ยืนยันบัญชี LinkedIn เพื่อให้ผู้ช่วยจัดการกิจกรรมบัญชีของคุณ",
+          "submitButtonLabel": "ยืนยันตัวตน",
+          "doneButtonLabel": "เสร็จสิ้น"
+        },
+        "LinkedInPost": {
+          "title": "โพสต์ LinkedIn",
+          "contentTitle": "เนื้อหา",
+          "author": "คุณ"
+        },
+        "Logo": {
+          "title": "โลโก้",
+          "description": "นี่คือโลโก้ที่สร้างสำหรับคุณ",
+          "downloadButtonLabel": "ดาวน์โหลด"
+        },
+        "Paraphrase": {
+          "title": "ข้อความที่ถอดความแล้ว"
+        },
+        "Persona": {
+          "title": "เพอร์โซนา"
+        },
+        "SalesPage": {
+          "title": "หน้าเซลส์",
+          "contentTitle": "เนื้อหา"
+        },
+        "SocialMediaStrategy": {
+          "title": "กลยุทธ์โซเชียลมีเดีย"
+        },
+        "Task": {
+          "title": "งานที่ตั้งเวลาไว้",
+          "time": "เวลา: {time}",
+          "manageTasksButtonLabel": "จัดการงาน"
+        },
+        "Upgrade": {
+          "title": "อัปเกรดเป็น {planName} เพื่อดำเนินการต่อ",
+          "dailyMessagesLimitDescription": "{dailyMessagesLimit} ข้อความต่อวัน",
+          "pricesTitle": "การอัปเกรดเริ่มต้นที่",
+          "buttonLabel": "อัปเกรด"
+        },
+        "XAuthentication": {
+          "doneMessageContent": "เสร็จสิ้น",
+          "title": "ยืนยันตัวตน X",
+          "description": "ยืนยันบัญชี X เพื่อให้ผู้ช่วยจัดการกิจกรรมบัญชีของคุณ",
+          "submitButtonLabel": "ยืนยันตัวตน",
+          "doneButtonLabel": "เสร็จสิ้น"
+        },
+        "XTweet": {
+          "title": "ทวีต",
+          "contentTitle": "เนื้อหา",
+          "author": "คุณ"
+        }
+      }
+    },
+    "menus": {
+      "Menu": {
+        "BottomMenu": {
+          "contactButtonLabel": "ติดต่อฝ่ายสนับสนุน",
+          "planDescription": "แผน {planName}",
+          "avatarAlt": "อวาตาร์ของคุณ",
+          "Supertokens": {
+            "imageAlt": "ซูเปอร์โทเคน",
+            "buttonLabel": "ซูเปอร์โทเคน"
+          },
+          "SignOutButton": {
+            "label": "ออกจากระบบ"
+          },
+          "UpgradeButton": {
+            "label": "อัปเกรด"
+          }
+        },
+        "Threads": {
+          "RecentThreads": {
+            "title": "แชทล่าสุด"
+          },
+          "Onboarding": {
+            "Root": {
+              "title": "คุยกับ Boardy ก่อน",
+              "description": "Boardy คือซูเปอร์ฮีโร่สำหรับเริ่มต้นใช้งานของคุณ"
+            },
+            "ActionButton": {
+              "label": "ดำเนินการแชทกับ Boardy"
+            }
+          },
+          "Thread": {
+            "description": "สร้างเมื่อ {relativeTime}",
+            "notification": "ข้อความใหม่"
+          }
+        },
+        "Content": {
+          "Header": {
+            "NewThreadButton": {
+              "label": "เริ่มแชทใหม่"
+            },
+            "TasksButton": {
+              "label": "งานที่ตั้งเวลาไว้"
+            }
+          }
+        }
+      }
+    },
+    "misc": {
+      "FullPageNotFound": {
+        "homeButtonLabel": "กลับหน้าหลัก"
+      }
+    },
+    "superinterface": {
+      "components": {
+        "MessageAttachments": {
+          "label": "แนบไฟล์ {attachmentsCount, plural, =1 {1 ไฟล์} other {{attachmentsCount, number} ไฟล์}}"
+        },
+        "StartingToolCalls": {
+          "inProgress": "กำลังทำงาน"
+        },
+        "Function": {
+          "completed": "ทำงานเสร็จแล้ว",
+          "inProgress": "กำลังทำงาน",
+          "failed": "ทำงานไม่สำเร็จ",
+          "cancelled": "ยกเลิกแล้ว",
+          "expired": "หมดเวลา"
+        },
+        "FileSearchToolCall": {
+          "completed": "ค้นหาไฟล์แล้ว",
+          "inProgress": "กำลังค้นหาไฟล์",
+          "failed": "ค้นหาไฟล์ไม่สำเร็จ",
+          "cancelled": "ยกเลิกแล้ว",
+          "expired": "หมดเวลา"
+        }
+      }
+    },
+    "tools": {
+      "Tool": {
+        "soonBadgeLabel": "(เร็ว ๆ นี้)"
+      },
+      "TruncatedTools": {
+        "suffix": "+{toolsCount, number} รายการ",
+        "cancelButtonLabel": "ปิด"
+      }
+    },
+    "workspaces": {
+      "WorkspaceNotFound": {
+        "title": "ไม่พบเวิร์กสเปซ",
+        "subtitle": "ไม่แน่ใจว่าคุณมาถึงที่นี่ได้อย่างไร แต่เวิร์กสเปซที่คุณค้นหาไม่มีอยู่"
+      }
+    },
+    "callbacks": {
+      "CodeNotFound": {
+        "title": "ไม่พบรหัสยืนยันตัวตน",
+        "subtitle": "ไม่แน่ใจว่าคุณมาถึงที่นี่ได้อย่างไร แต่ไม่มีรหัสยืนยัน โปรดลองยืนยันอีกครั้ง"
+      },
+      "StateNotFound": {
+        "title": "ไม่พบสถานะยืนยันตัวตน",
+        "subtitle": "ไม่แน่ใจว่าคุณมาถึงที่นี่ได้อย่างไร แต่ไม่มีสถานะยืนยัน โปรดลองยืนยันอีกครั้ง"
+      },
+      "VariablesNotFound": {
+        "title": "ไม่พบตัวแปร",
+        "subtitle": "ไม่แน่ใจว่าคุณมาถึงที่นี่ได้อย่างไร แต่ไม่มีตัวแปร โปรดลองยืนยันอีกครั้ง"
+      },
+      "UserIdNotFound": {
+        "title": "ไม่พบข้อมูลผู้ใช้",
+        "subtitle": "ไม่แน่ใจว่าคุณมาถึงที่นี่ได้อย่างไร แต่ไม่มีข้อมูลผู้ใช้ โปรดลองยืนยันอีกครั้ง"
+      },
+      "Success": {
+        "title": "ยืนยันตัวตนสำเร็จ",
+        "subtitle": "คุณยืนยันตัวตนเรียบร้อยแล้ว ปิดแท็บนี้ได้เลย"
+      },
+      "EmailNotFound": {
+        "title": "ไม่พบอีเมล",
+        "subtitle": "ไม่แน่ใจว่าคุณมาถึงที่นี่ได้อย่างไร แต่ไม่มีตัวแปร โปรดลองยืนยันอีกครั้ง"
+      }
+    },
+    "worldcoinUsers": {
+      "WorldcoinUserNotFound": {
+        "title": "ไม่พบบัญชี Worldcoin",
+        "subtitle": "ไม่แน่ใจว่าคุณมาถึงที่นี่ได้อย่างไร แต่บัญชี Worldcoin ปัจจุบันของคุณไม่มีอยู่"
+      }
+    },
+    "threads": {
+      "ThreadNotFound": {
+        "title": "ไม่พบแชท",
+        "subtitle": "ไม่แน่ใจว่าคุณมาถึงที่นี่ได้อย่างไร แต่แชทที่คุณค้นหาไม่มีอยู่"
+      }
+    },
+    "groups": {
+      "GroupNotFound": {
+        "title": "ไม่พบกลุ่ม",
+        "subtitle": "ไม่แน่ใจว่าคุณมาถึงที่นี่ได้อย่างไร แต่กลุ่มที่คุณค้นหาไม่มีอยู่"
+      }
+    },
+    "functionComponents": {
+      "functionComponents": {
+        "AuthUrl": {
+          "completed": "รับข้อมูลยืนยันแล้ว",
+          "inProgress": "กำลังรับข้อมูลยืนยัน",
+          "failed": "รับข้อมูลยืนยันไม่สำเร็จ",
+          "cancelled": "ยกเลิกแล้ว",
+          "expired": "หมดเวลา"
+        },
+        "CreateCalendarObject": {
+          "completed": "สร้างกิจกรรมปฏิทินแล้ว",
+          "inProgress": "กำลังสร้างกิจกรรมปฏิทิน",
+          "failed": "สร้างกิจกรรมปฏิทินไม่สำเร็จ",
+          "cancelled": "ยกเลิกแล้ว",
+          "expired": "หมดเวลา"
+        },
+        "CreateFile": {
+          "completed": "สร้างไฟล์แล้ว",
+          "inProgress": "กำลังสร้างไฟล์",
+          "failed": "สร้างไฟล์ไม่สำเร็จ",
+          "cancelled": "ยกเลิกแล้ว",
+          "expired": "หมดเวลา"
+        },
+        "CreateImage": {
+          "completed": "สร้างภาพแล้ว",
+          "inProgress": "กำลังสร้างภาพ",
+          "failed": "สร้างภาพไม่สำเร็จ",
+          "cancelled": "ยกเลิกแล้ว",
+          "expired": "หมดเวลา"
+        },
+        "CreateLogo": {
+          "completed": "สร้างโลโก้แล้ว",
+          "inProgress": "กำลังสร้างโลโก้",
+          "failed": "สร้างโลโก้ไม่สำเร็จ",
+          "cancelled": "ยกเลิกแล้ว",
+          "expired": "หมดเวลา"
+        },
+        "DeleteCalendarObject": {
+          "completed": "ลบกิจกรรมปฏิทินแล้ว",
+          "inProgress": "กำลังลบกิจกรรมปฏิทิน",
+          "failed": "ลบกิจกรรมปฏิทินไม่สำเร็จ",
+          "cancelled": "ยกเลิกแล้ว",
+          "expired": "หมดเวลา"
+        },
+        "DeleteFile": {
+          "completed": "ลบไฟล์แล้ว",
+          "inProgress": "กำลังลบไฟล์",
+          "failed": "ลบไฟล์ไม่สำเร็จ",
+          "cancelled": "ยกเลิกแล้ว",
+          "expired": "หมดเวลา"
+        },
+        "FetchCalendarObjects": {
+          "completed": "ดึงกิจกรรมปฏิทินแล้ว",
+          "inProgress": "กำลังดึงกิจกรรมปฏิทิน",
+          "failed": "ดึงกิจกรรมปฏิทินไม่สำเร็จ",
+          "cancelled": "ยกเลิกแล้ว",
+          "expired": "หมดเวลา"
+        },
+        "FetchCalendars": {
+          "completed": "ดึงปฏิทินแล้ว",
+          "inProgress": "กำลังดึงปฏิทิน",
+          "failed": "ดึงปฏิทินไม่สำเร็จ",
+          "cancelled": "ยกเลิกแล้ว",
+          "expired": "หมดเวลา"
+        },
+        "FreelancerSearchProjects": {
+          "completed": "พบงานพิเศษแล้ว",
+          "inProgress": "กำลังค้นหางานพิเศษ",
+          "failed": "ค้นหางานพิเศษไม่สำเร็จ",
+          "cancelled": "ยกเลิกแล้ว",
+          "expired": "หมดเวลา"
+        },
+        "FreelancerGetProject": {
+          "completed": "รับข้อมูลงานพิเศษแล้ว",
+          "inProgress": "กำลังรับข้อมูลงานพิเศษ",
+          "failed": "รับข้อมูลงานพิเศษไม่สำเร็จ",
+          "cancelled": "ยกเลิกแล้ว",
+          "expired": "หมดเวลา"
+        },
+        "GetPlan": {
+          "completed": "ได้รับข้อมูลแผนแล้ว",
+          "inProgress": "กำลังดึงข้อมูลแผน",
+          "failed": "ไม่สามารถดึงข้อมูลแผนได้",
+          "cancelled": "ยกเลิกแล้ว",
+          "expired": "หมดอายุ"
+        },
+        "GetFileMetadata": {
+          "completed": "รับข้อมูลไฟล์แล้ว",
+          "inProgress": "กำลังรับข้อมูลไฟล์",
+          "failed": "รับข้อมูลไฟล์ไม่สำเร็จ",
+          "cancelled": "ยกเลิกแล้ว",
+          "expired": "หมดเวลา"
+        },
+        "GetTime": {
+          "completed": "รับเวลาแล้ว",
+          "inProgress": "กำลังรับเวลา",
+          "failed": "รับเวลาไม่สำเร็จ",
+          "cancelled": "ยกเลิกแล้ว",
+          "expired": "หมดเวลา"
+        },
+        "GetLocale": {
+          "completed": "รับภาษาของคุณแล้ว",
+          "inProgress": "กำลังรับภาษา",
+          "failed": "รับภาษาไม่สำเร็จ",
+          "cancelled": "ยกเลิกแล้ว",
+          "expired": "หมดเวลา"
+        },
+        "ListAssistants": {
+          "completed": "พบซูเปอร์ฮีโร่ AI ของคุณแล้ว",
+          "inProgress": "กำลังค้นหาซูเปอร์ฮีโร่ AI ของคุณ",
+          "failed": "ค้นหาซูเปอร์ฮีโร่ AI ไม่สำเร็จ",
+          "cancelled": "ยกเลิกแล้ว",
+          "expired": "หมดเวลา"
+        },
+        "ListFiles": {
+          "completed": "แสดงรายการไฟล์แล้ว",
+          "inProgress": "กำลังแสดงรายการไฟล์",
+          "failed": "แสดงรายการไฟล์ไม่สำเร็จ",
+          "cancelled": "ยกเลิกแล้ว",
+          "expired": "หมดเวลา"
+        },
+        "MoveFile": {
+          "completed": "ย้ายไฟล์แล้ว",
+          "inProgress": "กำลังย้ายไฟล์",
+          "failed": "ย้ายไฟล์ไม่สำเร็จ",
+          "cancelled": "ยกเลิกแล้ว",
+          "expired": "หมดเวลา"
+        },
+        "ReadFile": {
+          "completed": "อ่านไฟล์แล้ว",
+          "inProgress": "กำลังอ่านไฟล์",
+          "failed": "อ่านไฟล์ไม่สำเร็จ",
+          "cancelled": "ยกเลิกแล้ว",
+          "expired": "หมดเวลา"
+        },
+        "ReadMemory": {
+          "completed": "เข้าถึงหน่วยความจำแล้ว",
+          "inProgress": "กำลังเข้าถึงหน่วยความจำ",
+          "failed": "เข้าถึงหน่วยความจำไม่สำเร็จ",
+          "cancelled": "ยกเลิกแล้ว",
+          "expired": "หมดเวลา"
+        },
+        "RequestNotificationsPermission": {
+          "completed": "ขออนุญาตการแจ้งเตือนแล้ว",
+          "inProgress": "กำลังขออนุญาตการแจ้งเตือน",
+          "failed": "ไม่สามารถขออนุญาตการแจ้งเตือนได้",
+          "cancelled": "ยกเลิกแล้ว",
+          "expired": "หมดอายุ"
+        },
+        "Search": {
+          "completed": "ค้นหาอินเทอร์เน็ตแล้ว",
+          "inProgress": "กำลังค้นหาอินเทอร์เน็ต",
+          "failed": "ค้นหาอินเทอร์เน็ตไม่สำเร็จ",
+          "cancelled": "ยกเลิกแล้ว",
+          "expired": "หมดเวลา"
+        },
+        "SearchWorldAppMiniApps": {
+          "completed": "ค้นหา World แล้ว",
+          "inProgress": "กำลังค้นหา World",
+          "failed": "ค้นหา World ไม่สำเร็จ",
+          "cancelled": "ยกเลิกแล้ว",
+          "expired": "หมดเวลา"
+        },
+        "SendEmail": {
+          "completed": "ส่งอีเมลแล้ว",
+          "inProgress": "กำลังส่งอีเมล",
+          "failed": "ส่งอีเมลไม่สำเร็จ",
+          "cancelled": "ยกเลิกแล้ว",
+          "expired": "หมดเวลา"
+        },
+        "UpdateCalendarObject": {
+          "completed": "อัปเดตกิจกรรมปฏิทินแล้ว",
+          "inProgress": "กำลังอัปเดตกิจกรรมปฏิทิน",
+          "failed": "อัปเดตกิจกรรมปฏิทินไม่สำเร็จ",
+          "cancelled": "ยกเลิกแล้ว",
+          "expired": "หมดเวลา"
+        },
+        "UpdateFile": {
+          "completed": "อัปเดตไฟล์แล้ว",
+          "inProgress": "กำลังอัปเดตไฟล์",
+          "failed": "อัปเดตไฟล์ไม่สำเร็จ",
+          "cancelled": "ยกเลิกแล้ว",
+          "expired": "หมดเวลา"
+        },
+        "UpdateMemory": {
+          "completed": "อัปเดตหน่วยความจำแล้ว",
+          "inProgress": "กำลังอัปเดตหน่วยความจำ",
+          "failed": "อัปเดตหน่วยความจำไม่สำเร็จ",
+          "cancelled": "ยกเลิกแล้ว",
+          "expired": "หมดเวลา"
+        },
+        "UpdateTitle": {
+          "completed": "ตั้งชื่อแชทของเราแล้ว",
+          "inProgress": "กำลังตั้งชื่อแชทของเรา",
+          "failed": "ตั้งชื่อแชทไม่สำเร็จ",
+          "cancelled": "ยกเลิกแล้ว",
+          "expired": "หมดเวลา"
+        },
+        "FacebookCreatePagePost": {
+          "completed": "สร้างโพสต์เพจ Facebook แล้ว",
+          "inProgress": "กำลังสร้างโพสต์เพจ Facebook",
+          "failed": "สร้างโพสต์เพจ Facebook ไม่สำเร็จ",
+          "cancelled": "ยกเลิกแล้ว",
+          "expired": "หมดเวลา"
+        },
+        "FacebookListPages": {
+          "completed": "แสดงเพจ Facebook แล้ว",
+          "inProgress": "กำลังแสดงเพจ Facebook",
+          "failed": "แสดงเพจ Facebook ไม่สำเร็จ",
+          "cancelled": "ยกเลิกแล้ว",
+          "expired": "หมดเวลา"
+        },
+        "FacebookReadPageInsights": {
+          "completed": "อ่านข้อมูลเชิงลึกเพจ Facebook แล้ว",
+          "inProgress": "กำลังอ่านข้อมูลเชิงลึกเพจ Facebook",
+          "failed": "อ่านข้อมูลเชิงลึกเพจ Facebook ไม่สำเร็จ",
+          "cancelled": "ยกเลิกแล้ว",
+          "expired": "หมดเวลา"
+        },
+        "FacebookReadPagePosts": {
+          "completed": "อ่านโพสต์เพจ Facebook แล้ว",
+          "inProgress": "กำลังอ่านโพสต์เพจ Facebook",
+          "failed": "อ่านโพสต์เพจ Facebook ไม่สำเร็จ",
+          "cancelled": "ยกเลิกแล้ว",
+          "expired": "หมดเวลา"
+        },
+        "InstagramAuthUrl": {
+          "completed": "รับ URL ยืนยัน Instagram แล้ว",
+          "inProgress": "กำลังรับ URL ยืนยัน Instagram",
+          "failed": "รับ URL ยืนยัน Instagram ไม่สำเร็จ",
+          "cancelled": "ยกเลิกแล้ว",
+          "expired": "หมดเวลา"
+        },
+        "InstagramCreatePost": {
+          "completed": "สร้างโพสต์ Instagram แล้ว",
+          "inProgress": "กำลังสร้างโพสต์ Instagram",
+          "failed": "สร้างโพสต์ Instagram ไม่สำเร็จ",
+          "cancelled": "ยกเลิกแล้ว",
+          "expired": "หมดเวลา"
+        },
+        "LinkedInAuthUrl": {
+          "completed": "รับ URL ยืนยัน LinkedIn แล้ว",
+          "inProgress": "กำลังรับ URL ยืนยัน LinkedIn",
+          "failed": "รับ URL ยืนยัน LinkedIn ไม่สำเร็จ",
+          "cancelled": "ยกเลิกแล้ว",
+          "expired": "หมดเวลา"
+        },
+        "LinkedInCreatePost": {
+          "completed": "สร้างโพสต์ LinkedIn แล้ว",
+          "inProgress": "กำลังสร้างโพสต์ LinkedIn",
+          "failed": "สร้างโพสต์ LinkedIn ไม่สำเร็จ",
+          "cancelled": "ยกเลิกแล้ว",
+          "expired": "หมดเวลา"
+        },
+        "Wait": {
+          "completed": "รอสำเร็จ",
+          "inProgress": "กำลังรอ",
+          "failed": "รอไม่สำเร็จ",
+          "cancelled": "ยกเลิกแล้ว",
+          "expired": "หมดเวลา"
+        },
+        "XAuthUrl": {
+          "completed": "รับ URL ยืนยัน X แล้ว",
+          "inProgress": "กำลังรับ URL ยืนยัน X",
+          "failed": "รับ URL ยืนยัน X ไม่สำเร็จ",
+          "cancelled": "ยกเลิกแล้ว",
+          "expired": "หมดเวลา"
+        },
+        "XCreateTweet": {
+          "completed": "สร้างทวีตแล้ว",
+          "inProgress": "กำลังสร้างทวีต",
+          "failed": "สร้างทวีตไม่สำเร็จ",
+          "cancelled": "ยกเลิกแล้ว",
+          "expired": "หมดเวลา"
+        },
+        "XGetTweets": {
+          "completed": "รับทวีตแล้ว",
+          "inProgress": "กำลังรับทวีต",
+          "failed": "รับทวีตไม่สำเร็จ",
+          "cancelled": "ยกเลิกแล้ว",
+          "expired": "หมดเวลา"
+        },
+        "CreateTask": {
+          "completed": "ตั้งเวลางานแล้ว",
+          "inProgress": "กำลังตั้งเวลางาน",
+          "failed": "ไม่สามารถตั้งเวลางานได้",
+          "cancelled": "ยกเลิกแล้ว",
+          "expired": "หมดอายุ"
+        },
+        "UpdateTask": {
+          "completed": "อัปเดตงานแล้ว",
+          "inProgress": "กำลังอัปเดตงาน",
+          "failed": "ไม่สามารถอัปเดตงานได้",
+          "cancelled": "ยกเลิกแล้ว",
+          "expired": "หมดอายุ"
+        },
+        "DeleteTask": {
+          "completed": "ลบงานแล้ว",
+          "inProgress": "กำลังลบงาน",
+          "failed": "ไม่สามารถลบงานได้",
+          "cancelled": "ยกเลิกแล้ว",
+          "expired": "หมดอายุ"
+        },
+        "ListTasks": {
+          "completed": "ได้รับรายการงานแล้ว",
+          "inProgress": "กำลังดึงรายการงาน",
+          "failed": "ไม่สามารถดึงรายการงานได้",
+          "cancelled": "ยกเลิกแล้ว",
+          "expired": "หมดอายุ"
+        },
+        "Notify": {
+          "completed": "ส่งการแจ้งเตือนแล้ว",
+          "inProgress": "กำลังส่งการแจ้งเตือน",
+          "failed": "ไม่สามารถส่งการแจ้งเตือนได้",
+          "cancelled": "ยกเลิกแล้ว",
+          "expired": "หมดอายุ"
+        }
+      }
+    }
+  },
+  "lib": {
+    "tasks": {
+      "formatSchedule": {
+        "once": "ครั้งเดียวเมื่อ {time}",
+        "tz": "({tz})",
+
+        "until": " จนถึง {date}",
+        "occurrences": " สำหรับ {count} ครั้ง",
+
+        "secondly": {
+          "every": "ทุกวินาที",
+          "everyInterval": "ทุก ๆ {interval} วินาที"
+        },
+        "minutely": {
+          "every": "ทุกนาที เมื่อวินาทีที่ {seconds}",
+          "everyInterval": "ทุก ๆ {interval} นาที เมื่อวินาทีที่ {seconds}"
+        },
+        "hourly": {
+          "every": "ทุกชั่วโมงที่ {mmss}",
+          "everyInterval": "ทุก ๆ {interval} ชั่วโมงที่ {mmss}"
+        },
+        "daily": {
+          "every": "ทุกวันเวลา {times}",
+          "everyInterval": "ทุก ๆ {interval} วันเวลา {times}"
+        },
+        "weekly": {
+          "every": "ทุกสัปดาห์ใน {days} เวลา {times}",
+          "everyInterval": "ทุก ๆ {interval} สัปดาห์ใน {days} เวลา {times}"
+        },
+        "monthly": {
+          "every": "ทุกเดือนวันที่ {dayNum} เวลา {times}",
+          "everyInterval": "ทุก ๆ {interval} เดือนวันที่ {dayNum} เวลา {times}"
+        },
+        "yearly": {
+          "every": "ทุกปีในวันที่ {onDate} เวลา {times}",
+          "everyInterval": "ทุก ๆ {interval} ปีในวันที่ {onDate} เวลา {times}"
+        }
+      }
+    },
+    "threads": {
+      "formatThreadTitle": {
+        "fallback": "แชทไม่มีชื่อ",
+        "fallbackWithAssistantName": "แชทกับ {assistantName}"
+      }
+    },
+    "plans": {
+      "upgradePlanWorldPay": {
+        "payloadDescription": "อัปเกรดเป็นแผน {planName} เป็นเวลา 1 {period, select, DAY {วัน} WEEK {สัปดาห์} MONTH {เดือน} other {ระยะเวลาไม่ทราบ}}"
+      },
+      "planConfigs": {
+        "basic": { "name": "Basic" },
+        "starter": { "name": "Starter" },
+        "pro": { "name": "Pro" },
+        "enterprise": { "name": "Enterprise" }
+      }
+    },
+    "tools": {
+      "toolConfigs": {
+        "search": { "name": "ค้นหาอินเทอร์เน็ต" },
+        "images": { "name": "สร้างภาพ" },
+        "files": { "name": "ไฟล์" },
+        "gmail": { "name": "Gmail" },
+        "appleCalendar": { "name": "Apple Calendar" },
+        "googleCalendar": { "name": "Google Calendar" },
+        "googleDrive": { "name": "Google Drive" },
+        "linkedin": { "name": "LinkedIn" },
+        "facebook": { "name": "Facebook" },
+        "instagram": { "name": "Instagram" },
+        "x": { "name": "X/Twitter" },
+        "voice": { "name": "เสียง" },
+        "searchWorld": { "name": "ค้นหา World" },
+        "searchSideGigs": { "name": "ค้นหางานพิเศษ" },
+        "tasks": {
+          "name": "งานที่ตั้งเวลาไว้"
+        }
+      }
+    },
+    "assistants": {
+      "assistantConfigs": {
+        "boardy": { "description": "ซูเปอร์ฮีโร่เริ่มต้นใช้งาน" },
+        "logan": { "description": "ซูเปอร์ฮีโร่โลโก้" },
+        "emma": { "description": "ซูเปอร์ฮีโร่อีเมลแนะนำตัว" },
+        "supa": { "description": "ซูเปอร์ฮีโร่แจกโทเคน" },
+        "mark": { "description": "ผู้ค้นหาเพอร์โซนาการตลาด" },
+        "quilla": { "description": "ซูเปอร์ฮีโร่จดหมายข่าวการตลาด" },
+        "parry": { "description": "ซูเปอร์ฮีโร่การถอดความ" },
+        "charlie": { "description": "ซูเปอร์ฮีโร่การเติบโตโซเชียลมีเดีย" },
+        "sia": { "description": "นักวางกลยุทธ์โซเชียลมีเดีย" },
+        "sunny": { "description": "ซูเปอร์ฮีโร่คำยืนยันเชิงบวก" },
+        "adam": { "description": "ซูเปอร์ฮีโร่งานพิเศษ" },
+        "shoppy": { "description": "ซูเปอร์ฮีโร่เพิ่มประสิทธิภาพ eCommerce" },
+        "vita": { "description": "ซูเปอร์ฮีโร่ปรับปรุง CV" },
+        "jobo": { "description": "ซูเปอร์ฮีโร่สัมภาษณ์งาน" },
+        "zena": { "description": "ซูเปอร์ฮีโร่สะกดจิตบำบัด" },
+        "lista": { "description": "ซูเปอร์ฮีโร่อีเมลมาร์เก็ตติ้ง" },
+        "aida": { "description": "ซูเปอร์ฮีโร่สาย Sales Funnel" },
+        "kairos": { "description": "ซูเปอร์ฮีโร่บริหารเวลา" },
+        "reev": { "description": "ซูเปอร์ฮีโร่ฟีดแบ็กเชิงลบทางธุรกิจ" },
+        "copia": { "description": "ซูเปอร์ฮีโร่บทความบล็อก" }
+      }
+    }
+  },
+  "hooks": {
+    "threads": {
+      "useThreads": {
+        "fallbackErrorMessage": "เกิดข้อผิดพลาดที่ไม่ทราบสาเหตุ"
+      },
+      "useUpdateThread": {
+        "fallbackErrorMessage": "เกิดข้อผิดพลาดที่ไม่ทราบสาเหตุ"
+      }
+    },
+    "worldAppMiniApps": {
+      "useSearchWorldAppMiniApps": {
+        "fallbackErrorMessage": "เกิดข้อผิดพลาดที่ไม่ทราบสาเหตุ"
+      }
+    }
+  }
+}

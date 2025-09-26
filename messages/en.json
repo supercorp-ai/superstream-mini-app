@@ -1,0 +1,986 @@
+{
+  "app": {
+    "callbacks": {
+      "googleDrive": {
+        "Content": {
+          "title": "Choose files",
+          "description": "Assistant will only be able to access folders and files you select.",
+          "buttonLabel": "Select files and folders"
+        }
+      }
+    },
+    "miniApp": {
+      "Content": {
+        "heading": "Earn money with AI workers",
+        "AuthButton": {
+          "text": "Sign in with your wallet"
+        }
+      },
+      "dashboard": {
+        "tasks": {
+          "title": "Scheduled tasks",
+          "Content": {
+            "NoTasks": {
+              "title": "No tasks scheduled",
+              "description": "Scheduled tasks is work that will be done for you automatically, on a schedule. Chat with any superhero that has <strong>Scheduled tasks</strong> superpower and ask them to schedule tasks for you.",
+              "availabilityNote": "Only available on <strong>Pro</strong> plan.",
+              "newThreadButtonLabel": "Start a new chat",
+              "upgradeButtonLabel": "Upgrade to {planName}"
+            },
+            "Item": {
+              "pastLabel": "Past",
+              "threadLabel": "Chat",
+              "DeleteButton": {
+                "label": "Delete",
+                "dialogTitle": "Delete task?",
+                "dialogDescription": "Are you sure you want to delete this task?",
+                "cancelButtonLabel": "Cancel",
+                "successMessage": "Deleted task successfully.",
+                "errorMessage": "Failed to delete task. Please try again later."
+              }
+            }
+          }
+        },
+        "supertokens": {
+          "Content": {
+            "title": "Supertoken",
+            "subtitle": "Universal Basic Compute token",
+            "balanceTitle": "Your balance",
+            "balanceValue": "{balance, number, ::precision-integer} SUPER",
+            "noUnclaimedSupertokens": "No Supertokens to claim",
+            "upgradeButtonLabel": "Upgrade to claim more",
+            "claimNote": "For every message you send, you can claim 1 <strong>SUPER</strong> token.",
+            "spendNote": "Use <strong>SUPER</strong> to get access to more powerful AI.",
+            "pendingClaimMessage": "{pendingClaimQuantity, number} SUPER pending. {additionalClaimable, number} more after this claim.",
+            "ClaimSupertokensButton": {
+              "buttonLabel": "Claim {totalClaimable, number} Supertokens",
+              "dialogTitle": "Claim Supertokens",
+              "dialogDescription": "You’ll claim <strong>{pendingClaimQuantity, number} SUPER</strong> now. After this completes, you can claim <strong>{additionalClaimable, number} SUPER</strong>.",
+              "confirmButtonLabel": "Start claim",
+              "claimSupertokensErrorMessage": "Oops, couldn’t claim your Supertokens. Please try again later."
+            }
+          }
+        },
+        "upgrade": {
+          "Content": {
+            "PeriodInput": {
+              "day": "Day",
+              "week": "Week",
+              "month": "Month"
+            },
+            "Plan": {
+              "dailyMessagesLimitDescription": "{dailyMessagesLimit, number} messages per day",
+              "pricesLabel": "{period, select, DAY {Day} WEEK {Week} MONTH {Month} other {Unknown period}} of {planName} for",
+              "PlanButton": {
+                "currentButtonLabel": "Current plan",
+                "previousButtonLabel": "Previous plan"
+              },
+              "UpgradeButton": {
+                "contactButtonLabel": "Contact us to upgrade",
+                "label": "Upgrade to {planName}",
+                "dialogTitle": "Upgrade to {planName} for 1 {period, select, DAY {day} WEEK {week} MONTH {month} other {unknown period}}",
+                "dialogDescription": "Choose one of the following methods to upgrade your plan.",
+                "UpgradeSupertokenButton": {
+                  "errorMessage": "Failed to upgrade your plan. Please try again or contact support.",
+                  "successMessage": "Your plan has been upgraded successfully. Superheroes rejoice!"
+                },
+                "UpgradeWorldPayButton": {
+                  "errorMessage": "Failed to upgrade your plan. Please try again or contact support.",
+                  "successMessage": "Your plan has been upgraded successfully. Superheroes rejoice!",
+                  "buttonLabel": "{formattedPrice} or USDC"
+                }
+              }
+            }
+          }
+        },
+        "threads": {
+          "Content": {
+            "lib": {
+              "createThread": {
+                "onboardingThreadTitle": "Onboarding"
+              }
+            }
+          },
+          "new": {
+            "Content": {
+              "title": "Talk to AI worker",
+              "Assistant": {
+                "toolsHeading": "Superpowers",
+                "truncatedToolsTitle": "{assistantName}'s integrations",
+                "truncatedToolsDescription": "{assistantName} uses latest AI models and tools to help you with your daily tasks.",
+                "newThreadButtonLabel": "Start chat",
+                "upgradeButtonLabel": "Upgrade"
+              }
+            }
+          },
+          "threadId": {
+            "Content": {
+              "Chat": {
+                "MessageForm": {
+                  "controlPlaceholder": "Ask anything"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "layout": {
+      "metadata": {
+        "description": "Earn money with AI workers"
+      }
+    }
+  },
+  "components": {
+    "plans": {
+      "PlanBenefits": {
+        "assistantsDescription": "{assistantsCount, number} powerful agents",
+        "toolsDescription": "{toolsCount, number} agent {toolsCount, plural, =1 {tool} other {tools}}",
+        "truncatedToolsTitle": "{planName} includes {toolsCount, plural, =1 {tool} other {tools}}",
+        "truncatedToolsDescription": "Superhero agents have access to all the tools they need to help you succeed.",
+        "tokensDescription": "Up to <supertoken></supertoken> {supertokensCount, number} tokens per day"
+      }
+    },
+    "errors": {
+      "FullScreenError": {
+        "title": "We've encountered an error",
+        "description": "Not sure if it's the fault of AI or the humans, but something went wrong. Please try again or contact our support team if the issue persists.",
+        "resetButtonLabel": "Try again",
+        "contactButtonLabel": "Contact support"
+      }
+    },
+    "locales": {
+      "LocaleInput": {
+        "title": "Select your language",
+        "description": "Select your preferred language for the app"
+      }
+    },
+    "layouts": {
+      "Layout": {
+        "Header": {
+          "streamsLinkLabel": "Back to streams",
+          "DialogAction": {
+            "title": "Menu",
+            "description": "Superhero app menu"
+          }
+        }
+      }
+    },
+    "validations": {
+      "ValidationError": {
+        "title": "Almost there",
+        "description": "Tap below to fetch this content once more.",
+        "retryButtonLabel": "Retry",
+        "retryMessageContent": "Retry"
+      }
+    },
+    "markdown": {
+      "markdownComponents": {
+        "Assistant": {
+          "ActionButton": {
+            "buttonLabel": "Start new chat with {assistantName}",
+            "upgradeButtonLabel": "Upgrade to chat with {assistantName}",
+            "onboardingButtonLabel": "{assistantName} available after onboarding"
+          }
+        },
+        "FreelancerProject": {
+          "title": "Side-gig",
+          "openButtonLabel": "Preview"
+        },
+        "FreelancerProjectProposal": {
+          "title": "Side-gig proposal",
+          "openButtonLabel": "Send this bid",
+          "bidAmountTitle": "Bid amount",
+          "contentTitle": "Content"
+        },
+        "WorldAppMiniApp": {
+          "logoAlt": "Logo",
+          "openButtonLabel": "Open {name}"
+        },
+        "ClaimSupertokens": {
+          "claimSupertokensErrorMessage": "Oops, couldn’t claim your Supertokens. Please try again later.",
+          "successMessageContent": "Claimed Supertokens",
+          "title": "Earn Supertokens",
+          "description": "For each message you send to AI superheroes you will be able to claim 1 <strong>SUPER</strong> token.",
+          "buttonLabel": "Claim Supertokens"
+        },
+        "AssistantsList": {
+          "newThreadButtonLabel": "Hire your AI workers"
+        },
+        "CaldavAuthentication": {
+          "GoogleCalendarAuth": {
+            "title": "Google Calendar Authentication",
+            "doneMessageContent": "Done.",
+            "description": "Authenticate your Google Calendar to allow the assistant to read and write calendar events on your behalf.",
+            "emailLabel": "Account Email",
+            "submitButtonLabel": "Authenticate",
+            "doneButtonLabel": "Done"
+          },
+          "AppleCalendarAuth": {
+            "title": "Apple Calendar Authentication",
+            "doneMessageContent": "Authentication succeeded.",
+            "description": "To authenticate with Apple iCal, you need to generate an app-specific password.",
+            "instructionsTitle": "Instructions",
+            "instructionsContent": "1. Visit your Apple ID account page and ensure two-factor authentication is enabled.<br></br>2. Generate an app-specific password for iCal. See <link>this guide</link>.<br></br>3. Enter your Apple ID and the app-specific password below.",
+            "usernameLabel": "Apple ID",
+            "usernamePlaceholder": "Enter your Apple ID",
+            "usernameRequiredMessage": "Apple ID is required",
+            "appSpecificPasswordLabel": "App-Specific Password",
+            "appSpecificPasswordPlaceholder": "Enter your App-Specific Password",
+            "appSpecificPasswordRequiredMessage": "App-Specific Password is required",
+            "submitButtonLabel": "Authenticate"
+          }
+        },
+        "BlogPost": {
+          "title": "Title",
+          "contentTitle": "Content"
+        },
+        "Email": {
+          "title": "Subject",
+          "contentTitle": "Content"
+        },
+        "FacebookAuthentication": {
+          "doneMessageContent": "Done.",
+          "title": "Facebook Authentication",
+          "description": "Authenticate your Facebook account to enable the assistant to manage your account activities.",
+          "submitButtonLabel": "Authenticate",
+          "doneButtonLabel": "Done"
+        },
+        "FacebookPost": {
+          "title": "Facebook Post",
+          "contentTitle": "Content",
+          "author": "You"
+        },
+        "GmailAuthentication": {
+          "doneMessageContent": "Done.",
+          "title": "Gmail Authentication",
+          "description": "Authenticate your Gmail to allow the assistant to read and send emails on your behalf.",
+          "submitButtonLabel": "Authenticate",
+          "doneButtonLabel": "Done"
+        },
+        "GoogleDrivePicker": {
+          "doneMessageContent": "Done.",
+          "title": "Google Drive Picker",
+          "description": "Select files from your Google Drive.",
+          "submitButtonLabel": "Select files",
+          "doneButtonLabel": "Done"
+        },
+        "Image": {
+          "downloadButtonLabel": "Download"
+        },
+        "InstagramAuthentication": {
+          "doneMessageContent": "Done.",
+          "title": "Instagram Authentication",
+          "description": "Authenticate your Instagram account to enable the assistant to manage your account activities.",
+          "submitButtonLabel": "Authenticate",
+          "doneButtonLabel": "Done"
+        },
+        "InstagramPost": {
+          "title": "Instagram Post",
+          "contentTitle": "Content",
+          "author": "You"
+        },
+        "LinkedInAuthentication": {
+          "doneMessageContent": "Done.",
+          "title": "LinkedIn Authentication",
+          "description": "Authenticate your LinkedIn account to enable the assistant to manage your account activities.",
+          "submitButtonLabel": "Authenticate",
+          "doneButtonLabel": "Done"
+        },
+        "LinkedInPost": {
+          "title": "LinkedIn Post",
+          "contentTitle": "Content",
+          "author": "You"
+        },
+        "Logo": {
+          "title": "Logo",
+          "description": "Here's a logo that was created for you.",
+          "downloadButtonLabel": "Download"
+        },
+        "Paraphrase": {
+          "title": "Paraphrased Text"
+        },
+        "Persona": {
+          "title": "Persona"
+        },
+        "SalesPage": {
+          "title": "Sales Page",
+          "contentTitle": "Content"
+        },
+        "SocialMediaStrategy": {
+          "title": "Social Media Strategy"
+        },
+        "Task": {
+          "title": "Scheduled task",
+          "time": "Time: {time}",
+          "manageTasksButtonLabel": "Manage tasks"
+        },
+        "Upgrade": {
+          "title": "Upgrade to {planName} to continue",
+          "dailyMessagesLimitDescription": "{dailyMessagesLimit} messages per day",
+          "pricesTitle": "Upgrades start from",
+          "buttonLabel": "Upgrade"
+        },
+        "XAuthentication": {
+          "doneMessageContent": "Done.",
+          "title": "X Authentication",
+          "description": "Authenticate your X account to enable the assistant to manage your account activities.",
+          "submitButtonLabel": "Authenticate",
+          "doneButtonLabel": "Done"
+        },
+        "XTweet": {
+          "title": "Tweet",
+          "contentTitle": "Content",
+          "author": "You"
+        }
+      }
+    },
+    "menus": {
+      "Menu": {
+        "BottomMenu": {
+          "contactButtonLabel": "Contact support",
+          "planDescription": "{planName} plan",
+          "avatarAlt": "Your avatar",
+          "Supertokens": {
+            "imageAlt": "Supertokens",
+            "buttonLabel": "Supertokens"
+          },
+          "SignOutButton": {
+            "label": "Sign out"
+          },
+          "UpgradeButton": {
+            "label": "Upgrade"
+          }
+        },
+        "Threads": {
+          "RecentThreads": {
+            "title": "Recent chats"
+          },
+          "Onboarding": {
+            "Root": {
+              "title": "Talk to Boardy first",
+              "description": "Boardy is your onboarding superhero"
+            },
+            "ActionButton": {
+              "label": "Continue chat with Boardy"
+            }
+          },
+          "Thread": {
+            "description": "Created {relativeTime}",
+            "notification": "New message"
+          }
+        },
+        "Content": {
+          "Header": {
+            "NewThreadButton": {
+              "label": "Start a new chat"
+            },
+            "TasksButton": {
+              "label": "Scheduled tasks"
+            }
+          }
+        }
+      }
+    },
+    "misc": {
+      "FullPageNotFound": {
+        "homeButtonLabel": "Open home"
+      }
+    },
+    "superinterface": {
+      "components": {
+        "MessageAttachments": {
+          "label": "Attached {attachmentsCount, plural, =1 {a file} other {{attachmentsCount, number} files}}"
+        },
+        "StartingToolCalls": {
+          "inProgress": "Working"
+        },
+        "Function": {
+          "completed": "Done working",
+          "inProgress": "Working",
+          "failed": "Failed to finish work",
+          "cancelled": "Cancelled",
+          "expired": "Expired"
+        },
+        "FileSearchToolCall": {
+          "completed": "Searched files",
+          "inProgress": "Searching files",
+          "failed": "Failed to search files",
+          "cancelled": "Cancelled",
+          "expired": "Expired"
+        }
+      }
+    },
+    "tools": {
+      "Tool": {
+        "soonBadgeLabel": "(soon)"
+      },
+      "TruncatedTools": {
+        "suffix": "+{toolsCount, number} more",
+        "cancelButtonLabel": "Close"
+      }
+    },
+    "workspaces": {
+      "WorkspaceNotFound": {
+        "title": "Workspace not found",
+        "subtitle": "Unclear how you got here, but the workspace you're looking for doesn't exist."
+      }
+    },
+    "callbacks": {
+      "CodeNotFound": {
+        "title": "Authentication code not found",
+        "subtitle": "Unclear how you got here, but the authentication code is missing. Please try to authenticate again."
+      },
+      "StateNotFound": {
+        "title": "Authentication state not found",
+        "subtitle": "Unclear how you got here, but the authentication state is missing. Please try to authenticate again."
+      },
+      "VariablesNotFound": {
+        "title": "Variables not found",
+        "subtitle": "Unclear how you got here, but the variables are missing. Please try to authenticate again."
+      },
+      "UserIdNotFound": {
+        "title": "User information not found",
+        "subtitle": "Unclear how you got here, but the user information is missing. Please try to authenticate again."
+      },
+      "Success": {
+        "title": "Successfully authenticated",
+        "subtitle": "You have successfully authenticated. You can close this tab now."
+      },
+      "EmailNotFound": {
+        "title": "Email not found",
+        "subtitle": "Unclear how you got here, but the variables are missing. Please try to authenticate again."
+      }
+    },
+    "worldcoinUsers": {
+      "WorldcoinUserNotFound": {
+        "title": "Worldcoin user not found",
+        "subtitle": "Unclear how you got here, but your current Worldcoin user doesn't exist."
+      }
+    },
+    "threads": {
+      "ThreadNotFound": {
+        "title": "Thread not found",
+        "subtitle": "Unclear how you got here, but the thread you're looking for doesn't exist."
+      }
+    },
+    "groups": {
+      "GroupNotFound": {
+        "title": "Group not found",
+        "subtitle": "Unclear how you got here, but the group you're looking for doesn't exist."
+      }
+    },
+    "functionComponents": {
+      "functionComponents": {
+        "AuthUrl": {
+          "completed": "Got authentication information",
+          "inProgress": "Getting authentication information",
+          "failed": "Failed to get authentication information",
+          "cancelled": "Cancelled",
+          "expired": "Expired"
+        },
+        "CreateCalendarObject": {
+          "completed": "Created calendar event",
+          "inProgress": "Creating calendar event",
+          "failed": "Failed to create calendar event",
+          "cancelled": "Cancelled",
+          "expired": "Expired"
+        },
+        "CreateFile": {
+          "completed": "Created file",
+          "inProgress": "Creating file",
+          "failed": "Failed to create file",
+          "cancelled": "Cancelled",
+          "expired": "Expired"
+        },
+        "CreateImage": {
+          "completed": "Created image",
+          "inProgress": "Creating image",
+          "failed": "Failed to create image",
+          "cancelled": "Cancelled",
+          "expired": "Expired"
+        },
+        "CreateLogo": {
+          "completed": "Created logo",
+          "inProgress": "Creating logo",
+          "failed": "Failed to create logo",
+          "cancelled": "Cancelled",
+          "expired": "Expired"
+        },
+        "DeleteCalendarObject": {
+          "completed": "Deleted calendar event",
+          "inProgress": "Deleting calendar event",
+          "failed": "Failed to delete calendar event",
+          "cancelled": "Cancelled",
+          "expired": "Expired"
+        },
+        "DeleteFile": {
+          "completed": "Deleted file",
+          "inProgress": "Deleting file",
+          "failed": "Failed to delete file",
+          "cancelled": "Cancelled",
+          "expired": "Expired"
+        },
+        "FetchCalendarObjects": {
+          "completed": "Got calendar events",
+          "inProgress": "Getting calendar events",
+          "failed": "Failed to get calendar events",
+          "cancelled": "Cancelled",
+          "expired": "Expired"
+        },
+        "FetchCalendars": {
+          "completed": "Got calendars",
+          "inProgress": "Getting calendars",
+          "failed": "Failed to get calendars",
+          "cancelled": "Cancelled",
+          "expired": "Expired"
+        },
+        "FreelancerSearchProjects": {
+          "completed": "Found side-gigs",
+          "inProgress": "Finding side-gigs",
+          "failed": "Failed to find side-gigs",
+          "cancelled": "Cancelled",
+          "expired": "Expired"
+        },
+        "FreelancerGetProject": {
+          "completed": "Got side-gig info",
+          "inProgress": "Getting side-gig info",
+          "failed": "Failed to get side-gig info",
+          "cancelled": "Cancelled",
+          "expired": "Expired"
+        },
+        "GetPlan": {
+          "completed": "Got plan information",
+          "inProgress": "Getting plan information",
+          "failed": "Failed to get plan information",
+          "cancelled": "Cancelled",
+          "expired": "Expired"
+        },
+        "GetFileMetadata": {
+          "completed": "Got file metadata",
+          "inProgress": "Getting file metadata",
+          "failed": "Failed to get file metadata",
+          "cancelled": "Cancelled",
+          "expired": "Expired"
+        },
+        "GetTime": {
+          "completed": "Got time",
+          "inProgress": "Getting time",
+          "failed": "Failed to get time",
+          "cancelled": "Cancelled",
+          "expired": "Expired"
+        },
+        "GetLocale": {
+          "completed": "Got your language",
+          "inProgress": "Getting your language",
+          "failed": "Failed to your language",
+          "cancelled": "Cancelled",
+          "expired": "Expired"
+        },
+        "ListAssistants": {
+          "completed": "Found your AI superheroes",
+          "inProgress": "Finding your AI superheroes",
+          "failed": "Failed to find your AI superheroes",
+          "cancelled": "Cancelled",
+          "expired": "Expired"
+        },
+        "ListFiles": {
+          "completed": "Listed files",
+          "inProgress": "Listing files",
+          "failed": "Failed to list files",
+          "cancelled": "Cancelled",
+          "expired": "Expired"
+        },
+        "MoveFile": {
+          "completed": "Moved file",
+          "inProgress": "Moving file",
+          "failed": "Failed to move file",
+          "cancelled": "Cancelled",
+          "expired": "Expired"
+        },
+        "ReadFile": {
+          "completed": "Read file",
+          "inProgress": "Reading file",
+          "failed": "Failed to read file",
+          "cancelled": "Cancelled",
+          "expired": "Expired"
+        },
+        "ReadMemory": {
+          "completed": "Memory accessed",
+          "inProgress": "Accessing memory",
+          "failed": "Failed to access memory",
+          "cancelled": "Cancelled",
+          "expired": "Expired"
+        },
+        "RequestNotificationsPermission": {
+          "completed": "Requested notifications permission",
+          "inProgress": "Requesting notifications permission",
+          "failed": "Failed to request notifications permission",
+          "cancelled": "Cancelled",
+          "expired": "Expired"
+        },
+        "Search": {
+          "completed": "Searched internet",
+          "inProgress": "Searching internet",
+          "failed": "Failed to search internet",
+          "cancelled": "Cancelled",
+          "expired": "Expired"
+        },
+        "SearchWorldAppMiniApps": {
+          "completed": "Searched World",
+          "inProgress": "Searching World",
+          "failed": "Failed to search World",
+          "cancelled": "Cancelled",
+          "expired": "Expired"
+        },
+        "SendEmail": {
+          "completed": "Sent email",
+          "inProgress": "Sending email",
+          "failed": "Failed to send email",
+          "cancelled": "Cancelled",
+          "expired": "Expired"
+        },
+        "UpdateCalendarObject": {
+          "completed": "Updated calendar event",
+          "inProgress": "Updating calendar event",
+          "failed": "Failed to update calendar event",
+          "cancelled": "Cancelled",
+          "expired": "Expired"
+        },
+        "UpdateFile": {
+          "completed": "Updated file",
+          "inProgress": "Updating file",
+          "failed": "Failed to update file",
+          "cancelled": "Cancelled",
+          "expired": "Expired"
+        },
+        "UpdateMemory": {
+          "completed": "Updated memory",
+          "inProgress": "Updating memory",
+          "failed": "Failed to update memory",
+          "cancelled": "Cancelled",
+          "expired": "Expired"
+        },
+        "UpdateTitle": {
+          "completed": "Named our chat",
+          "inProgress": "Naming our chat",
+          "failed": "Failed to name our chat",
+          "cancelled": "Cancelled",
+          "expired": "Expired"
+        },
+        "FacebookCreatePagePost": {
+          "completed": "Created Facebook page post",
+          "inProgress": "Creating Facebook page post",
+          "failed": "Failed to create Facebook page post",
+          "cancelled": "Cancelled",
+          "expired": "Expired"
+        },
+        "FacebookListPages": {
+          "completed": "Listed Facebook pages",
+          "inProgress": "Listing Facebook pages",
+          "failed": "Failed to list Facebook pages",
+          "cancelled": "Cancelled",
+          "expired": "Expired"
+        },
+        "FacebookReadPageInsights": {
+          "completed": "Read Facebook page insights",
+          "inProgress": "Reading Facebook page insights",
+          "failed": "Failed to read Facebook page insights",
+          "cancelled": "Cancelled",
+          "expired": "Expired"
+        },
+        "FacebookReadPagePosts": {
+          "completed": "Read Facebook page posts",
+          "inProgress": "Reading Facebook page posts",
+          "failed": "Failed to read Facebook page posts",
+          "cancelled": "Cancelled",
+          "expired": "Expired"
+        },
+        "InstagramAuthUrl": {
+          "completed": "Got Instagram authentication URL",
+          "inProgress": "Getting Instagram authentication URL",
+          "failed": "Failed to get Instagram authentication URL",
+          "cancelled": "Cancelled",
+          "expired": "Expired"
+        },
+        "InstagramCreatePost": {
+          "completed": "Created Instagram post",
+          "inProgress": "Creating Instagram post",
+          "failed": "Failed to create Instagram post",
+          "cancelled": "Cancelled",
+          "expired": "Expired"
+        },
+        "LinkedInAuthUrl": {
+          "completed": "Got LinkedIn authentication URL",
+          "inProgress": "Getting LinkedIn authentication URL",
+          "failed": "Failed to get LinkedIn authentication URL",
+          "cancelled": "Cancelled",
+          "expired": "Expired"
+        },
+        "LinkedInCreatePost": {
+          "completed": "Created LinkedIn post",
+          "inProgress": "Creating LinkedIn post",
+          "failed": "Failed to create LinkedIn post",
+          "cancelled": "Cancelled",
+          "expired": "Expired"
+        },
+        "Wait": {
+          "completed": "Waited successfully",
+          "inProgress": "Waiting",
+          "failed": "Failed to wait",
+          "cancelled": "Cancelled",
+          "expired": "Expired"
+        },
+        "XAuthUrl": {
+          "completed": "Got X authentication URL",
+          "inProgress": "Getting X authentication URL",
+          "failed": "Failed to get X authentication URL",
+          "cancelled": "Cancelled",
+          "expired": "Expired"
+        },
+        "XCreateTweet": {
+          "completed": "Created tweet",
+          "inProgress": "Creating tweet",
+          "failed": "Failed to create tweet",
+          "cancelled": "Cancelled",
+          "expired": "Expired"
+        },
+        "XGetTweets": {
+          "completed": "Got tweets",
+          "inProgress": "Getting tweets",
+          "failed": "Failed to get tweets",
+          "cancelled": "Cancelled",
+          "expired": "Expired"
+        },
+        "CreateTask": {
+          "completed": "Scheduled a task",
+          "inProgress": "Scheduling a task",
+          "failed": "Failed to schedule a task",
+          "cancelled": "Cancelled",
+          "expired": "Expired"
+        },
+        "UpdateTask": {
+          "completed": "Updated task",
+          "inProgress": "Updating task",
+          "failed": "Failed to update a task",
+          "cancelled": "Cancelled",
+          "expired": "Expired"
+        },
+        "DeleteTask": {
+          "completed": "Deleted task",
+          "inProgress": "Deleting task",
+          "failed": "Failed to delete a task",
+          "cancelled": "Cancelled",
+          "expired": "Expired"
+        },
+        "ListTasks": {
+          "completed": "Got tasks list",
+          "inProgress": "Getting tasks list",
+          "failed": "Failed to get tasks task",
+          "cancelled": "Cancelled",
+          "expired": "Expired"
+        },
+        "Notify": {
+          "completed": "Notification sent",
+          "inProgress": "Sending notification",
+          "failed": "Failed to send a notification",
+          "cancelled": "Cancelled",
+          "expired": "Expired"
+        }
+      }
+    }
+  },
+  "lib": {
+    "tasks": {
+      "formatSchedule": {
+        "once": "Once on {time}",
+        "tz": "({tz})",
+
+        "until": " until {date}",
+        "occurrences": " for {count} occurrences",
+
+        "secondly": {
+          "every": "Every second",
+          "everyInterval": "Every {interval} seconds"
+        },
+        "minutely": {
+          "every": "Every minute at second{seconds, plural, one {} other {s}} {seconds}",
+          "everyInterval": "Every {interval} minutes at second{seconds, plural, one {} other {s}} {seconds}"
+        },
+        "hourly": {
+          "every": "Hourly at {mmss}",
+          "everyInterval": "Every {interval} hours at {mmss}"
+        },
+        "daily": {
+          "every": "Daily at {times}",
+          "everyInterval": "Every {interval} days at {times}"
+        },
+        "weekly": {
+          "every": "Weekly on {days} at {times}",
+          "everyInterval": "Every {interval} weeks on {days} at {times}"
+        },
+        "monthly": {
+          "every": "Monthly on the {dayNum} at {times}",
+          "everyInterval": "Every {interval} months on the {dayNum} at {times}"
+        },
+        "yearly": {
+          "every": "Yearly on {onDate} at {times}",
+          "everyInterval": "Every {interval} years on {onDate} at {times}"
+        }
+      }
+    },
+    "threads": {
+      "formatThreadTitle": {
+        "fallback": "Untitled chat",
+        "fallbackWithAssistantName": "Chat with {assistantName}"
+      }
+    },
+    "plans": {
+      "upgradePlanWorldPay": {
+        "payloadDescription": "Upgrade to {planName} plan for 1 {period, select, DAY {day} WEEK {week} MONTH {month} other {unknown period}}"
+      },
+      "planConfigs": {
+        "basic": {
+          "name": "Basic"
+        },
+        "starter": {
+          "name": "Starter"
+        },
+        "pro": {
+          "name": "Pro"
+        },
+        "enterprise": {
+          "name": "Enterprise"
+        }
+      }
+    },
+    "tools": {
+      "toolConfigs": {
+        "search": {
+          "name": "Search internet"
+        },
+        "images": {
+          "name": "Create images"
+        },
+        "files": {
+          "name": "Files"
+        },
+        "gmail": {
+          "name": "Gmail"
+        },
+        "appleCalendar": {
+          "name": "Apple Calendar"
+        },
+        "googleCalendar": {
+          "name": "Google Calendar"
+        },
+        "googleDrive": {
+          "name": "Google Drive"
+        },
+        "linkedin": {
+          "name": "LinkedIn"
+        },
+        "facebook": {
+          "name": "Facebook"
+        },
+        "instagram": {
+          "name": "Instagram"
+        },
+        "x": {
+          "name": "X/Twitter"
+        },
+        "voice": {
+          "name": "Voice"
+        },
+        "searchWorld": {
+          "name": "Search World"
+        },
+        "searchSideGigs": {
+          "name": "Search side-gigs"
+        },
+        "tasks": {
+          "name": "Scheduled tasks"
+        }
+      }
+    },
+    "assistants": {
+      "assistantConfigs": {
+        "boardy": {
+          "description": "Onboarding superhero"
+        },
+        "logan": {
+          "description": "Logo superhero"
+        },
+        "emma": {
+          "description": "Cold email superhero"
+        },
+        "supa": {
+          "description": "Token airdrop superhero"
+        },
+        "mark": {
+          "description": "Marketing Persona Finder"
+        },
+        "quilla": {
+          "description": "Marketing newsletter superhero"
+        },
+        "parry": {
+          "description": "Paraphraser superhero"
+        },
+        "charlie": {
+          "description": "Superhero of Social Media Growth"
+        },
+        "sia": {
+          "description": "Social Media Strategist"
+        },
+        "sunny": {
+          "description": "Superhero of Positive Affirmations"
+        },
+        "adam": {
+          "description": "Freelance side-gig superhero"
+        },
+        "shoppy": {
+          "description": "Superhero of eCommerce Optimization"
+        },
+        "vita": {
+          "description": "Superhero of CV enhancement"
+        },
+        "jobo": {
+          "description": "Superhero of job interviews"
+        },
+        "zena": {
+          "description": "Superhero of hypnotherapy"
+        },
+        "lista": {
+          "description": "Email marketing superhero"
+        },
+        "aida": {
+          "description": "Superhero of Sales Funnels"
+        },
+        "kairos": {
+          "description": "Superhero of time management"
+        },
+        "reev": {
+          "description": "Superhero of (Negative) Business Feedback"
+        },
+        "copia": {
+          "description": "Blog post superhero"
+        }
+      }
+    }
+  },
+  "hooks": {
+    "threads": {
+      "useThreads": {
+        "fallbackErrorMessage": "Unknown error occured."
+      },
+      "useUpdateThread": {
+        "fallbackErrorMessage": "Unknown error occured."
+      }
+    },
+    "worldAppMiniApps": {
+      "useSearchWorldAppMiniApps": {
+        "fallbackErrorMessage": "Unknown error occured."
+      }
+    }
+  }
+}

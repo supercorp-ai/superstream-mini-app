@@ -1,0 +1,986 @@
+{
+  "app": {
+    "callbacks": {
+      "googleDrive": {
+        "Content": {
+          "title": "Pilih fail",
+          "description": "Pembantu hanya boleh mengakses folder dan fail yang anda pilih.",
+          "buttonLabel": "Pilih fail dan folder"
+        }
+      }
+    },
+    "miniApp": {
+      "Content": {
+        "heading": "Peroleh wang dengan pekerja AI",
+        "AuthButton": {
+          "text": "Daftar masuk dengan dompet anda"
+        }
+      },
+      "dashboard": {
+        "tasks": {
+          "title": "Tugas dijadualkan",
+          "Content": {
+            "NoTasks": {
+              "title": "Tiada tugas dijadualkan",
+              "description": "Tugas dijadualkan ialah kerja yang dijalankan secara automatik mengikut jadual. Berbual dengan mana-mana wira super yang mempunyai kuasa super <strong>Tugas dijadualkan</strong> dan minta mereka menjadualkan tugas untuk anda.",
+              "availabilityNote": "Hanya tersedia dalam pelan <strong>Pro</strong>.",
+              "newThreadButtonLabel": "Mula sembang baru",
+              "upgradeButtonLabel": "Tingkatkan ke {planName}"
+            },
+            "Item": {
+              "pastLabel": "Lalu",
+              "threadLabel": "Sembang",
+              "DeleteButton": {
+                "label": "Padam",
+                "dialogTitle": "Padam tugas?",
+                "dialogDescription": "Adakah anda pasti mahu memadam tugas ini?",
+                "cancelButtonLabel": "Batal",
+                "successMessage": "Tugas berjaya dipadam.",
+                "errorMessage": "Gagal memadam tugas. Sila cuba lagi nanti."
+              }
+            }
+          }
+        },
+        "supertokens": {
+          "Content": {
+            "title": "Supertoken",
+            "subtitle": "Token Komputasi Asas Sejagat",
+            "balanceTitle": "Baki anda",
+            "balanceValue": "{balance, number, ::precision-integer} SUPER",
+            "noUnclaimedSupertokens": "Tiada Supertoken untuk dituntut",
+            "upgradeButtonLabel": "Tingkatkan untuk membuka lebih banyak",
+            "claimNote": "Untuk setiap mesej yang anda hantar, anda boleh menuntut 1 token <strong>SUPER</strong>.",
+            "spendNote": "Gunakan <strong>SUPER</strong> untuk mendapatkan akses kepada AI yang lebih berkuasa.",
+            "ClaimSupertokensButton": {
+              "buttonLabel": "Tuntut {totalClaimable, number} Supertoken",
+              "dialogTitle": "Tuntut Supertoken",
+              "dialogDescription": "Anda akan menuntut <strong>{pendingClaimQuantity, number} SUPER</strong> sekarang. Selepas selesai, anda boleh menuntut <strong>{additionalClaimable, number} SUPER</strong>.",
+              "confirmButtonLabel": "Mulakan tuntutan",
+              "claimSupertokensErrorMessage": "Ups, tidak dapat menuntut Supertokens anda. Sila cuba semula kemudian."
+            },
+            "pendingClaimMessage": "{pendingClaimQuantity, number} SUPER tertangguh. {additionalClaimable, number} lagi selepas tuntutan ini."
+          }
+        },
+        "upgrade": {
+          "Content": {
+            "PeriodInput": {
+              "day": "Hari",
+              "week": "Minggu",
+              "month": "Bulan"
+            },
+            "Plan": {
+              "dailyMessagesLimitDescription": "{dailyMessagesLimit} mesej sehari",
+              "pricesLabel": "{period, select, DAY {Hari} WEEK {Minggu} MONTH {Bulan} other {Tempoh tidak diketahui}} daripada {planName} untuk",
+              "PlanButton": {
+                "currentButtonLabel": "Pelan semasa",
+                "previousButtonLabel": "Pelan terdahulu"
+              },
+              "UpgradeButton": {
+                "contactButtonLabel": "Hubungi kami untuk naik taraf",
+                "label": "Tingkatkan ke {planName}",
+                "dialogTitle": "Tingkatkan ke {planName} untuk 1 {period, select, DAY {Hari} WEEK {Minggu} MONTH {Bulan} other {Tempoh tidak diketahui}}",
+                "dialogDescription": "Pilih salah satu kaedah berikut untuk meningkatkan pelan anda.",
+                "UpgradeSupertokenButton": {
+                  "errorMessage": "Gagal meningkatkan pelan anda. Sila cuba lagi atau hubungi sokongan.",
+                  "successMessage": "Pelan anda telah berjaya ditingkatkan. Wira super bergembira!"
+                },
+                "UpgradeWorldPayButton": {
+                  "errorMessage": "Gagal meningkatkan pelan anda. Sila cuba lagi atau hubungi sokongan.",
+                  "successMessage": "Pelan anda telah berjaya ditingkatkan. Wira super bergembira!",
+                  "buttonLabel": "{formattedPrice} atau USDC"
+                }
+              }
+            }
+          }
+        },
+        "threads": {
+          "Content": {
+            "lib": {
+              "createThread": {
+                "onboardingThreadTitle": "Pengenalan"
+              }
+            }
+          },
+          "new": {
+            "Content": {
+              "title": "Bercakap dengan pekerja AI",
+              "Assistant": {
+                "toolsHeading": "Kuasa hebat",
+                "truncatedToolsTitle": "Integrasi {assistantName}",
+                "truncatedToolsDescription": "{assistantName} menggunakan model AI dan alat terkini untuk membantu tugasan harian anda.",
+                "newThreadButtonLabel": "Mulakan sembang",
+                "upgradeButtonLabel": "Naik taraf"
+              }
+            }
+          },
+          "threadId": {
+            "Content": {
+              "Chat": {
+                "MessageForm": {
+                  "controlPlaceholder": "Tanya apa‑apa"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "layout": {
+      "metadata": {
+        "description": "Peroleh wang dengan pekerja AI"
+      }
+    }
+  },
+  "components": {
+    "plans": {
+      "PlanBenefits": {
+        "assistantsDescription": "{assistantsCount, number} ejen berkuasa",
+        "toolsDescription": "{toolsCount, number} ejen {toolsCount, plural, =1 {alat} other {alat}}",
+        "truncatedToolsTitle": "{planName} termasuk {toolsCount, plural, =1 {alat} other {alat}}",
+        "truncatedToolsDescription": "Ejen wira super mempunyai akses kepada semua alat yang mereka perlukan untuk membantu anda berjaya.",
+        "tokensDescription": "Sehingga <supertoken></supertoken> {supertokensCount, number} token setiap hari"
+      }
+    },
+    "errors": {
+      "FullScreenError": {
+        "title": "Kami menghadapi ralat",
+        "description": "Tidak pasti salah AI atau manusia, tetapi sesuatu telah berlaku. Sila cuba lagi atau hubungi pasukan sokongan kami jika masalah berterusan.",
+        "resetButtonLabel": "Cuba lagi",
+        "contactButtonLabel": "Hubungi sokongan"
+      }
+    },
+    "locales": {
+      "LocaleInput": {
+        "title": "Pilih bahasa anda",
+        "description": "Pilih bahasa pilihan anda untuk aplikasi ini"
+      }
+    },
+    "layouts": {
+      "Layout": {
+        "Header": {
+          "threadsLinkLabel": "Kembali ke semua sembang",
+          "DialogAction": {
+            "title": "Menu",
+            "description": "Menu aplikasi adiwira"
+          }
+        }
+      }
+    },
+    "validations": {
+      "ValidationError": {
+        "title": "Hampir selesai",
+        "description": "Ketuk di bawah untuk mengambil semula kandungan ini.",
+        "retryButtonLabel": "Cuba semula",
+        "retryMessageContent": "Cuba semula"
+      }
+    },
+    "markdown": {
+      "markdownComponents": {
+        "Assistant": {
+          "ActionButton": {
+            "buttonLabel": "Mula sembang baru dengan {assistantName}",
+            "upgradeButtonLabel": "Tingkatkan untuk bersembang dengan {assistantName}",
+            "onboardingButtonLabel": "{assistantName} tersedia selepas orientasi"
+          }
+        },
+        "FreelancerProject": {
+          "title": "Kerja sampingan",
+          "openButtonLabel": "Pratonton"
+        },
+        "FreelancerProjectProposal": {
+          "title": "Cadangan kerja sampingan",
+          "openButtonLabel": "Hantar bidaan ini",
+          "bidAmountTitle": "Jumlah bidaan",
+          "contentTitle": "Kandungan"
+        },
+        "WorldAppMiniApp": {
+          "logoAlt": "Logo",
+          "openButtonLabel": "Buka {name}"
+        },
+        "ClaimSupertokens": {
+          "claimSupertokensErrorMessage": "Ups, tidak dapat menuntut Supertokens anda. Sila cuba semula kemudian.",
+          "successMessageContent": "Supertoken dituntut",
+          "title": "Peroleh Supertoken",
+          "description": "Untuk setiap mesej yang anda hantar kepada adiwira AI, anda boleh menuntut 1 token <strong>SUPER</strong>.",
+          "buttonLabel": "Tuntut Supertoken"
+        },
+        "AssistantsList": {
+          "newThreadButtonLabel": "Upah pekerja AI anda"
+        },
+        "CaldavAuthentication": {
+          "GoogleCalendarAuth": {
+            "title": "Pengesahan Google Calendar",
+            "doneMessageContent": "Selesai.",
+            "description": "Sahkan Google Calendar anda untuk membenarkan pembantu membaca dan menulis acara kalendar bagi pihak anda.",
+            "emailLabel": "Emel akaun",
+            "submitButtonLabel": "Sahkan",
+            "doneButtonLabel": "Selesai"
+          },
+          "AppleCalendarAuth": {
+            "title": "Pengesahan Apple Calendar",
+            "doneMessageContent": "Pengesahan berjaya.",
+            "description": "Untuk mengesahkan dengan Apple iCal, anda perlu menjana kata laluan khusus aplikasi.",
+            "instructionsTitle": "Arahan",
+            "instructionsContent": "1. Lawati halaman akaun Apple ID anda dan pastikan pengesahan dua faktor diaktifkan.<br></br>2. Jana kata laluan khusus aplikasi untuk iCal. Lihat <link>panduan ini</link>.<br></br>3. Masukkan Apple ID dan kata laluan khusus aplikasi anda di bawah.",
+            "usernameLabel": "Apple ID",
+            "usernamePlaceholder": "Masukkan Apple ID anda",
+            "usernameRequiredMessage": "Apple ID diperlukan",
+            "appSpecificPasswordLabel": "Kata Laluan Khusus Aplikasi",
+            "appSpecificPasswordPlaceholder": "Masukkan Kata Laluan Khusus Aplikasi anda",
+            "appSpecificPasswordRequiredMessage": "Kata Laluan Khusus Aplikasi diperlukan",
+            "submitButtonLabel": "Sahkan"
+          }
+        },
+        "BlogPost": {
+          "title": "Tajuk",
+          "contentTitle": "Kandungan"
+        },
+        "Email": {
+          "title": "Subjek",
+          "contentTitle": "Kandungan"
+        },
+        "FacebookAuthentication": {
+          "doneMessageContent": "Selesai.",
+          "title": "Pengesahan Facebook",
+          "description": "Sahkan akaun Facebook anda untuk membolehkan pembantu mengurus aktiviti akaun anda.",
+          "submitButtonLabel": "Sahkan",
+          "doneButtonLabel": "Selesai"
+        },
+        "FacebookPost": {
+          "title": "Kiriman Facebook",
+          "contentTitle": "Kandungan",
+          "author": "Anda"
+        },
+        "GmailAuthentication": {
+          "doneMessageContent": "Selesai.",
+          "title": "Pengesahan Gmail",
+          "description": "Sahkan Gmail anda untuk membenarkan pembantu membaca dan menghantar emel bagi pihak anda.",
+          "submitButtonLabel": "Sahkan",
+          "doneButtonLabel": "Selesai"
+        },
+        "GoogleDrivePicker": {
+          "doneMessageContent": "Selesai.",
+          "title": "Pemilih Google Drive",
+          "description": "Pilih fail daripada Google Drive anda.",
+          "submitButtonLabel": "Pilih fail",
+          "doneButtonLabel": "Selesai"
+        },
+        "Image": {
+          "downloadButtonLabel": "Muat turun"
+        },
+        "InstagramAuthentication": {
+          "doneMessageContent": "Selesai.",
+          "title": "Pengesahan Instagram",
+          "description": "Sahkan akaun Instagram anda untuk membolehkan pembantu mengurus aktiviti akaun anda.",
+          "submitButtonLabel": "Sahkan",
+          "doneButtonLabel": "Selesai"
+        },
+        "InstagramPost": {
+          "title": "Kiriman Instagram",
+          "contentTitle": "Kandungan",
+          "author": "Anda"
+        },
+        "LinkedInAuthentication": {
+          "doneMessageContent": "Selesai.",
+          "title": "Pengesahan LinkedIn",
+          "description": "Sahkan akaun LinkedIn anda untuk membolehkan pembantu mengurus aktiviti akaun anda.",
+          "submitButtonLabel": "Sahkan",
+          "doneButtonLabel": "Selesai"
+        },
+        "LinkedInPost": {
+          "title": "Kiriman LinkedIn",
+          "contentTitle": "Kandungan",
+          "author": "Anda"
+        },
+        "Logo": {
+          "title": "Logo",
+          "description": "Berikut ialah logo yang dicipta untuk anda.",
+          "downloadButtonLabel": "Muat turun"
+        },
+        "Paraphrase": {
+          "title": "Teks Parafrasa"
+        },
+        "Persona": {
+          "title": "Persona"
+        },
+        "SalesPage": {
+          "title": "Halaman Jualan",
+          "contentTitle": "Kandungan"
+        },
+        "SocialMediaStrategy": {
+          "title": "Strategi Media Sosial"
+        },
+        "Task": {
+          "title": "Tugas dijadualkan",
+          "time": "Masa: {time}",
+          "manageTasksButtonLabel": "Urus tugasan"
+        },
+        "Upgrade": {
+          "title": "Naik taraf ke {planName} untuk meneruskan",
+          "dailyMessagesLimitDescription": "{dailyMessagesLimit} mesej sehari",
+          "pricesTitle": "Peningkatan bermula dari",
+          "buttonLabel": "Naik taraf"
+        },
+        "XAuthentication": {
+          "doneMessageContent": "Selesai.",
+          "title": "Pengesahan X",
+          "description": "Sahkan akaun X anda untuk membolehkan pembantu mengurus aktiviti akaun anda.",
+          "submitButtonLabel": "Sahkan",
+          "doneButtonLabel": "Selesai"
+        },
+        "XTweet": {
+          "title": "Ciapan",
+          "contentTitle": "Kandungan",
+          "author": "Anda"
+        }
+      }
+    },
+    "menus": {
+      "Menu": {
+        "BottomMenu": {
+          "contactButtonLabel": "Hubungi sokongan",
+          "planDescription": "Pelan {planName}",
+          "avatarAlt": "Avatar anda",
+          "Supertokens": {
+            "imageAlt": "Supertoken",
+            "buttonLabel": "Supertoken"
+          },
+          "SignOutButton": {
+            "label": "Log keluar"
+          },
+          "UpgradeButton": {
+            "label": "Naik taraf"
+          }
+        },
+        "Threads": {
+          "RecentThreads": {
+            "title": "Sembang terkini"
+          },
+          "Onboarding": {
+            "Root": {
+              "title": "Bercakap dengan Boardy dahulu",
+              "description": "Boardy ialah adiwira pengenalan anda"
+            },
+            "ActionButton": {
+              "label": "Teruskan sembang dengan Boardy"
+            }
+          },
+          "Thread": {
+            "description": "Dicipta {relativeTime}",
+            "notification": "Mesej baru"
+          }
+        },
+        "Content": {
+          "Header": {
+            "NewThreadButton": {
+              "label": "Mula sembang baru"
+            },
+            "TasksButton": {
+              "label": "Tugas dijadualkan"
+            }
+          }
+        }
+      }
+    },
+    "misc": {
+      "FullPageNotFound": {
+        "homeButtonLabel": "Buka laman utama"
+      }
+    },
+    "superinterface": {
+      "components": {
+        "MessageAttachments": {
+          "label": "Dilampirkan {attachmentsCount, plural, =1 {satu fail} other {{attachmentsCount, number} fail}}"
+        },
+        "StartingToolCalls": {
+          "inProgress": "Sedang bekerja"
+        },
+        "Function": {
+          "completed": "Selesai bekerja",
+          "inProgress": "Sedang bekerja",
+          "failed": "Gagal menyiapkan kerja",
+          "cancelled": "Dibatalkan",
+          "expired": "Tamat tempoh"
+        },
+        "FileSearchToolCall": {
+          "completed": "Pencarian fail selesai",
+          "inProgress": "Mencari fail",
+          "failed": "Gagal mencari fail",
+          "cancelled": "Dibatalkan",
+          "expired": "Luput"
+        }
+      }
+    },
+    "tools": {
+      "Tool": {
+        "soonBadgeLabel": "(segera)"
+      },
+      "TruncatedTools": {
+        "suffix": "+{toolsCount, number} lagi",
+        "cancelButtonLabel": "Tutup"
+      }
+    },
+    "workspaces": {
+      "WorkspaceNotFound": {
+        "title": "Workspace tidak ditemui",
+        "subtitle": "Tidak pasti bagaimana anda sampai ke sini, tetapi ruang kerja yang anda cari tidak wujud."
+      }
+    },
+    "callbacks": {
+      "CodeNotFound": {
+        "title": "Kod pengesahan tidak ditemui",
+        "subtitle": "Tidak pasti bagaimana anda sampai ke sini, tetapi kod pengesahan hilang. Sila cuba mengesahkan semula."
+      },
+      "StateNotFound": {
+        "title": "Keadaan pengesahan tidak ditemui",
+        "subtitle": "Tidak pasti bagaimana anda sampai ke sini, tetapi keadaan pengesahan hilang. Sila cuba mengesahkan semula."
+      },
+      "VariablesNotFound": {
+        "title": "Pembolehubah tidak ditemui",
+        "subtitle": "Tidak pasti bagaimana anda sampai ke sini, tetapi pembolehubah hilang. Sila cuba mengesahkan semula."
+      },
+      "UserIdNotFound": {
+        "title": "Maklumat pengguna tidak ditemui",
+        "subtitle": "Tidak pasti bagaimana anda sampai ke sini, tetapi maklumat pengguna hilang. Sila cuba mengesahkan semula."
+      },
+      "Success": {
+        "title": "Berjaya disahkan",
+        "subtitle": "Anda berjaya disahkan. Anda boleh menutup tab ini sekarang."
+      },
+      "EmailNotFound": {
+        "title": "Emel tidak ditemui",
+        "subtitle": "Tidak pasti bagaimana anda sampai ke sini, tetapi pembolehubah hilang. Sila cuba mengesahkan semula."
+      }
+    },
+    "worldcoinUsers": {
+      "WorldcoinUserNotFound": {
+        "title": "Pengguna Worldcoin tidak ditemui",
+        "subtitle": "Tidak pasti bagaimana anda sampai ke sini, tetapi pengguna Worldcoin semasa anda tidak wujud."
+      }
+    },
+    "threads": {
+      "ThreadNotFound": {
+        "title": "Sembang tidak ditemui",
+        "subtitle": "Tidak pasti bagaimana anda sampai ke sini, tetapi sembang yang anda cari tidak wujud."
+      }
+    },
+    "groups": {
+      "GroupNotFound": {
+        "title": "Kumpulan tidak ditemui",
+        "subtitle": "Tidak pasti bagaimana anda sampai ke sini, tetapi kumpulan yang anda cari tidak wujud."
+      }
+    },
+    "functionComponents": {
+      "functionComponents": {
+        "AuthUrl": {
+          "completed": "Maklumat pengesahan diperoleh",
+          "inProgress": "Memperoleh maklumat pengesahan",
+          "failed": "Gagal memperoleh maklumat pengesahan",
+          "cancelled": "Dibatalkan",
+          "expired": "Tamat tempoh"
+        },
+        "CreateCalendarObject": {
+          "completed": "Acara kalendar dicipta",
+          "inProgress": "Mencipta acara kalendar",
+          "failed": "Gagal mencipta acara kalendar",
+          "cancelled": "Dibatalkan",
+          "expired": "Tamat tempoh"
+        },
+        "CreateFile": {
+          "completed": "Fail dicipta",
+          "inProgress": "Mencipta fail",
+          "failed": "Gagal mencipta fail",
+          "cancelled": "Dibatalkan",
+          "expired": "Tamat tempoh"
+        },
+        "CreateImage": {
+          "completed": "Imej dicipta",
+          "inProgress": "Mencipta imej",
+          "failed": "Gagal mencipta imej",
+          "cancelled": "Dibatalkan",
+          "expired": "Tamat tempoh"
+        },
+        "CreateLogo": {
+          "completed": "Logo dicipta",
+          "inProgress": "Mencipta logo",
+          "failed": "Gagal mencipta logo",
+          "cancelled": "Dibatalkan",
+          "expired": "Tamat tempoh"
+        },
+        "DeleteCalendarObject": {
+          "completed": "Acara kalendar dipadam",
+          "inProgress": "Memadam acara kalendar",
+          "failed": "Gagal memadam acara kalendar",
+          "cancelled": "Dibatalkan",
+          "expired": "Tamat tempoh"
+        },
+        "DeleteFile": {
+          "completed": "Fail dipadam",
+          "inProgress": "Memadam fail",
+          "failed": "Gagal memadam fail",
+          "cancelled": "Dibatalkan",
+          "expired": "Tamat tempoh"
+        },
+        "FetchCalendarObjects": {
+          "completed": "Acara kalendar diperoleh",
+          "inProgress": "Mengambil acara kalendar",
+          "failed": "Gagal mengambil acara kalendar",
+          "cancelled": "Dibatalkan",
+          "expired": "Tamat tempoh"
+        },
+        "FetchCalendars": {
+          "completed": "Kalendar diperoleh",
+          "inProgress": "Mengambil kalendar",
+          "failed": "Gagal mengambil kalendar",
+          "cancelled": "Dibatalkan",
+          "expired": "Tamat tempoh"
+        },
+        "FreelancerSearchProjects": {
+          "completed": "Kerja sampingan ditemui",
+          "inProgress": "Mencari kerja sampingan",
+          "failed": "Gagal mencari kerja sampingan",
+          "cancelled": "Dibatalkan",
+          "expired": "Tamat tempoh"
+        },
+        "FreelancerGetProject": {
+          "completed": "Maklumat kerja sampingan diperoleh",
+          "inProgress": "Mendapatkan maklumat kerja sampingan",
+          "failed": "Gagal mendapatkan maklumat kerja sampingan",
+          "cancelled": "Dibatalkan",
+          "expired": "Tamat tempoh"
+        },
+        "GetPlan": {
+          "completed": "Maklumat pelan diperoleh",
+          "inProgress": "Mendapatkan maklumat pelan",
+          "failed": "Gagal mendapatkan maklumat pelan",
+          "cancelled": "Dibatalkan",
+          "expired": "Tamat tempoh"
+        },
+        "GetFileMetadata": {
+          "completed": "Metadata fail diperoleh",
+          "inProgress": "Mengambil metadata fail",
+          "failed": "Gagal mengambil metadata fail",
+          "cancelled": "Dibatalkan",
+          "expired": "Tamat tempoh"
+        },
+        "GetTime": {
+          "completed": "Masa diperoleh",
+          "inProgress": "Mengambil masa",
+          "failed": "Gagal mengambil masa",
+          "cancelled": "Dibatalkan",
+          "expired": "Tamat tempoh"
+        },
+        "GetLocale": {
+          "completed": "Bahasa anda diperoleh",
+          "inProgress": "Mendapatkan bahasa anda",
+          "failed": "Gagal mendapatkan bahasa anda",
+          "cancelled": "Dibatalkan",
+          "expired": "Tamat tempoh"
+        },
+        "ListAssistants": {
+          "completed": "Adiwira AI anda ditemui",
+          "inProgress": "Mencari adiwira AI anda",
+          "failed": "Gagal mencari adiwira AI anda",
+          "cancelled": "Dibatalkan",
+          "expired": "Tamat tempoh"
+        },
+        "ListFiles": {
+          "completed": "Fail disenaraikan",
+          "inProgress": "Menyenaraikan fail",
+          "failed": "Gagal menyenaraikan fail",
+          "cancelled": "Dibatalkan",
+          "expired": "Tamat tempoh"
+        },
+        "MoveFile": {
+          "completed": "Fail dipindah",
+          "inProgress": "Memindahkan fail",
+          "failed": "Gagal memindahkan fail",
+          "cancelled": "Dibatalkan",
+          "expired": "Tamat tempoh"
+        },
+        "ReadFile": {
+          "completed": "Fail dibaca",
+          "inProgress": "Membaca fail",
+          "failed": "Gagal membaca fail",
+          "cancelled": "Dibatalkan",
+          "expired": "Tamat tempoh"
+        },
+        "ReadMemory": {
+          "completed": "Memori diakses",
+          "inProgress": "Mengakses memori",
+          "failed": "Gagal mengakses memori",
+          "cancelled": "Dibatalkan",
+          "expired": "Tamat tempoh"
+        },
+        "RequestNotificationsPermission": {
+          "completed": "Kebenaran pemberitahuan diminta",
+          "inProgress": "Meminta kebenaran pemberitahuan",
+          "failed": "Gagal meminta kebenaran pemberitahuan",
+          "cancelled": "Dibatalkan",
+          "expired": "Tamat tempoh"
+        },
+        "Search": {
+          "completed": "Carian internet selesai",
+          "inProgress": "Mencari di internet",
+          "failed": "Gagal mencari di internet",
+          "cancelled": "Dibatalkan",
+          "expired": "Tamat tempoh"
+        },
+        "SearchWorldAppMiniApps": {
+          "completed": "Carian World selesai",
+          "inProgress": "Mencari World",
+          "failed": "Gagal mencari World",
+          "cancelled": "Dibatalkan",
+          "expired": "Luput"
+        },
+        "SendEmail": {
+          "completed": "Emel dihantar",
+          "inProgress": "Menghantar emel",
+          "failed": "Gagal menghantar emel",
+          "cancelled": "Dibatalkan",
+          "expired": "Tamat tempoh"
+        },
+        "UpdateCalendarObject": {
+          "completed": "Acara kalendar dikemas kini",
+          "inProgress": "Mengemas kini acara kalendar",
+          "failed": "Gagal mengemas kini acara kalendar",
+          "cancelled": "Dibatalkan",
+          "expired": "Tamat tempoh"
+        },
+        "UpdateFile": {
+          "completed": "Fail dikemas kini",
+          "inProgress": "Mengemas kini fail",
+          "failed": "Gagal mengemas kini fail",
+          "cancelled": "Dibatalkan",
+          "expired": "Tamat tempoh"
+        },
+        "UpdateMemory": {
+          "completed": "Memori dikemas kini",
+          "inProgress": "Mengemas kini memori",
+          "failed": "Gagal mengemas kini memori",
+          "cancelled": "Dibatalkan",
+          "expired": "Tamat tempoh"
+        },
+        "UpdateTitle": {
+          "completed": "Perbualan dinamakan",
+          "inProgress": "Menamakan perbualan",
+          "failed": "Gagal menamakan perbualan",
+          "cancelled": "Dibatalkan",
+          "expired": "Tamat tempoh"
+        },
+        "FacebookCreatePagePost": {
+          "completed": "Kiriman halaman Facebook dicipta",
+          "inProgress": "Mencipta kiriman halaman Facebook",
+          "failed": "Gagal mencipta kiriman halaman Facebook",
+          "cancelled": "Dibatalkan",
+          "expired": "Tamat tempoh"
+        },
+        "FacebookListPages": {
+          "completed": "Halaman Facebook disenaraikan",
+          "inProgress": "Menyenaraikan halaman Facebook",
+          "failed": "Gagal menyenaraikan halaman Facebook",
+          "cancelled": "Dibatalkan",
+          "expired": "Tamat tempoh"
+        },
+        "FacebookReadPageInsights": {
+          "completed": "Cerapan halaman Facebook dibaca",
+          "inProgress": "Membaca cerapan halaman Facebook",
+          "failed": "Gagal membaca cerapan halaman Facebook",
+          "cancelled": "Dibatalkan",
+          "expired": "Tamat tempoh"
+        },
+        "FacebookReadPagePosts": {
+          "completed": "Kiriman halaman Facebook dibaca",
+          "inProgress": "Membaca kiriman halaman Facebook",
+          "failed": "Gagal membaca kiriman halaman Facebook",
+          "cancelled": "Dibatalkan",
+          "expired": "Tamat tempoh"
+        },
+        "InstagramAuthUrl": {
+          "completed": "URL pengesahan Instagram diperoleh",
+          "inProgress": "Memperoleh URL pengesahan Instagram",
+          "failed": "Gagal memperoleh URL pengesahan Instagram",
+          "cancelled": "Dibatalkan",
+          "expired": "Tamat tempoh"
+        },
+        "InstagramCreatePost": {
+          "completed": "Kiriman Instagram dicipta",
+          "inProgress": "Mencipta kiriman Instagram",
+          "failed": "Gagal mencipta kiriman Instagram",
+          "cancelled": "Dibatalkan",
+          "expired": "Tamat tempoh"
+        },
+        "LinkedInAuthUrl": {
+          "completed": "URL pengesahan LinkedIn diperoleh",
+          "inProgress": "Memperoleh URL pengesahan LinkedIn",
+          "failed": "Gagal memperoleh URL pengesahan LinkedIn",
+          "cancelled": "Dibatalkan",
+          "expired": "Tamat tempoh"
+        },
+        "LinkedInCreatePost": {
+          "completed": "Kiriman LinkedIn dicipta",
+          "inProgress": "Mencipta kiriman LinkedIn",
+          "failed": "Gagal mencipta kiriman LinkedIn",
+          "cancelled": "Dibatalkan",
+          "expired": "Tamat tempoh"
+        },
+        "Wait": {
+          "completed": "Menunggu selesai",
+          "inProgress": "Menunggu",
+          "failed": "Gagal menunggu",
+          "cancelled": "Dibatalkan",
+          "expired": "Tamat tempoh"
+        },
+        "XAuthUrl": {
+          "completed": "URL pengesahan X diperoleh",
+          "inProgress": "Memperoleh URL pengesahan X",
+          "failed": "Gagal memperoleh URL pengesahan X",
+          "cancelled": "Dibatalkan",
+          "expired": "Tamat tempoh"
+        },
+        "XCreateTweet": {
+          "completed": "Ciapan dicipta",
+          "inProgress": "Mencipta ciapan",
+          "failed": "Gagal mencipta ciapan",
+          "cancelled": "Dibatalkan",
+          "expired": "Tamat tempoh"
+        },
+        "XGetTweets": {
+          "completed": "Ciapan diperoleh",
+          "inProgress": "Mengambil ciapan",
+          "failed": "Gagal mengambil ciapan",
+          "cancelled": "Dibatalkan",
+          "expired": "Tamat tempoh"
+        },
+        "CreateTask": {
+          "completed": "Tugas dijadualkan",
+          "inProgress": "Menjadualkan tugas",
+          "failed": "Gagal menjadualkan tugas",
+          "cancelled": "Dibatalkan",
+          "expired": "Tamat tempoh"
+        },
+        "UpdateTask": {
+          "completed": "Tugas dikemas kini",
+          "inProgress": "Mengemas kini tugas",
+          "failed": "Gagal mengemas kini tugas",
+          "cancelled": "Dibatalkan",
+          "expired": "Tamat tempoh"
+        },
+        "DeleteTask": {
+          "completed": "Tugas dipadam",
+          "inProgress": "Memadam tugas",
+          "failed": "Gagal memadam tugas",
+          "cancelled": "Dibatalkan",
+          "expired": "Tamat tempoh"
+        },
+        "ListTasks": {
+          "completed": "Senarai tugas diperoleh",
+          "inProgress": "Mendapatkan senarai tugas",
+          "failed": "Gagal mendapatkan senarai tugas",
+          "cancelled": "Dibatalkan",
+          "expired": "Tamat tempoh"
+        },
+        "Notify": {
+          "completed": "Pemberitahuan dihantar",
+          "inProgress": "Menghantar pemberitahuan",
+          "failed": "Gagal menghantar pemberitahuan",
+          "cancelled": "Dibatalkan",
+          "expired": "Tamat tempoh"
+        }
+      }
+    }
+  },
+  "lib": {
+    "tasks": {
+      "formatSchedule": {
+        "once": "Sekali pada {time}",
+        "tz": "({tz})",
+
+        "until": " sehingga {date}",
+        "occurrences": " untuk {count} kali",
+
+        "secondly": {
+          "every": "Setiap detik",
+          "everyInterval": "Setiap {interval} detik"
+        },
+        "minutely": {
+          "every": "Setiap minit pada detik{seconds, plural, one {} other {s}} {seconds}",
+          "everyInterval": "Setiap {interval} minit pada detik{seconds, plural, one {} other {s}} {seconds}"
+        },
+        "hourly": {
+          "every": "Setiap jam pada {mmss}",
+          "everyInterval": "Setiap {interval} jam pada {mmss}"
+        },
+        "daily": {
+          "every": "Setiap hari pada {times}",
+          "everyInterval": "Setiap {interval} hari pada {times}"
+        },
+        "weekly": {
+          "every": "Setiap minggu pada {days} pada {times}",
+          "everyInterval": "Setiap {interval} minggu pada {days} pada {times}"
+        },
+        "monthly": {
+          "every": "Bulanan pada hari {dayNum} pada {times}",
+          "everyInterval": "Setiap {interval} bulan pada hari {dayNum} pada {times}"
+        },
+        "yearly": {
+          "every": "Tahunan pada {onDate} pada {times}",
+          "everyInterval": "Setiap {interval} tahun pada {onDate} pada {times}"
+        }
+      }
+    },
+    "threads": {
+      "formatThreadTitle": {
+        "fallback": "Sembang tanpa tajuk",
+        "fallbackWithAssistantName": "Sembang dengan {assistantName}"
+      }
+    },
+    "plans": {
+      "upgradePlanWorldPay": {
+        "payloadDescription": "Tingkatkan ke {planName} untuk 1 {period, select, DAY {Hari} WEEK {Minggu} MONTH {Bulan} other {Tempoh tidak diketahui}}"
+      },
+      "planConfigs": {
+        "basic": {
+          "name": "Asas"
+        },
+        "starter": {
+          "name": "Permulaan"
+        },
+        "pro": {
+          "name": "Pro"
+        },
+        "enterprise": {
+          "name": "Enterprise"
+        }
+      }
+    },
+    "tools": {
+      "toolConfigs": {
+        "search": {
+          "name": "Cari internet"
+        },
+        "images": {
+          "name": "Cipta imej"
+        },
+        "files": {
+          "name": "Fail"
+        },
+        "gmail": {
+          "name": "Gmail"
+        },
+        "appleCalendar": {
+          "name": "Apple Calendar"
+        },
+        "googleCalendar": {
+          "name": "Google Calendar"
+        },
+        "googleDrive": {
+          "name": "Google Drive"
+        },
+        "linkedin": {
+          "name": "LinkedIn"
+        },
+        "facebook": {
+          "name": "Facebook"
+        },
+        "instagram": {
+          "name": "Instagram"
+        },
+        "x": {
+          "name": "X/Twitter"
+        },
+        "voice": {
+          "name": "Suara"
+        },
+        "searchWorld": {
+          "name": "Cari World"
+        },
+        "searchSideGigs": {
+          "name": "Cari kerja sampingan"
+        },
+        "tasks": {
+          "name": "Tugas dijadualkan"
+        }
+      }
+    },
+    "assistants": {
+      "assistantConfigs": {
+        "boardy": {
+          "description": "Adiwira pengenalan"
+        },
+        "logan": {
+          "description": "Adiwira logo"
+        },
+        "emma": {
+          "description": "Adiwira emel sejuk"
+        },
+        "supa": {
+          "description": "Wira airdrop token"
+        },
+        "mark": {
+          "description": "Pencari Persona Pemasaran"
+        },
+        "quilla": {
+          "description": "Adiwira surat berita pemasaran"
+        },
+        "parry": {
+          "description": "Adiwira parafrasa"
+        },
+        "charlie": {
+          "description": "Adiwira Pertumbuhan Media Sosial"
+        },
+        "sia": {
+          "description": "Strategis Media Sosial"
+        },
+        "sunny": {
+          "description": "Adiwira Peneguhan Positif"
+        },
+        "adam": {
+          "description": "Superhero kerja sampingan bebas"
+        },
+        "shoppy": {
+          "description": "Adiwira Pengoptimuman e‑Dagang"
+        },
+        "vita": {
+          "description": "Adiwira penambahbaikan CV"
+        },
+        "jobo": {
+          "description": "Adiwira temu duga kerja"
+        },
+        "zena": {
+          "description": "Adiwira hipnoterapi"
+        },
+        "lista": {
+          "description": "Adiwira pemasaran emel"
+        },
+        "aida": {
+          "description": "Adiwira Corong Jualan"
+        },
+        "kairos": {
+          "description": "Adiwira pengurusan masa"
+        },
+        "reev": {
+          "description": "Adiwira Maklum Balas Perniagaan (Negatif)"
+        },
+        "copia": {
+          "description": "Adiwira pos blog"
+        }
+      }
+    }
+  },
+  "hooks": {
+    "threads": {
+      "useThreads": {
+        "fallbackErrorMessage": "Ralat tidak diketahui berlaku."
+      },
+      "useUpdateThread": {
+        "fallbackErrorMessage": "Ralat tidak diketahui berlaku."
+      }
+    },
+    "worldAppMiniApps": {
+      "useSearchWorldAppMiniApps": {
+        "fallbackErrorMessage": "Ralat tidak diketahui telah berlaku."
+      }
+    }
+  }
+}
