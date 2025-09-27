@@ -58,7 +58,7 @@ export default async function Layout({
         <NextIntlClientProvider>
           <Theme
             radius="large"
-            accentColor="violet"
+            accentColor="ruby"
             scaling="110%"
             style={{
               display: 'flex',
