@@ -12,11 +12,6 @@ const isRuntimeTestMode = () => {
   )
 }
 
-const sources = [
-  process.env.NEXT_PUBLIC_HLS_PRIMARY_URL!,
-  process.env.NEXT_PUBLIC_HLS_FALLBACK_URL!,
-]
-
 type PlayerState = 'idle' | 'waiting' | 'playing' | 'blocked' | 'unsupported'
 
 const STATE_MESSAGES: Record<PlayerState, string> = {
@@ -28,7 +23,7 @@ const STATE_MESSAGES: Record<PlayerState, string> = {
     'HLS playback is not supported in this browser. Try Safari or another MSE-capable browser.',
 }
 
-export const Player = () => {
+export const Player = ({ sources }: { sources: string[] }) => {
   const videoRef = useRef<HTMLVideoElement>(null)
 
   const [state, setState] = useState<PlayerState>('waiting')
