@@ -1,3 +1,8 @@
-'use client'
+import { Flex } from '@radix-ui/themes'
+import { Player } from './Player'
 
-export const Content = () => <div>Stream should be here</div>
+export const Content = () => (
+  <Flex>
+    <Player />
+  </Flex>
+)

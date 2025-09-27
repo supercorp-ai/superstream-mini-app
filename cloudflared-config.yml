@@ -4,5 +4,5 @@ warp-routing:
   enabled: true
 ingress:
   - hostname: superstream-mini-app-dev.supercorp.ai
-    service: http://localhost:3000
+    service: http://localhost:3100
   - service: http_status:404

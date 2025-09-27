@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "next dev & npx next-video sync -w",
+    "dev": "next dev --port 3100 & npx next-video sync -w",
     "build": "next build",
     "tunnel": "cloudflared tunnel --config cloudflared-config.yml run",
     "start": "next start",
