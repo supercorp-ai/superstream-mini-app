@@ -1,4 +1,4 @@
-Redeploy #6
+Redeploy #1
 
 ## This template provides a minimal setup to get Next.js working with MiniKit
 
