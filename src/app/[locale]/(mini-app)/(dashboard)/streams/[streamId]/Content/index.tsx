@@ -23,7 +23,12 @@ export const Content = () => {
         overlay={
           <Box
             width={{ initial: '220px', md: '260px', lg: '320px' }}
-            style={{ maxWidth: '320px', boxShadow: 'var(--shadow-5)' }}
+            style={{
+              maxWidth: '320px',
+              boxShadow: 'var(--shadow-5)',
+              borderRadius: 'var(--radius-4)',
+              overflow: 'hidden',
+            }}
           >
             <AssistantPlayer sources={assistantSources} />
           </Box>

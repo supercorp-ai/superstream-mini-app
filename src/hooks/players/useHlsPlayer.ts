@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import Hls from 'hls.js'
 
 const isRuntimeTestMode = () => {
@@ -25,11 +25,30 @@ export const useHlsPlayer = ({
 }) => {
   const videoRef = useRef<HTMLVideoElement>(null)
   const [state, setState] = useState<PlayerState>('waiting')
+  const [attempt, setAttempt] = useState(0)
 
   const filteredSources = useMemo(
     () => sources.filter((source): source is string => Boolean(source)),
     [sources],
   )
+
+  const retry = useCallback(() => {
+    setAttempt((value) => value + 1)
+  }, [])
+
+  const resume = useCallback(() => {
+    const video = videoRef.current
+    if (!video) return
+    const playAttempt = video.play()
+    setState('waiting')
+    if (playAttempt && typeof playAttempt.then === 'function') {
+      playAttempt
+        .then(() => setState('playing'))
+        .catch(() => setState('blocked'))
+      return
+    }
+    setState('playing')
+  }, [])
 
   useEffect(() => {
     if (isRuntimeTestMode()) {
@@ -49,6 +68,8 @@ export const useHlsPlayer = ({
     let destroyed = false
     let hls: Hls | null = null
     let currentIndex = 0
+
+    setState('waiting')
 
     const cleanupPlayback = () => {
       video.pause()
@@ -155,10 +176,28 @@ export const useHlsPlayer = ({
       detachListeners()
       cleanupPlayback()
     }
-  }, [filteredSources])
+  }, [filteredSources, attempt])
+
+  useEffect(() => {
+    if (filteredSources.length === 0) return
+    if (state !== 'idle') return
+
+    const timeout = window.setTimeout(
+      () => {
+        retry()
+      },
+      15000 + Math.random() * 10000,
+    )
+
+    return () => {
+      window.clearTimeout(timeout)
+    }
+  }, [filteredSources.length, retry, state])
 
   return {
     videoRef,
     state,
+    retry,
+    resume,
   }
 }

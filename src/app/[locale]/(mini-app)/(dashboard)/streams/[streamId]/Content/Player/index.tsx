@@ -8,7 +8,16 @@ import {
   SpeakerOffIcon,
   VideoIcon,
 } from '@radix-ui/react-icons'
-import { Badge, Box, Card, Flex, IconButton, Text } from '@radix-ui/themes'
+import {
+  Badge,
+  Box,
+  Button,
+  Card,
+  Flex,
+  IconButton,
+  Spinner,
+  Text,
+} from '@radix-ui/themes'
 import { useFormatter } from 'next-intl'
 import { useHlsPlayer, type PlayerState } from '@/hooks/players/useHlsPlayer'
 
@@ -17,9 +26,10 @@ type BadgeColor = NonNullable<ComponentProps<typeof Badge>['color']>
 type PlayerStateContent = {
   badgeLabel: string
   badgeColor: BadgeColor
-  title?: string
-  description?: string
+  message?: string
   icon: ReactNode
+  actionLabel?: string
+  actionType?: 'resume' | 'retry'
 }
 
 type StateDictionary = Record<PlayerState, PlayerStateContent>
@@ -35,13 +45,38 @@ type ComputerUsePlayerProps = BasePlayerProps & {
 const PlayerOverlay = ({
   state,
   content,
+  onRetry,
+  onResume,
 }: {
   state: PlayerState
   content: PlayerStateContent
+  onRetry?: () => void
+  onResume?: () => void
 }) => {
   if (state === 'playing') return null
 
-  const overlayTitle = content.title ?? content.badgeLabel
+  if (state === 'waiting') {
+    return (
+      <Flex
+        position="absolute"
+        top="0"
+        left="0"
+        width="100%"
+        height="100%"
+        align="center"
+        justify="center"
+        style={{
+          backgroundColor: 'rgba(255, 255, 255, 0.86)',
+          backdropFilter: 'blur(4px)',
+        }}
+      >
+        <Spinner
+          size="3"
+          style={{ color: 'var(--ruby-9)' }}
+        />
+      </Flex>
+    )
+  }
 
   return (
     <Flex
@@ -52,10 +87,10 @@ const PlayerOverlay = ({
       height="100%"
       align="center"
       justify="center"
-      px="6"
       style={{
-        backgroundColor: 'rgba(5, 5, 5, 0.72)',
-        backdropFilter: 'blur(6px)',
+        padding: 'var(--space-6)',
+        backgroundColor: 'rgba(255, 255, 255, 0.9)',
+        backdropFilter: 'blur(4px)',
       }}
     >
       <Card
@@ -69,31 +104,42 @@ const PlayerOverlay = ({
           gap="3"
         >
           <Badge color={content.badgeColor}>{content.badgeLabel}</Badge>
-          <Flex
-            align="center"
-            justify="center"
-            style={{
-              color: 'var(--gray-11)',
-              fontSize: 32,
-            }}
-          >
-            {content.icon}
-          </Flex>
-          <Text
-            weight="medium"
-            size="4"
-            align="center"
-          >
-            {overlayTitle}
-          </Text>
-          {content.description ? (
-            <Text
-              color="gray"
-              size="2"
+          {content.icon ? (
+            <Flex
               align="center"
+              justify="center"
+              style={{
+                color: 'var(--gray-11)',
+                fontSize: 32,
+              }}
             >
-              {content.description}
+              {content.icon}
+            </Flex>
+          ) : null}
+          {content.message ? (
+            <Text
+              align="center"
+              size="3"
+            >
+              {content.message}
             </Text>
+          ) : null}
+          {content.actionType === 'resume' && onResume ? (
+            <Button
+              color="ruby"
+              onClick={onResume}
+            >
+              {content.actionLabel ?? 'Resume stream'}
+            </Button>
+          ) : null}
+          {content.actionType === 'retry' && onRetry ? (
+            <Button
+              variant="outline"
+              color="ruby"
+              onClick={onRetry}
+            >
+              {content.actionLabel ?? 'Retry now'}
+            </Button>
           ) : null}
         </Flex>
       </Card>
@@ -123,20 +169,19 @@ const computerStateContent: StateDictionary = {
   idle: {
     badgeLabel: 'Browser feed offline',
     badgeColor: 'gray',
-    title: 'No active browser feed',
-    description: 'Start a session to see the shared browser stream here.',
+    message: "We'll be back to streaming very soon.",
     icon: (
       <VideoIcon
         width={36}
         height={36}
       />
     ),
+    actionType: 'retry',
+    actionLabel: 'Retry now',
   },
   waiting: {
     badgeLabel: 'Connecting to browser feed…',
     badgeColor: 'indigo',
-    title: 'Preparing live browser stream',
-    description: 'Hang tight while we connect to the shared browser.',
     icon: (
       <ActivityLogIcon
         width={36}
@@ -157,20 +202,21 @@ const computerStateContent: StateDictionary = {
   blocked: {
     badgeLabel: 'Autoplay blocked',
     badgeColor: 'amber',
-    title: 'Press play to start streaming',
-    description: 'Your browser prevented autoplay. Click the video to resume.',
+    message: 'Autoplay is blocked. Tap resume to start streaming.',
     icon: (
       <ExclamationTriangleIcon
         width={36}
         height={36}
       />
     ),
+    actionType: 'resume',
+    actionLabel: 'Resume stream',
   },
   unsupported: {
     badgeLabel: 'Playback not supported',
     badgeColor: 'red',
-    title: 'This browser cannot play HLS streams',
-    description: 'Try Safari or another browser with Media Source Extensions.',
+    message:
+      'This browser cannot play HLS streams. Try Safari or another browser with Media Source Extensions.',
     icon: (
       <ExclamationTriangleIcon
         width={36}
@@ -184,20 +230,19 @@ const assistantStateContent: StateDictionary = {
   idle: {
     badgeLabel: 'Assistant feed offline',
     badgeColor: 'gray',
-    title: 'Assistant stream unavailable',
-    description: 'Once the assistant is live the feed will appear here.',
+    message: "We'll be back to streaming very soon.",
     icon: (
       <VideoIcon
         width={36}
         height={36}
       />
     ),
+    actionType: 'retry',
+    actionLabel: 'Retry now',
   },
   waiting: {
     badgeLabel: 'Connecting to assistant…',
     badgeColor: 'indigo',
-    title: 'Preparing assistant feed',
-    description: 'We are setting up the assistant audio and video.',
     icon: (
       <ActivityLogIcon
         width={36}
@@ -218,20 +263,21 @@ const assistantStateContent: StateDictionary = {
   blocked: {
     badgeLabel: 'Autoplay blocked',
     badgeColor: 'amber',
-    title: 'Press play to start audio',
-    description: 'Your browser blocked autoplay. Click the video to resume.',
+    message: 'Autoplay is blocked. Tap resume to hear the assistant.',
     icon: (
       <ExclamationTriangleIcon
         width={36}
         height={36}
       />
     ),
+    actionType: 'resume',
+    actionLabel: 'Resume audio',
   },
   unsupported: {
     badgeLabel: 'Playback not supported',
     badgeColor: 'red',
-    title: 'This browser cannot play HLS streams',
-    description: 'Try Safari or another browser with Media Source Extensions.',
+    message:
+      'This browser cannot play HLS streams. Try Safari or another browser with Media Source Extensions.',
     icon: (
       <ExclamationTriangleIcon
         width={36}
@@ -245,7 +291,7 @@ export const ComputerUsePlayer = ({
   sources,
   overlay,
 }: ComputerUsePlayerProps) => {
-  const { videoRef, state } = useHlsPlayer({ sources })
+  const { videoRef, state, retry, resume } = useHlsPlayer({ sources })
 
   return (
     <Flex
@@ -261,7 +307,8 @@ export const ComputerUsePlayer = ({
         overflow="hidden"
         style={{
           borderRadius: 'var(--radius-4)',
-          backgroundColor: 'var(--color-surface)',
+          backgroundColor: '#fff',
+          aspectRatio: '590 / 1216',
         }}
       >
         <Box
@@ -274,7 +321,6 @@ export const ComputerUsePlayer = ({
             ref={videoRef}
             autoPlay
             muted
-            controls
             playsInline
             style={{
               width: '100%',
@@ -288,6 +334,8 @@ export const ComputerUsePlayer = ({
         <PlayerOverlay
           state={state}
           content={computerStateContent[state]}
+          onRetry={retry}
+          onResume={resume}
         />
 
         {overlay ? (
@@ -311,7 +359,7 @@ export const ComputerUsePlayer = ({
 }
 
 export const AssistantPlayer = ({ sources }: BasePlayerProps) => {
-  const { videoRef, state } = useHlsPlayer({ sources })
+  const { videoRef, state, retry, resume } = useHlsPlayer({ sources })
   const [muted, setMuted] = useState(true)
   const format = useFormatter()
   const [now, setNow] = useState(() => new Date())
@@ -349,7 +397,7 @@ export const AssistantPlayer = ({ sources }: BasePlayerProps) => {
         style={{
           aspectRatio: '1 / 1',
           borderRadius: 'var(--radius-4)',
-          backgroundColor: 'var(--color-surface)',
+          backgroundColor: '#fff',
         }}
       >
         <Box
@@ -362,14 +410,13 @@ export const AssistantPlayer = ({ sources }: BasePlayerProps) => {
             ref={videoRef}
             autoPlay
             muted={muted}
-            controls
             playsInline
             style={{
               width: '100%',
               height: '100%',
               objectFit: 'cover',
               objectPosition: 'center',
-              backgroundColor: '#000',
+              backgroundColor: 'transparent',
             }}
           />
         </Box>
@@ -377,6 +424,11 @@ export const AssistantPlayer = ({ sources }: BasePlayerProps) => {
         <PlayerOverlay
           state={state}
           content={assistantStateContent[state]}
+          onRetry={retry}
+          onResume={() => {
+            resume()
+            setMuted(false)
+          }}
         />
 
         {showMuteToggle ? (
@@ -387,7 +439,8 @@ export const AssistantPlayer = ({ sources }: BasePlayerProps) => {
           >
             <IconButton
               size="2"
-              variant={muted ? 'solid' : 'soft'}
+              variant={muted ? 'surface' : 'solid'}
+              color="ruby"
               aria-label={muted ? 'Unmute assistant' : 'Mute assistant'}
               onClick={toggleMuted}
             >
@@ -414,12 +467,11 @@ export const AssistantPlayer = ({ sources }: BasePlayerProps) => {
               }}
             >
               <Box
-                width="var(--space-2)"
-                height="var(--space-2)"
-                flexShrink="0"
                 style={{
-                  borderRadius: 'var(--radius-4)',
-                  backgroundColor: 'var(--red-10)',
+                  width: 8,
+                  height: 8,
+                  borderRadius: '9999px',
+                  backgroundColor: '#f53941',
                 }}
               />
               <Text
