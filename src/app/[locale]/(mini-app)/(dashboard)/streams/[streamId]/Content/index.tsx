@@ -17,23 +17,27 @@ export const Content = () => {
       direction="column"
       width="100%"
       height="100%"
+      gap="4"
     >
-      <ComputerUsePlayer
-        sources={computerSources}
-        overlay={
-          <Box
-            width={{ initial: '220px', md: '260px', lg: '320px' }}
-            style={{
-              maxWidth: '320px',
-              boxShadow: 'var(--shadow-5)',
-              borderRadius: 'var(--radius-4)',
-              overflow: 'hidden',
-            }}
-          >
-            <AssistantPlayer sources={assistantSources} />
-          </Box>
-        }
-      />
+      <Box
+        width="100%"
+        style={{
+          maxWidth: 720,
+          margin: '0 auto',
+        }}
+      >
+        <AssistantPlayer sources={assistantSources} />
+      </Box>
+
+      <Box
+        width="100%"
+        style={{
+          maxWidth: 720,
+          margin: '0 auto',
+        }}
+      >
+        <ComputerUsePlayer sources={computerSources} />
+      </Box>
     </Flex>
   )
 }

@@ -38,10 +38,6 @@ type BasePlayerProps = {
   sources: readonly (string | null | undefined)[]
 }
 
-type ComputerUsePlayerProps = BasePlayerProps & {
-  overlay?: ReactNode
-}
-
 const PlayerOverlay = ({
   state,
   content,
@@ -287,10 +283,7 @@ const assistantStateContent: StateDictionary = {
   },
 }
 
-export const ComputerUsePlayer = ({
-  sources,
-  overlay,
-}: ComputerUsePlayerProps) => {
+export const ComputerUsePlayer = ({ sources }: BasePlayerProps) => {
   const { videoRef, state, retry, resume } = useHlsPlayer({ sources })
 
   return (
@@ -308,7 +301,7 @@ export const ComputerUsePlayer = ({
         style={{
           borderRadius: 'var(--radius-4)',
           backgroundColor: '#fff',
-          aspectRatio: '590 / 1216',
+          aspectRatio: '16 / 9',
         }}
       >
         <Box
@@ -337,16 +330,6 @@ export const ComputerUsePlayer = ({
           onRetry={retry}
           onResume={resume}
         />
-
-        {overlay ? (
-          <Box
-            position="absolute"
-            bottom="var(--space-5)"
-            left="var(--space-5)"
-          >
-            {overlay}
-          </Box>
-        ) : null}
       </Box>
 
       <HiddenStateBadge
@@ -395,7 +378,7 @@ export const AssistantPlayer = ({ sources }: BasePlayerProps) => {
         width="100%"
         overflow="hidden"
         style={{
-          aspectRatio: '1 / 1',
+          aspectRatio: '16 / 9',
           borderRadius: 'var(--radius-4)',
           backgroundColor: '#fff',
         }}
@@ -452,8 +435,8 @@ export const AssistantPlayer = ({ sources }: BasePlayerProps) => {
         {showLiveBadge ? (
           <Box
             position="absolute"
-            left="var(--space-2)"
-            bottom="var(--space-2)"
+            right="var(--space-2)"
+            top="var(--space-2)"
           >
             <Flex
               align="center"
