@@ -17,7 +17,7 @@ export default async function Layout({
 
   if (!user) {
     return redirect({
-      href: '/sign-in',
+      href: '/',
       locale: locale as Locale,
     })
   }

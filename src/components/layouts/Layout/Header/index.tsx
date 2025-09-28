@@ -120,9 +120,11 @@ const DialogAction = ({ worldcoinUser }: { worldcoinUser: WorldcoinUser }) => {
 export const Header = ({
   worldcoinUser,
   showStreamsLink = false,
+  backgroundColor,
 }: {
   worldcoinUser: WorldcoinUser
   showStreamsLink?: boolean
+  backgroundColor?: string
 }) => {
   const t = useTranslations('components.layouts.Layout.Header')
 
@@ -134,7 +136,7 @@ export const Header = ({
       px="3"
       flexShrink="0"
       style={{
-        backgroundColor: '#EAE8AD',
+        backgroundColor: backgroundColor ?? 'transparent',
         zIndex: 9999,
       }}
     >

@@ -10,6 +10,7 @@ import { streamConfigs } from '@/lib/streams/streamConfigs'
 import { hasLocale } from 'next-intl'
 import { getTranslations } from 'next-intl/server'
 import { routing } from '@/i18n/routing'
+import { adamBackgroundColor } from '@/lib/assistants/colors'
 
 type Props = {
   params: Promise<{
@@ -50,7 +51,10 @@ export default async function StreamLayout(props: Props) {
 
   return (
     <Layout.Root>
-      <Layout.Header worldcoinUser={worldcoinUser} />
+      <Layout.Header
+        worldcoinUser={worldcoinUser}
+        backgroundColor={adamBackgroundColor}
+      />
       <Layout.Content.Root>
         <Sidebar worldcoinUser={worldcoinUser} />
         {props.children}

@@ -19,8 +19,8 @@ import {
   Spinner,
   Text,
 } from '@radix-ui/themes'
-import { useFormatter } from 'next-intl'
 import { useHlsPlayer, type PlayerState } from '@/hooks/players/useHlsPlayer'
+import { adamBackgroundColor } from '@/lib/assistants/colors'
 
 type BadgeColor = NonNullable<ComponentProps<typeof Badge>['color']>
 
@@ -39,18 +39,33 @@ type BasePlayerProps = {
   sources: readonly (string | null | undefined)[]
 }
 
+const hexToRgba = (hex: string, alpha: number) => {
+  const normalized = hex.replace('#', '')
+  const bigint = parseInt(normalized, 16)
+  const r = (bigint >> 16) & 255
+  const g = (bigint >> 8) & 255
+  const b = bigint & 255
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`
+}
+
 const PlayerOverlay = ({
   state,
   content,
   onRetry,
   onResume,
+  backgroundColor,
 }: {
   state: PlayerState
   content: PlayerStateContent
   onRetry?: () => void
   onResume?: () => void
+  backgroundColor?: string
 }) => {
   if (state === 'playing') return null
+
+  const baseColor = backgroundColor ?? '#ffffff'
+  const waitingOverlay = hexToRgba(baseColor, 0.86)
+  const messageOverlay = hexToRgba(baseColor, 0.92)
 
   if (state === 'waiting') {
     return (
@@ -63,7 +78,7 @@ const PlayerOverlay = ({
         align="center"
         justify="center"
         style={{
-          backgroundColor: 'rgba(255, 255, 255, 0.86)',
+          backgroundColor: waitingOverlay,
           backdropFilter: 'blur(4px)',
         }}
       >
@@ -86,7 +101,7 @@ const PlayerOverlay = ({
       justify="center"
       style={{
         padding: 'var(--space-6)',
-        backgroundColor: 'rgba(255, 255, 255, 0.9)',
+        backgroundColor: messageOverlay,
         backdropFilter: 'blur(4px)',
       }}
     >
@@ -300,6 +315,7 @@ export const ComputerUsePlayer = ({ sources }: BasePlayerProps) => {
         width="100%"
         overflow="hidden"
         style={{
+          borderRadius: 'var(--radius-4)',
           backgroundColor: '#fff',
           aspectRatio: '16 / 9',
         }}
@@ -329,6 +345,7 @@ export const ComputerUsePlayer = ({ sources }: BasePlayerProps) => {
           content={computerStateContent[state]}
           onRetry={retry}
           onResume={resume}
+          backgroundColor="#ffffff"
         />
       </Box>
 
@@ -344,8 +361,6 @@ export const ComputerUsePlayer = ({ sources }: BasePlayerProps) => {
 export const AssistantPlayer = ({ sources }: BasePlayerProps) => {
   const { videoRef, state, retry, resume } = useHlsPlayer({ sources })
   const [muted, setMuted] = useState(true)
-  const format = useFormatter()
-  const [now, setNow] = useState(() => new Date())
 
   useEffect(() => {
     const element = videoRef.current
@@ -353,20 +368,10 @@ export const AssistantPlayer = ({ sources }: BasePlayerProps) => {
     element.muted = muted
   }, [muted, videoRef])
 
-  useEffect(() => {
-    const interval = setInterval(() => setNow(new Date()), 1000)
-    return () => clearInterval(interval)
-  }, [])
-
   const toggleMuted = () => setMuted((value) => !value)
 
   const showMuteToggle = state === 'playing'
   const showLiveBadge = state === 'playing'
-  const liveTime = format.dateTime(now, {
-    hour: 'numeric',
-    minute: '2-digit',
-    second: '2-digit',
-  })
 
   return (
     <Flex
@@ -379,7 +384,8 @@ export const AssistantPlayer = ({ sources }: BasePlayerProps) => {
         overflow="hidden"
         style={{
           aspectRatio: '16 / 9',
-          backgroundColor: '#fff',
+          borderRadius: 'var(--radius-4)',
+          backgroundColor: adamBackgroundColor,
         }}
       >
         <Box
@@ -411,6 +417,7 @@ export const AssistantPlayer = ({ sources }: BasePlayerProps) => {
             resume()
             setMuted(false)
           }}
+          backgroundColor={adamBackgroundColor}
         />
 
         {showMuteToggle ? (
