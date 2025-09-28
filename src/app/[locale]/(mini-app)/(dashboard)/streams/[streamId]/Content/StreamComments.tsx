@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react'
 import {
+  Theme,
   Avatar,
   Box,
   Button,
@@ -113,6 +114,7 @@ export const StreamComments = ({ streamId }: { streamId: string }) => {
       sendComment({ streamId, content }),
     onSuccess: () => {
       setComment('')
+      setIsComposerOpen(false)
       queryClient.invalidateQueries({ queryKey: commentsQueryKey(streamId) })
     },
   })
@@ -146,264 +148,264 @@ export const StreamComments = ({ streamId }: { streamId: string }) => {
     mutation.isPending || trimmedComment.length === 0 || isOverLimit
 
   return (
-    <Flex
-      position="absolute"
-      inset="0"
-      direction="column"
-      justify="end"
-      style={{ pointerEvents: 'none', zIndex: 2 }}
-    >
+    <Theme appearance="dark">
       <Flex
+        position="absolute"
+        inset="0"
         direction="column"
         justify="end"
-        gap="var(--space-3)"
-        style={{
-          pointerEvents: 'none',
-          width: '100%',
-          padding: 'var(--space-4)',
-          paddingBottom: 'var(--space-3)',
-        }}
+        style={{ pointerEvents: 'none', zIndex: 2 }}
       >
-        <Box
+        <Flex
+          direction="column"
+          justify="end"
+          gap="var(--space-3)"
           style={{
-            position: 'relative',
             pointerEvents: 'none',
-            maxHeight: '240px',
-            overflow: 'hidden',
+            width: '100%',
+            padding: 'var(--space-4)',
+            paddingBottom: 'var(--space-3)',
           }}
         >
-          {!isComposerOpen && (
-            <Box
-              style={{
-                position: 'absolute',
-                inset: 0,
-                background:
-                  'linear-gradient(to top, rgba(18,18,18,0.85) 0%, rgba(18,18,18,0.45) 45%, rgba(18,18,18,0.12) 70%, rgba(18,18,18,0) 100%)',
-                pointerEvents: 'none',
-              }}
-            />
-          )}
-
-          <Flex
-            direction="column"
-            gap="2"
+          <Box
             style={{
               position: 'relative',
-              zIndex: 1,
-              maskImage:
-                'linear-gradient(to top, rgba(0,0,0,1) 65%, rgba(0,0,0,0) 100%)',
-              WebkitMaskImage:
-                'linear-gradient(to top, rgba(0,0,0,1) 65%, rgba(0,0,0,0) 100%)',
               pointerEvents: 'none',
+              maxHeight: '240px',
+              overflow: 'hidden',
             }}
           >
-            {commentsQuery.isLoading ? (
-              <Flex
-                align="center"
-                justify="center"
-                style={{ minHeight: 64 }}
-              >
-                <Spinner />
-              </Flex>
-            ) : commentsQuery.isError ? (
-              <Text color="red">Unable to load recent comments.</Text>
-            ) : commentsQuery.data && commentsQuery.data.length > 0 ? (
-              commentsQuery.data.map((item) => {
-                const lookup = usernameMap.get(item.user.address.toLowerCase())
-                const displayName =
-                  lookup?.username ??
-                  item.user.name ??
-                  truncateAddress(item.user.address)
-                const avatarSrc =
-                  lookup?.minimized_profile_picture_url ??
-                  lookup?.profile_picture_url ??
-                  undefined
+            {!isComposerOpen && (
+              <Box
+                style={{
+                  position: 'absolute',
+                  inset: 0,
+                  background:
+                    'linear-gradient(to top, rgba(18,18,18,0.85) 0%, rgba(18,18,18,0.45) 45%, rgba(18,18,18,0.12) 70%, rgba(18,18,18,0) 100%)',
+                  pointerEvents: 'none',
+                }}
+              />
+            )}
 
-                return (
-                  <Flex
-                    key={item.id}
-                    align="start"
-                    gap="2"
-                    style={{
-                      alignSelf: 'flex-start',
-                      pointerEvents: 'none',
-                      maxWidth: '80%',
-                      flexShrink: 0,
-                    }}
-                  >
-                    <Avatar
-                      size="1"
-                      src={avatarSrc}
-                      radius="full"
-                      fallback={displayName[0]?.toUpperCase() ?? 'U'}
-                      style={{
-                        width: 'var(--space-4)',
-                        height: 'var(--space-4)',
-                        minWidth: 'var(--space-4)',
-                        flexShrink: 0,
-                        marginTop: 'var(--space-1)',
-                        boxShadow: '0 0 6px rgba(0,0,0,0.4)',
-                      }}
-                    />
+            <Flex
+              direction="column"
+              gap="2"
+              style={{
+                position: 'relative',
+                zIndex: 1,
+                maskImage:
+                  'linear-gradient(to top, rgba(0,0,0,1) 65%, rgba(0,0,0,0) 100%)',
+                WebkitMaskImage:
+                  'linear-gradient(to top, rgba(0,0,0,1) 65%, rgba(0,0,0,0) 100%)',
+                pointerEvents: 'none',
+              }}
+            >
+              {commentsQuery.isLoading ? (
+                <Flex
+                  align="center"
+                  justify="center"
+                  style={{ minHeight: 64 }}
+                >
+                  <Spinner />
+                </Flex>
+              ) : commentsQuery.isError ? (
+                <Text color="red">Unable to load recent comments.</Text>
+              ) : commentsQuery.data && commentsQuery.data.length > 0 ? (
+                commentsQuery.data.map((item) => {
+                  const lookup = usernameMap.get(
+                    item.user.address.toLowerCase(),
+                  )
+                  const displayName = lookup?.username ?? item.user.name ?? ''
+                  const avatarSrc =
+                    lookup?.minimized_profile_picture_url ??
+                    lookup?.profile_picture_url ??
+                    undefined
 
+                  return (
                     <Flex
-                      direction="column"
-                      gap="1"
+                      key={item.id}
+                      align="start"
+                      gap="2"
                       style={{
-                        flex: 1,
-                        minWidth: 0,
-                        color: 'white',
-                        textShadow: '0 1px 3px rgba(0,0,0,0.9)',
+                        alignSelf: 'flex-start',
+                        pointerEvents: 'none',
+                        maxWidth: '80%',
+                        flexShrink: 0,
                       }}
                     >
-                      <Text
+                      <Avatar
                         size="1"
-                        weight="medium"
+                        src={avatarSrc}
+                        radius="full"
+                        fallback={displayName[0]?.toUpperCase() ?? 'U'}
                         style={{
-                          overflow: 'hidden',
-                          textOverflow: 'ellipsis',
-                          whiteSpace: 'nowrap',
+                          width: 'var(--space-4)',
+                          height: 'var(--space-4)',
+                          minWidth: 'var(--space-4)',
+                          flexShrink: 0,
+                          marginTop: 'var(--space-1)',
+                          boxShadow: '0 0 6px rgba(0,0,0,0.4)',
                         }}
-                      >
-                        {displayName}
-                      </Text>
-                      <Text
-                        size="1"
-                        style={{
-                          whiteSpace: 'pre-wrap',
-                          wordBreak: 'break-word',
-                        }}
-                      >
-                        {item.content}
-                      </Text>
-                    </Flex>
-                  </Flex>
-                )
-              })
-            ) : (
-              <Text color="gray">No comments yet. Start the conversation.</Text>
-            )}
-          </Flex>
-        </Box>
+                      />
 
-        <Box style={{ width: '100%', pointerEvents: 'auto' }}>
-          {isComposerOpen ? (
-            <form
-              onSubmit={(event) => {
-                event.preventDefault()
-                if (isSubmitDisabled) return
-                mutation.mutate({ content: trimmedComment })
-              }}
-            >
-              <Card
-                variant="surface"
-                style={{
-                  border: isOverLimit
-                    ? '1px solid var(--red-9)'
-                    : '1px solid var(--gray-a5)',
-                  padding: 'var(--space-2) var(--space-3) var(--space-3)',
-                  backgroundColor: 'white',
-                  boxShadow: 'var(--shadow-4)',
+                      <Flex
+                        direction="column"
+                        style={{
+                          flex: 1,
+                          minWidth: 0,
+                          color: 'white',
+                          textShadow: '0 1px 3px rgba(0,0,0,0.9)',
+                        }}
+                      >
+                        <Text
+                          size="1"
+                          weight="medium"
+                          color="gray"
+                          style={{
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                            whiteSpace: 'nowrap',
+                          }}
+                        >
+                          @{displayName}
+                        </Text>
+                        <Text
+                          size="1"
+                          color="gray"
+                          highContrast
+                          style={{
+                            whiteSpace: 'pre-wrap',
+                            wordBreak: 'break-word',
+                          }}
+                        >
+                          {item.content}
+                        </Text>
+                      </Flex>
+                    </Flex>
+                  )
+                })
+              ) : (
+                <Text color="gray">
+                  No comments yet. Start the conversation.
+                </Text>
+              )}
+            </Flex>
+          </Box>
+
+          <Box style={{ width: '100%', pointerEvents: 'auto' }}>
+            {isComposerOpen ? (
+              <form
+                onSubmit={(event) => {
+                  event.preventDefault()
+                  if (isSubmitDisabled) return
+                  mutation.mutate({ content: trimmedComment })
                 }}
               >
-                <Flex
-                  justify="end"
-                  mb="1"
-                >
-                  <IconButton
-                    size="1"
-                    variant="ghost"
-                    color="gray"
-                    onClick={() => setIsComposerOpen(false)}
-                    type="button"
-                  >
-                    <Cross2Icon />
-                  </IconButton>
-                </Flex>
-
-                <Box
-                  asChild
+                <Card
+                  variant="surface"
+                  size="1"
                   style={{
-                    borderRadius: 'var(--radius-3)',
-                    border: isOverLimit
-                      ? '1px solid var(--red-9)'
-                      : '1px solid transparent',
-                    backgroundColor: 'var(--color-surface)',
-                    overflow: 'hidden',
+                    position: 'relative',
+                    border: isOverLimit ? '1px solid var(--red-9)' : undefined,
+                    boxShadow: 'var(--shadow-4)',
                   }}
                 >
-                  <textarea
-                    ref={textareaRef}
-                    value={comment}
-                    onChange={(event) => setComment(event.target.value)}
-                    placeholder="Type…"
-                    rows={1}
+                  <Flex
+                    justify="end"
+                    mb="1"
+                    position="absolute"
+                    top="var(--space-3)"
+                    right="var(--space-3)"
+                  >
+                    <IconButton
+                      size="1"
+                      variant="ghost"
+                      color="gray"
+                      onClick={() => setIsComposerOpen(false)}
+                      type="button"
+                    >
+                      <Cross2Icon />
+                    </IconButton>
+                  </Flex>
+
+                  <Box
+                    asChild
                     style={{
-                      width: '100%',
-                      padding: 'var(--space-3)',
-                      resize: 'none',
-                      border: 'none',
-                      outline: 'none',
-                      background: 'transparent',
-                      color: 'inherit',
+                      border: isOverLimit
+                        ? '1px solid var(--red-9)'
+                        : '1px solid transparent',
                     }}
-                  />
-                </Box>
-
-                {mutation.isError ? (
-                  <Text
-                    size="1"
-                    color="red"
-                    mt="2"
                   >
-                    {mutation.error?.message}
-                  </Text>
-                ) : null}
+                    <textarea
+                      ref={textareaRef}
+                      value={comment}
+                      onChange={(event) => setComment(event.target.value)}
+                      placeholder="Type…"
+                      rows={1}
+                      style={{
+                        width: '100%',
+                        resize: 'none',
+                        border: 'none',
+                        outline: 'none',
+                        background: 'transparent',
+                        color: 'inherit',
+                      }}
+                    />
+                  </Box>
 
-                {isOverLimit ? (
-                  <Text
-                    size="1"
-                    color="red"
-                    mt="2"
-                  >
-                    Comment is too long (140 characters max).
-                  </Text>
-                ) : null}
+                  {mutation.isError ? (
+                    <Text
+                      size="1"
+                      color="red"
+                      mt="2"
+                    >
+                      {mutation.error?.message}
+                    </Text>
+                  ) : null}
 
-                <Flex
-                  justify="end"
-                  mt="3"
-                >
-                  <Button
-                    type="submit"
-                    loading={mutation.isPending}
-                    disabled={isSubmitDisabled}
+                  {isOverLimit ? (
+                    <Text
+                      size="1"
+                      color="red"
+                      mt="2"
+                    >
+                      Comment is too long (140 characters max).
+                    </Text>
+                  ) : null}
+
+                  <Flex
+                    justify="end"
+                    mt="3"
                   >
-                    Send
-                  </Button>
-                </Flex>
-              </Card>
-            </form>
-          ) : (
-            <Button
-              variant="surface"
-              color="gray"
-              onClick={() => setIsComposerOpen(true)}
-              style={{
-                width: '100%',
-                justifyContent: 'flex-start',
-                pointerEvents: 'auto',
-                gap: 'var(--space-2)',
-                backgroundColor: 'white',
-                boxShadow: 'var(--shadow-3)',
-              }}
-            >
-              <Pencil1Icon />
-              <Text size="1">Type…</Text>
-            </Button>
-          )}
-        </Box>
+                    <Button
+                      type="submit"
+                      loading={mutation.isPending}
+                      disabled={isSubmitDisabled}
+                    >
+                      Send
+                    </Button>
+                  </Flex>
+                </Card>
+              </form>
+            ) : (
+              <Button
+                radius="full"
+                onClick={() => setIsComposerOpen(true)}
+                style={{
+                  width: '100%',
+                  justifyContent: 'flex-start',
+                  pointerEvents: 'auto',
+                  gap: 'var(--space-2)',
+                  backgroundColor: 'var(--gray-4)',
+                  opacity: 0.5,
+                }}
+              >
+                <Text size="1">Type…</Text>
+              </Button>
+            )}
+          </Box>
+        </Flex>
       </Flex>
-    </Flex>
+    </Theme>
   )
 }
