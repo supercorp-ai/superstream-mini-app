@@ -4,6 +4,9 @@ import { prisma } from '@/lib/prisma'
 import { cacheHeaders } from '@/lib/cache/cacheHeaders'
 import { getWorldcoinUser } from '@/lib/worldcoin/getWorldcoinUser'
 import dayjs from 'dayjs'
+import relativeTime from 'dayjs/plugin/relativeTime'
+
+dayjs.extend(relativeTime)
 
 export const GET = async (
   _request: NextRequest,
@@ -61,9 +64,10 @@ export const GET = async (
   return NextResponse.json(
     {
       comments: await pMap(comments, async (comment) => ({
-        createdAt: comment.createdAt,
         username: await getUsername({ comment }),
         content: comment.content,
+        createdAt: comment.createdAt,
+        createdAtRelative: dayjs(comment.createdAt).fromNow(),
       })),
     },
     { headers: cacheHeaders },
