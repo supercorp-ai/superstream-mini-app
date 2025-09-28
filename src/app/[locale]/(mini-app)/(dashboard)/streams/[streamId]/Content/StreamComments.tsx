@@ -394,7 +394,7 @@ export const StreamComments = ({ streamId }: { streamId: string }) => {
       >
         <Box
           p="4"
-          pb="3"
+          pb="4"
           width="100%"
           style={{ pointerEvents: 'none' }}
         >
