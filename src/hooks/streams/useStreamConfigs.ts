@@ -3,7 +3,7 @@ import { useMemo } from 'react'
 import { streamConfigs } from '@/lib/streams/streamConfigs'
 
 export const useStreamConfigs = () => {
-  const t = useTranslations('lib.tools.toolConfigs')
+  const t = useTranslations('lib.assistants.assistantConfigs')
 
   return useMemo(
     () => ({

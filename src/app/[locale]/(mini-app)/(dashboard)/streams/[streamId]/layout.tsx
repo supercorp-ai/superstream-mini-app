@@ -6,11 +6,10 @@ import { StreamNotFound } from '@/components/streams/StreamNotFound'
 import { redirect } from '@/i18n/navigation'
 import { Layout } from '@/components/layouts/Layout'
 import { Sidebar } from '@/components/sidebars/Sidebar'
-import { streamConfigs } from '@/lib/streams/streamConfigs'
+import { streamConfigs, findStreamConfig } from '@/lib/streams/streamConfigs'
 import { hasLocale } from 'next-intl'
 import { getTranslations } from 'next-intl/server'
 import { routing } from '@/i18n/routing'
-import { adamBackgroundColor } from '@/lib/assistants/colors'
 
 type Props = {
   params: Promise<{
@@ -43,17 +42,17 @@ export default async function StreamLayout(props: Props) {
     namespace: 'lib.assistants.assistantConfigs',
   })
 
-  const streamConfig = streamConfigs({ t })[0]
-
-  if (!streamConfig) {
-    return <StreamNotFound />
-  }
+  const streamConfig =
+    findStreamConfig({
+      t,
+      streamId: params.streamId,
+    }) ?? streamConfigs({ t })[0]
 
   return (
     <Layout.Root>
       <Layout.Header
         worldcoinUser={worldcoinUser}
-        backgroundColor={adamBackgroundColor}
+        backgroundColor={streamConfig?.backgroundColor}
       />
       <Layout.Content.Root>
         <Sidebar worldcoinUser={worldcoinUser} />

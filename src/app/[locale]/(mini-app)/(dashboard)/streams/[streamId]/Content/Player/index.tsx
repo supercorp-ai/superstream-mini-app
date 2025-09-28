@@ -20,7 +20,6 @@ import {
   Text,
 } from '@radix-ui/themes'
 import { useHlsPlayer, type PlayerState } from '@/hooks/players/useHlsPlayer'
-import { adamBackgroundColor } from '@/lib/assistants/colors'
 
 type BadgeColor = NonNullable<ComponentProps<typeof Badge>['color']>
 
@@ -358,7 +357,10 @@ export const ComputerUsePlayer = ({ sources }: BasePlayerProps) => {
   )
 }
 
-export const AssistantPlayer = ({ sources }: BasePlayerProps) => {
+export const AssistantPlayer = ({
+  sources,
+  backgroundColor,
+}: BasePlayerProps & { backgroundColor: string }) => {
   const { videoRef, state, retry, resume } = useHlsPlayer({ sources })
   const [muted, setMuted] = useState(true)
 
@@ -385,7 +387,7 @@ export const AssistantPlayer = ({ sources }: BasePlayerProps) => {
         style={{
           aspectRatio: '16 / 9',
           borderRadius: 'var(--radius-4)',
-          backgroundColor: adamBackgroundColor,
+          backgroundColor,
         }}
       >
         <Box
@@ -417,7 +419,7 @@ export const AssistantPlayer = ({ sources }: BasePlayerProps) => {
             resume()
             setMuted(false)
           }}
-          backgroundColor={adamBackgroundColor}
+          backgroundColor={backgroundColor}
         />
 
         {showMuteToggle ? (

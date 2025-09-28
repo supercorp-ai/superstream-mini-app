@@ -11,6 +11,7 @@ import { PostHogProvider } from '@/components/posthog/PostHogProvider'
 import PostHogPageView from '@/components/posthog/PostHogPageView'
 import { getTranslations } from 'next-intl/server'
 import { ToastsProvider } from '@/components/toasts/ToastsProvider'
+import { QueryProvider } from '@/components/query/QueryProvider'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -65,16 +66,18 @@ export default async function Layout({
               flexDirection: 'column',
             }}
           >
-            <ToastsProvider>
-              <PostHogProvider>
-                {children}
+            <QueryProvider>
+              <ToastsProvider>
+                <PostHogProvider>
+                  {children}
 
-                <Analytics />
-                <Suspense fallback={null}>
-                  <PostHogPageView />
-                </Suspense>
-              </PostHogProvider>
-            </ToastsProvider>
+                  <Analytics />
+                  <Suspense fallback={null}>
+                    <PostHogPageView />
+                  </Suspense>
+                </PostHogProvider>
+              </ToastsProvider>
+            </QueryProvider>
           </Theme>
         </NextIntlClientProvider>
       </body>

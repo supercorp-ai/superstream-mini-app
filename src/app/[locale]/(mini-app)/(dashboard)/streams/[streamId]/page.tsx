@@ -3,6 +3,9 @@ import { getCurrentUser } from '@/lib/users/getCurrentUser'
 import { StreamNotFound } from '@/components/streams/StreamNotFound'
 import { redirect } from '@/i18n/navigation'
 import type { Locale } from 'next-intl'
+import { getTranslations } from 'next-intl/server'
+import { findStreamConfig } from '@/lib/streams/streamConfigs'
+import { routing } from '@/i18n/routing'
 
 type Props = {
   params: Promise<{
@@ -22,9 +25,26 @@ export default async function Page(props: Props) {
     })
   }
 
-  if (params.streamId !== 'lista') {
+  const t = await getTranslations({
+    locale: routing.locales.includes(params.locale)
+      ? params.locale
+      : routing.defaultLocale,
+    namespace: 'lib.assistants.assistantConfigs',
+  })
+
+  const streamConfig = findStreamConfig({
+    t,
+    streamId: params.streamId,
+  })
+
+  if (!streamConfig) {
     return <StreamNotFound />
   }
 
-  return <Content />
+  return (
+    <Content
+      streamId={streamConfig.id}
+      backgroundColor={streamConfig.backgroundColor}
+    />
+  )
 }
