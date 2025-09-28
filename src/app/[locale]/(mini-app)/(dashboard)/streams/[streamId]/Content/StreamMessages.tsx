@@ -156,13 +156,12 @@ export const StreamMessages = ({ streamId }: { streamId: string }) => {
       <Flex
         direction="column"
         justify="end"
-        gap="2"
+        gap="var(--space-3)"
         style={{
           pointerEvents: 'none',
+          width: '100%',
           padding: 'var(--space-4)',
-          paddingBottom: isComposerOpen
-            ? 'calc(var(--space-6) + var(--space-4))'
-            : 'var(--space-4)',
+          paddingBottom: 'var(--space-3)',
         }}
       >
         <Box
