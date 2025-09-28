@@ -23,8 +23,6 @@ export const Content = ({
     return null
   }
 
-  console.log('Rendering Content for streamId:', streamId)
-
   return (
     <Flex
       direction="column"

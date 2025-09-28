@@ -1,6 +1,12 @@
 'use client'
 
-import { useEffect, useState, type ComponentProps, type ReactNode } from 'react'
+import {
+  useEffect,
+  useMemo,
+  useState,
+  type ComponentProps,
+  type ReactNode,
+} from 'react'
 import {
   ActivityLogIcon,
   ExclamationTriangleIcon,
@@ -301,8 +307,13 @@ const assistantStateContent: StateDictionary = {
 }
 
 export const ComputerUsePlayer = ({ streamConfig }: BasePlayerProps) => {
+  const computerUseSources = useMemo(
+    () => streamConfig.computerUseSources.map((source) => source.url),
+    [streamConfig.computerUseSources],
+  )
+
   const { videoRef, state, retry, resume } = useHlsPlayer({
-    sources: streamConfig.computerUseSources.map((s) => s.url),
+    sources: computerUseSources,
   })
 
   return (
@@ -362,9 +373,13 @@ export const ComputerUsePlayer = ({ streamConfig }: BasePlayerProps) => {
 }
 
 export const AssistantPlayer = ({ streamConfig }: BasePlayerProps) => {
-  console.log('Rendering AssistantPlayer with streamConfig:', streamConfig)
+  const assistantSources = useMemo(
+    () => streamConfig.assistantSources.map((source) => source.url),
+    [streamConfig.assistantSources],
+  )
+
   const { videoRef, state, retry, resume } = useHlsPlayer({
-    sources: streamConfig.assistantSources.map((s) => s.url),
+    sources: assistantSources,
   })
   const [muted, setMuted] = useState(true)
 

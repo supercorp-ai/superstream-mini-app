@@ -4,7 +4,6 @@ import { useState } from 'react'
 import { Link } from '@/i18n/navigation'
 import {
   Flex,
-  Box,
   Button,
   Dialog,
   VisuallyHidden,

@@ -41,7 +41,7 @@ const listaStreamConfig = ({
 }: {
   t: AssistantConfigsTranslations
 }): StreamConfig => ({
-  id: 'a1c19514-7623-400e-abeb-7b4defeebdbb',
+  id: '',
   title: 'Crypto opportunities with AI tools',
   status: StreamStatus.SOON,
   backgroundColor: '#EAE8AD',

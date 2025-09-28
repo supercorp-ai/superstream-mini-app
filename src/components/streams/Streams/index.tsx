@@ -1,5 +1,13 @@
 import { useMemo } from 'react'
-import { Flex, Box, Heading, ScrollArea, Card, Text } from '@radix-ui/themes'
+import {
+  Flex,
+  Box,
+  Heading,
+  ScrollArea,
+  Card,
+  Text,
+  Dialog,
+} from '@radix-ui/themes'
 import { useStreamConfigs } from '@/hooks/streams/useStreamConfigs'
 import { useAssistantConfigs } from '@/hooks/assistants/useAssistantConfigs'
 import type { StreamConfig, AssistantConfig } from '@/types'
@@ -103,17 +111,20 @@ const Stream = ({ streamConfig }: { streamConfig: StreamConfig }) => {
   }
 
   return (
-    <Link href={`/streams/${streamConfig.id}`}>
-      <StreamContent
-        assistantConfig={assistantConfig}
-        streamConfig={streamConfig}
-      />
-    </Link>
+    <Dialog.Close>
+      <Link href={`/streams/${streamConfig.id}`}>
+        <StreamContent
+          assistantConfig={assistantConfig}
+          streamConfig={streamConfig}
+        />
+      </Link>
+    </Dialog.Close>
   )
 }
 
 export const Streams = () => {
   const { streamConfigs } = useStreamConfigs()
+
   return (
     <Flex
       direction="column"
