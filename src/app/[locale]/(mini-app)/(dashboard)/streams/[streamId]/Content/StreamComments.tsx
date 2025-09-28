@@ -9,10 +9,9 @@ import {
   Card,
   Flex,
   IconButton,
-  Spinner,
   Text,
 } from '@radix-ui/themes'
-import { Cross2Icon, Pencil1Icon } from '@radix-ui/react-icons'
+import { Cross2Icon } from '@radix-ui/react-icons'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import {
   createStreamComment,
@@ -20,6 +19,7 @@ import {
 } from '@/lib/streams/comments/actions'
 
 const MAX_LENGTH = 140
+const MAX_VISIBLE_COMMENTS = 8
 const commentsQueryKey = (streamId: string) => ['streams', streamId, 'comments']
 const getRandomInterval = () => 10000 + Math.floor(Math.random() * 10000)
 
@@ -41,13 +41,12 @@ type UsernameResponse = {
   minimized_profile_picture_url?: string
 }
 
+// API functions
 const fetchComments = async ({ streamId }: { streamId: string }) => {
   const result = await listStreamComments({ streamId })
-
   if (!result?.data) {
     throw new Error(result?.serverError ?? 'Failed to fetch comments')
   }
-
   return result.data.comments as CommentPayload[]
 }
 
@@ -56,16 +55,13 @@ const fetchUsernames = async (addresses: string[]) => {
 
   const response = await fetch('https://usernames.worldcoin.org/api/v1/query', {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ addresses }),
   })
 
   if (!response.ok) {
     throw new Error('Failed to load usernames')
   }
-
   return (await response.json()) as UsernameResponse[]
 }
 
@@ -77,50 +73,280 @@ const sendComment = async ({
   content: string
 }) => {
   const result = await createStreamComment({ streamId, content })
-
   if (!result?.data) {
     throw new Error(result?.serverError ?? 'Failed to send comment')
   }
-
   return result.data.comment as CommentPayload
 }
 
+// Helper function
 const truncateAddress = (address: string) =>
   address.length > 10 ? `${address.slice(0, 6)}…${address.slice(-4)}` : address
 
+// Comment Item Component
+const CommentItem = ({
+  comment,
+  usernameMap,
+}: {
+  comment: CommentPayload
+  usernameMap: Map<string, UsernameResponse>
+}) => {
+  const lookup = usernameMap.get(comment.user.address.toLowerCase())
+  const displayName =
+    lookup?.username ??
+    comment.user.name ??
+    truncateAddress(comment.user.address)
+  const avatarSrc =
+    lookup?.minimized_profile_picture_url ?? lookup?.profile_picture_url
+
+  return (
+    <Flex
+      align="start"
+      gap="2"
+      maxWidth="80%"
+      style={{ flexShrink: 0 }}
+    >
+      <Avatar
+        size="1"
+        src={avatarSrc}
+        radius="full"
+        fallback={displayName[0]?.toUpperCase() ?? 'U'}
+        width="4"
+        height="4"
+        style={{
+          minWidth: 'var(--space-4)',
+          marginTop: 'var(--space-1)',
+          boxShadow: '0 0 6px rgba(0,0,0,0.4)',
+        }}
+      />
+      <Flex
+        direction="column"
+        gap="1"
+        style={{ minWidth: 0, flex: 1 }}
+      >
+        <Text
+          size="1"
+          weight="medium"
+          style={{
+            color: 'white',
+            textShadow: '0 1px 3px rgba(0,0,0,0.9)',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap',
+          }}
+        >
+          {displayName}
+        </Text>
+        <Text
+          size="1"
+          style={{
+            color: 'white',
+            textShadow: '0 1px 3px rgba(0,0,0,0.9)',
+            whiteSpace: 'pre-wrap',
+            wordBreak: 'break-word',
+          }}
+        >
+          {comment.content}
+        </Text>
+      </Flex>
+    </Flex>
+  )
+}
+
+// Comment Composer Component
+const CommentComposer = ({
+  comment,
+  setComment,
+  onSubmit,
+  onClose,
+  isSubmitting,
+  error,
+}: {
+  comment: string
+  setComment: (value: string) => void
+  onSubmit: (content: string) => void
+  onClose: () => void
+  isSubmitting: boolean
+  error: string | null
+}) => {
+  const textareaRef = useRef<HTMLTextAreaElement>(null)
+  const isOverLimit = comment.length > MAX_LENGTH
+  const trimmedComment = comment.trim()
+  const isSubmitDisabled =
+    isSubmitting || trimmedComment.length === 0 || isOverLimit
+
+  useEffect(() => {
+    const timeout = setTimeout(() => textareaRef.current?.focus(), 20)
+    return () => clearTimeout(timeout)
+  }, [])
+
+  return (
+    <form
+      onSubmit={(e) => {
+        e.preventDefault()
+        if (!isSubmitDisabled) onSubmit(trimmedComment)
+      }}
+    >
+      <Card
+        variant="surface"
+        size="1"
+        style={{ boxShadow: 'var(--shadow-4)' }}
+      >
+        <Flex
+          justify="end"
+          mb="1"
+          position="absolute"
+          top="3"
+          right="3"
+        >
+          <IconButton
+            size="1"
+            variant="ghost"
+            color="gray"
+            onClick={onClose}
+            type="button"
+          >
+            <Cross2Icon />
+          </IconButton>
+        </Flex>
+
+        <Box asChild>
+          <textarea
+            ref={textareaRef}
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
+            placeholder="Type…"
+            rows={1}
+            style={{
+              width: '100%',
+              resize: 'none',
+              border: isOverLimit
+                ? '1px solid var(--red-9)'
+                : '1px solid transparent',
+              outline: 'none',
+              background: 'transparent',
+              color: 'inherit',
+            }}
+          />
+        </Box>
+
+        {error && (
+          <Text
+            size="1"
+            color="red"
+            mt="2"
+          >
+            {error}
+          </Text>
+        )}
+
+        {isOverLimit && (
+          <Text
+            size="1"
+            color="red"
+            mt="2"
+          >
+            Comment is too long (140 characters max).
+          </Text>
+        )}
+
+        <Flex
+          justify="end"
+          mt="3"
+        >
+          <Button
+            type="submit"
+            loading={isSubmitting}
+            disabled={isSubmitDisabled}
+          >
+            Send
+          </Button>
+        </Flex>
+      </Card>
+    </form>
+  )
+}
+
+// Comments List Component
+const CommentsList = ({
+  comments,
+  usernameMap,
+  isLoading,
+  isError,
+}: {
+  comments: CommentPayload[]
+  usernameMap: Map<string, UsernameResponse>
+  isLoading: boolean
+  isError: boolean
+}) => {
+  const commentsEndRef = useRef<HTMLDivElement>(null)
+
+  // Keep only the most recent comments and auto-scroll
+  const visibleComments = useMemo(() => {
+    return comments.slice(-MAX_VISIBLE_COMMENTS)
+  }, [comments])
+
+  // Auto-scroll to bottom when new comments arrive
+  useEffect(() => {
+    commentsEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }, [visibleComments.length])
+
+  if (isLoading) return null
+
+  return (
+    <Box
+      style={{
+        maxHeight: '150px',
+        overflowY: 'auto',
+        maskImage:
+          'linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%)',
+        WebkitMaskImage:
+          'linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%)',
+      }}
+    >
+      <Flex
+        direction="column"
+        gap="2"
+      >
+        {isError ? (
+          <Text color="red">Unable to load recent comments.</Text>
+        ) : visibleComments.length > 0 ? (
+          <>
+            {visibleComments.map((comment) => (
+              <CommentItem
+                key={comment.id}
+                comment={comment}
+                usernameMap={usernameMap}
+              />
+            ))}
+            <div ref={commentsEndRef} />
+          </>
+        ) : (
+          <Text color="gray">No comments yet. Start the conversation.</Text>
+        )}
+      </Flex>
+    </Box>
+  )
+}
+
+// Main Component
 export const StreamComments = ({ streamId }: { streamId: string }) => {
   const queryClient = useQueryClient()
   const [comment, setComment] = useState('')
   const [isComposerOpen, setIsComposerOpen] = useState(false)
-  const textareaRef = useRef<HTMLTextAreaElement>(null)
 
-  useEffect(() => {
-    if (!isComposerOpen) return
-    const timeout = window.setTimeout(() => textareaRef.current?.focus(), 20)
-    return () => window.clearTimeout(timeout)
-  }, [isComposerOpen])
-
+  // Queries
   const commentsQuery = useQuery({
     queryKey: commentsQueryKey(streamId),
     queryFn: () => fetchComments({ streamId }),
-    refetchInterval: () => getRandomInterval(),
+    refetchInterval: getRandomInterval,
     retry: 3,
     retryDelay: (attempt) => Math.min(1500 * 2 ** attempt, 15000),
     staleTime: 10000,
   })
 
-  const mutation = useMutation({
-    mutationFn: ({ content }: { content: string }) =>
-      sendComment({ streamId, content }),
-    onSuccess: () => {
-      setComment('')
-      setIsComposerOpen(false)
-      queryClient.invalidateQueries({ queryKey: commentsQueryKey(streamId) })
-    },
-  })
-
   const participantAddresses = useMemo(() => {
-    if (!commentsQuery.data) return [] as string[]
+    if (!commentsQuery.data?.length) return []
     return Array.from(
       new Set(
         commentsQuery.data.map((item) => item.user.address.toLowerCase()),
@@ -142,10 +368,16 @@ export const StreamComments = ({ streamId }: { streamId: string }) => {
     )
   }, [usernamesQuery.data])
 
-  const isOverLimit = comment.length > MAX_LENGTH
-  const trimmedComment = comment.trim()
-  const isSubmitDisabled =
-    mutation.isPending || trimmedComment.length === 0 || isOverLimit
+  // Mutation
+  const mutation = useMutation({
+    mutationFn: ({ content }: { content: string }) =>
+      sendComment({ streamId, content }),
+    onSuccess: () => {
+      setComment('')
+      setIsComposerOpen(false)
+      queryClient.invalidateQueries({ queryKey: commentsQueryKey(streamId) })
+    },
+  })
 
   return (
     <Theme appearance="dark">
@@ -156,255 +388,55 @@ export const StreamComments = ({ streamId }: { streamId: string }) => {
         justify="end"
         style={{ pointerEvents: 'none', zIndex: 2 }}
       >
-        <Flex
-          direction="column"
-          justify="end"
-          gap="var(--space-3)"
-          style={{
-            pointerEvents: 'none',
-            width: '100%',
-            padding: 'var(--space-4)',
-            paddingBottom: 'var(--space-3)',
-          }}
+        <Box
+          p="4"
+          pb="3"
+          width="100%"
+          style={{ pointerEvents: 'none' }}
         >
-          <Box
-            style={{
-              position: 'relative',
-              pointerEvents: 'none',
-              maxHeight: '240px',
-              overflow: 'hidden',
-            }}
+          <Flex
+            direction="column"
+            gap="3"
           >
-            {!isComposerOpen && (
-              <Box
-                style={{
-                  position: 'absolute',
-                  inset: 0,
-                  background:
-                    'linear-gradient(to top, rgba(18,18,18,0.85) 0%, rgba(18,18,18,0.45) 45%, rgba(18,18,18,0.12) 70%, rgba(18,18,18,0) 100%)',
-                  pointerEvents: 'none',
-                }}
-              />
-            )}
+            <CommentsList
+              comments={commentsQuery.data ?? []}
+              usernameMap={usernameMap}
+              isLoading={commentsQuery.isLoading}
+              isError={commentsQuery.isError}
+            />
 
             <Flex
+              flexGrow="1"
               direction="column"
-              gap="2"
-              style={{
-                position: 'relative',
-                zIndex: 1,
-                maskImage:
-                  'linear-gradient(to top, rgba(0,0,0,1) 65%, rgba(0,0,0,0) 100%)',
-                WebkitMaskImage:
-                  'linear-gradient(to top, rgba(0,0,0,1) 65%, rgba(0,0,0,0) 100%)',
-                pointerEvents: 'none',
-              }}
+              style={{ pointerEvents: 'auto' }}
             >
-              {commentsQuery.isLoading ? (
-                <Flex
-                  align="center"
-                  justify="center"
-                  style={{ minHeight: 64 }}
-                >
-                  <Spinner />
-                </Flex>
-              ) : commentsQuery.isError ? (
-                <Text color="red">Unable to load recent comments.</Text>
-              ) : commentsQuery.data && commentsQuery.data.length > 0 ? (
-                commentsQuery.data.map((item) => {
-                  const lookup = usernameMap.get(
-                    item.user.address.toLowerCase(),
-                  )
-                  const displayName = lookup?.username ?? item.user.name ?? ''
-                  const avatarSrc =
-                    lookup?.minimized_profile_picture_url ??
-                    lookup?.profile_picture_url ??
-                    undefined
-
-                  return (
-                    <Flex
-                      key={item.id}
-                      align="start"
-                      gap="2"
-                      style={{
-                        alignSelf: 'flex-start',
-                        pointerEvents: 'none',
-                        maxWidth: '80%',
-                        flexShrink: 0,
-                      }}
-                    >
-                      <Avatar
-                        size="1"
-                        src={avatarSrc}
-                        radius="full"
-                        fallback={displayName[0]?.toUpperCase() ?? 'U'}
-                        style={{
-                          width: 'var(--space-4)',
-                          height: 'var(--space-4)',
-                          minWidth: 'var(--space-4)',
-                          flexShrink: 0,
-                          marginTop: 'var(--space-1)',
-                          boxShadow: '0 0 6px rgba(0,0,0,0.4)',
-                        }}
-                      />
-
-                      <Flex
-                        direction="column"
-                        style={{
-                          flex: 1,
-                          minWidth: 0,
-                          color: 'white',
-                          textShadow: '0 1px 3px rgba(0,0,0,0.9)',
-                        }}
-                      >
-                        <Text
-                          size="1"
-                          weight="medium"
-                          color="gray"
-                          style={{
-                            overflow: 'hidden',
-                            textOverflow: 'ellipsis',
-                            whiteSpace: 'nowrap',
-                          }}
-                        >
-                          @{displayName}
-                        </Text>
-                        <Text
-                          size="1"
-                          color="gray"
-                          highContrast
-                          style={{
-                            whiteSpace: 'pre-wrap',
-                            wordBreak: 'break-word',
-                          }}
-                        >
-                          {item.content}
-                        </Text>
-                      </Flex>
-                    </Flex>
-                  )
-                })
+              {isComposerOpen ? (
+                <CommentComposer
+                  comment={comment}
+                  setComment={setComment}
+                  onSubmit={(content) => mutation.mutate({ content })}
+                  onClose={() => setIsComposerOpen(false)}
+                  isSubmitting={mutation.isPending}
+                  error={mutation.error?.message ?? null}
+                />
               ) : (
-                <Text color="gray">
-                  No comments yet. Start the conversation.
-                </Text>
-              )}
-            </Flex>
-          </Box>
-
-          <Box style={{ width: '100%', pointerEvents: 'auto' }}>
-            {isComposerOpen ? (
-              <form
-                onSubmit={(event) => {
-                  event.preventDefault()
-                  if (isSubmitDisabled) return
-                  mutation.mutate({ content: trimmedComment })
-                }}
-              >
-                <Card
-                  variant="surface"
-                  size="1"
+                <Button
+                  radius="full"
+                  onClick={() => setIsComposerOpen(true)}
                   style={{
-                    position: 'relative',
-                    border: isOverLimit ? '1px solid var(--red-9)' : undefined,
-                    boxShadow: 'var(--shadow-4)',
+                    width: '100%',
+                    justifyContent: 'flex-start',
+                    gap: 'var(--space-2)',
+                    backgroundColor: 'var(--gray-4)',
+                    opacity: 0.5,
                   }}
                 >
-                  <Flex
-                    justify="end"
-                    mb="1"
-                    position="absolute"
-                    top="var(--space-3)"
-                    right="var(--space-3)"
-                  >
-                    <IconButton
-                      size="1"
-                      variant="ghost"
-                      color="gray"
-                      onClick={() => setIsComposerOpen(false)}
-                      type="button"
-                    >
-                      <Cross2Icon />
-                    </IconButton>
-                  </Flex>
-
-                  <Box
-                    asChild
-                    style={{
-                      border: isOverLimit
-                        ? '1px solid var(--red-9)'
-                        : '1px solid transparent',
-                    }}
-                  >
-                    <textarea
-                      ref={textareaRef}
-                      value={comment}
-                      onChange={(event) => setComment(event.target.value)}
-                      placeholder="Type…"
-                      rows={1}
-                      style={{
-                        width: '100%',
-                        resize: 'none',
-                        border: 'none',
-                        outline: 'none',
-                        background: 'transparent',
-                        color: 'inherit',
-                      }}
-                    />
-                  </Box>
-
-                  {mutation.isError ? (
-                    <Text
-                      size="1"
-                      color="red"
-                      mt="2"
-                    >
-                      {mutation.error?.message}
-                    </Text>
-                  ) : null}
-
-                  {isOverLimit ? (
-                    <Text
-                      size="1"
-                      color="red"
-                      mt="2"
-                    >
-                      Comment is too long (140 characters max).
-                    </Text>
-                  ) : null}
-
-                  <Flex
-                    justify="end"
-                    mt="3"
-                  >
-                    <Button
-                      type="submit"
-                      loading={mutation.isPending}
-                      disabled={isSubmitDisabled}
-                    >
-                      Send
-                    </Button>
-                  </Flex>
-                </Card>
-              </form>
-            ) : (
-              <Button
-                radius="full"
-                onClick={() => setIsComposerOpen(true)}
-                style={{
-                  width: '100%',
-                  justifyContent: 'flex-start',
-                  pointerEvents: 'auto',
-                  gap: 'var(--space-2)',
-                  backgroundColor: 'var(--gray-4)',
-                  opacity: 0.5,
-                }}
-              >
-                <Text size="1">Type…</Text>
-              </Button>
-            )}
-          </Box>
-        </Flex>
+                  <Text size="1">Type…</Text>
+                </Button>
+              )}
+            </Flex>
+          </Flex>
+        </Box>
       </Flex>
     </Theme>
   )
