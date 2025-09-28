@@ -314,9 +314,8 @@ export const ComputerUsePlayer = ({ sources }: BasePlayerProps) => {
         width="100%"
         overflow="hidden"
         style={{
-          borderRadius: 'var(--radius-4)',
-          backgroundColor: '#fff',
-          aspectRatio: '16 / 9',
+          backgroundColor: '#000',
+          height: '100%',
         }}
       >
         <Box
@@ -332,9 +331,10 @@ export const ComputerUsePlayer = ({ sources }: BasePlayerProps) => {
             playsInline
             style={{
               width: '100%',
-              height: '100%',
-              objectFit: 'contain',
-              backgroundColor: 'transparent',
+              height: 'auto',
+              minHeight: '100%',
+              display: 'block',
+              backgroundColor: '#000',
             }}
           />
         </Box>
@@ -386,7 +386,6 @@ export const AssistantPlayer = ({
         overflow="hidden"
         style={{
           aspectRatio: '16 / 9',
-          borderRadius: 'var(--radius-4)',
           backgroundColor,
         }}
       >

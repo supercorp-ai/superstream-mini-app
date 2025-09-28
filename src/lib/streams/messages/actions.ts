@@ -61,7 +61,7 @@ const createMessageSchema = streamIdSchema.extend({
     .string()
     .trim()
     .min(1, 'Message cannot be empty')
-    .max(2000, 'Message is too long'),
+    .max(140, 'Message is too long'),
 })
 
 export const listStreamMessages = authActionClient

@@ -1,18 +1,44 @@
 'use client'
 
-import { useState, useMemo } from 'react'
-import { Box, Button, Flex, Spinner, Text } from '@radix-ui/themes'
-import { useFormatter } from 'next-intl'
+import { useEffect, useMemo, useRef, useState } from 'react'
+import {
+  Avatar,
+  Box,
+  Button,
+  Card,
+  Flex,
+  IconButton,
+  Spinner,
+  Text,
+} from '@radix-ui/themes'
+import { Cross2Icon, Pencil1Icon } from '@radix-ui/react-icons'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-
-const messagesQueryKey = (streamId: string) => ['streams', streamId, 'messages']
-
-const getRandomInterval = () => 10000 + Math.floor(Math.random() * 10000)
-
 import {
   createStreamMessage,
   listStreamMessages,
 } from '@/lib/streams/messages/actions'
+
+const MAX_LENGTH = 140
+const messagesQueryKey = (streamId: string) => ['streams', streamId, 'messages']
+const getRandomInterval = () => 10000 + Math.floor(Math.random() * 10000)
+
+export type MessagePayload = {
+  id: string
+  content: string
+  createdAt: string
+  user: {
+    id: string
+    name: string | null
+    address: string
+  }
+}
+
+type UsernameResponse = {
+  username: string
+  address: string
+  profile_picture_url?: string
+  minimized_profile_picture_url?: string
+}
 
 const fetchMessages = async ({ streamId }: { streamId: string }) => {
   const result = await listStreamMessages({ streamId })
@@ -22,6 +48,24 @@ const fetchMessages = async ({ streamId }: { streamId: string }) => {
   }
 
   return result.data.messages as MessagePayload[]
+}
+
+const fetchUsernames = async (addresses: string[]) => {
+  if (addresses.length === 0) return [] as UsernameResponse[]
+
+  const response = await fetch('https://usernames.worldcoin.org/api/v1/query', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ addresses }),
+  })
+
+  if (!response.ok) {
+    throw new Error('Failed to load usernames')
+  }
+
+  return (await response.json()) as UsernameResponse[]
 }
 
 const sendMessage = async ({
@@ -40,30 +84,28 @@ const sendMessage = async ({
   return result.data.message as MessagePayload
 }
 
-const MAX_LENGTH = 2000
-
-export type MessagePayload = {
-  id: string
-  content: string
-  createdAt: string
-  user: {
-    id: string
-    name: string | null
-    address: string
-  }
-}
+const truncateAddress = (address: string) =>
+  address.length > 10 ? `${address.slice(0, 6)}…${address.slice(-4)}` : address
 
 export const StreamMessages = ({ streamId }: { streamId: string }) => {
-  const format = useFormatter()
   const queryClient = useQueryClient()
   const [message, setMessage] = useState('')
+  const [isComposerOpen, setIsComposerOpen] = useState(false)
+  const textareaRef = useRef<HTMLTextAreaElement>(null)
 
-  const query = useQuery({
+  useEffect(() => {
+    if (!isComposerOpen) return
+    const timeout = window.setTimeout(() => textareaRef.current?.focus(), 20)
+    return () => window.clearTimeout(timeout)
+  }, [isComposerOpen])
+
+  const messagesQuery = useQuery({
     queryKey: messagesQueryKey(streamId),
     queryFn: () => fetchMessages({ streamId }),
     refetchInterval: () => getRandomInterval(),
     retry: 3,
     retryDelay: (attempt) => Math.min(1500 * 2 ** attempt, 15000),
+    staleTime: 10000,
   })
 
   const mutation = useMutation({
@@ -75,151 +117,280 @@ export const StreamMessages = ({ streamId }: { streamId: string }) => {
     },
   })
 
-  const isSubmitDisabled = mutation.isPending || message.trim().length === 0
+  const participantAddresses = useMemo(() => {
+    if (!messagesQuery.data) return [] as string[]
+    return Array.from(
+      new Set(
+        messagesQuery.data.map((item) => item.user.address.toLowerCase()),
+      ),
+    )
+  }, [messagesQuery.data])
 
-  const remaining = useMemo(() => MAX_LENGTH - message.length, [message.length])
+  const usernamesQuery = useQuery({
+    queryKey: ['usernames', participantAddresses.sort().join(',')],
+    queryFn: () => fetchUsernames(participantAddresses),
+    enabled: participantAddresses.length > 0,
+    staleTime: 60_000,
+  })
+
+  const usernameMap = useMemo(() => {
+    if (!usernamesQuery.data) return new Map<string, UsernameResponse>()
+    return new Map(
+      usernamesQuery.data.map((item) => [item.address.toLowerCase(), item]),
+    )
+  }, [usernamesQuery.data])
+
+  const isOverLimit = message.length > MAX_LENGTH
+  const trimmedMessage = message.trim()
+  const isSubmitDisabled =
+    mutation.isPending || trimmedMessage.length === 0 || isOverLimit
 
   return (
     <Flex
+      position="absolute"
+      inset="0"
       direction="column"
-      gap="4"
-      mt="6"
+      justify="end"
+      p="4"
+      style={{
+        pointerEvents: 'none',
+        position: 'absolute',
+        zIndex: 2,
+        flex: 1,
+      }}
     >
       <Box
         style={{
-          borderRadius: 'var(--radius-4)',
-          border: '1px solid var(--gray-a6)',
-          backgroundColor: 'white',
-          padding: 'var(--space-4)',
-          minHeight: 200,
+          position: 'absolute',
+          inset: 0,
+          background:
+            'linear-gradient(to top, rgba(12,12,12,0.72) 0%, rgba(12,12,12,0.45) 35%, rgba(12,12,12,0) 100%)',
+          pointerEvents: 'none',
+          zIndex: 1,
+        }}
+      />
+
+      <Flex
+        direction="column"
+        justify="end"
+        gap="2"
+        style={{
+          maxHeight: '30%',
+          overflow: 'hidden',
+          pointerEvents: 'none',
+          position: 'relative',
+          zIndex: 2,
         }}
       >
-        {query.isLoading ? (
+        {messagesQuery.isLoading ? (
           <Flex
             align="center"
             justify="center"
-            style={{ minHeight: 120 }}
+            style={{ minHeight: 64 }}
           >
             <Spinner />
           </Flex>
-        ) : query.isError ? (
+        ) : messagesQuery.isError ? (
           <Text color="red">Unable to load recent messages.</Text>
-        ) : query.data?.length ? (
-          <Flex
-            direction="column"
-            gap="3"
-          >
-            {query.data.map((item) => {
-              const formattedTime = format.dateTime(new Date(item.createdAt), {
-                hour: 'numeric',
-                minute: '2-digit',
-                second: '2-digit',
-              })
+        ) : messagesQuery.data && messagesQuery.data.length > 0 ? (
+          messagesQuery.data.map((item) => {
+            const lookup = usernameMap.get(item.user.address.toLowerCase())
+            const displayName =
+              lookup?.username ??
+              item.user.name ??
+              truncateAddress(item.user.address)
+            const avatarSrc =
+              lookup?.minimized_profile_picture_url ??
+              lookup?.profile_picture_url ??
+              undefined
 
-              return (
-                <Box
-                  key={item.id}
+            return (
+              <Flex
+                key={item.id}
+                align="start"
+                gap="2"
+                style={{
+                  alignSelf: 'flex-start',
+                  pointerEvents: 'none',
+                  maxWidth: '85%',
+                  flexShrink: 0,
+                }}
+              >
+                <Avatar
+                  size="1"
+                  src={avatarSrc}
+                  radius="full"
+                  fallback={displayName[0]?.toUpperCase() ?? 'U'}
                   style={{
-                    padding: 'var(--space-3)',
+                    width: 'var(--space-5)',
+                    height: 'var(--space-5)',
+                    minWidth: 'var(--space-5)',
+                    flexShrink: 0,
+                  }}
+                />
+
+                <Flex
+                  direction="column"
+                  gap="1"
+                  style={{
+                    flex: 1,
+                    minWidth: 0,
+                    color: 'white',
+                    textShadow: '0 1px 3px rgba(0,0,0,0.85)',
+                    background: 'rgba(12,12,12,0.35)',
+                    backdropFilter: 'blur(6px)',
+                    padding: 'var(--space-2) var(--space-3)',
                     borderRadius: 'var(--radius-3)',
-                    backgroundColor: 'var(--gray-a2)',
                   }}
                 >
-                  <Flex
-                    justify="between"
-                    align="center"
-                    mb="1"
+                  <Text
+                    size="1"
+                    weight="medium"
+                    style={{
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                      whiteSpace: 'nowrap',
+                    }}
                   >
-                    <Text
-                      size="2"
-                      weight="medium"
-                    >
-                      {item.user.name ?? item.user.address}
-                    </Text>
-                    <Text
-                      size="1"
-                      color="gray"
-                    >
-                      {formattedTime}
-                    </Text>
-                  </Flex>
-
-                  <Text size="2">{item.content}</Text>
-                </Box>
-              )
-            })}
-          </Flex>
+                    {displayName}
+                  </Text>
+                  <Text
+                    size="1"
+                    style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}
+                  >
+                    {item.content}
+                  </Text>
+                </Flex>
+              </Flex>
+            )
+          })
         ) : (
           <Text color="gray">No messages yet. Start the conversation.</Text>
         )}
-      </Box>
+      </Flex>
 
-      <form
-        onSubmit={(event) => {
-          event.preventDefault()
-          if (isSubmitDisabled) return
-          mutation.mutate({ content: message.trim() })
-        }}
-      >
-        <Flex
-          direction="column"
-          gap="2"
-        >
-          <Box
-            asChild
+      <Box mt="3">
+        {isComposerOpen ? (
+          <form
+            onSubmit={(event) => {
+              event.preventDefault()
+              if (isSubmitDisabled) return
+              mutation.mutate({ content: trimmedMessage })
+            }}
+            style={{ pointerEvents: 'auto', position: 'relative', zIndex: 3 }}
+          >
+            <Card
+              variant="surface"
+              style={{
+                border: isOverLimit
+                  ? '1px solid var(--red-9)'
+                  : '1px solid var(--gray-a5)',
+                padding: 'var(--space-3)',
+                backgroundColor: 'white',
+              }}
+            >
+              <Flex
+                justify="between"
+                align="center"
+                mb="2"
+              >
+                <Text
+                  size="1"
+                  color="gray"
+                >
+                  New message
+                </Text>
+                <IconButton
+                  size="1"
+                  variant="ghost"
+                  color="gray"
+                  onClick={() => setIsComposerOpen(false)}
+                  type="button"
+                >
+                  <Cross2Icon />
+                </IconButton>
+              </Flex>
+
+              <Box
+                asChild
+                style={{
+                  borderRadius: 'var(--radius-3)',
+                  border: isOverLimit
+                    ? '1px solid var(--red-9)'
+                    : '1px solid transparent',
+                  backgroundColor: 'var(--color-surface)',
+                  overflow: 'hidden',
+                }}
+              >
+                <textarea
+                  ref={textareaRef}
+                  value={message}
+                  onChange={(event) => setMessage(event.target.value)}
+                  placeholder="Type…"
+                  rows={1}
+                  style={{
+                    width: '100%',
+                    padding: 'var(--space-3)',
+                    resize: 'none',
+                    border: 'none',
+                    outline: 'none',
+                    background: 'transparent',
+                    color: 'inherit',
+                  }}
+                />
+              </Box>
+
+              {mutation.isError ? (
+                <Text
+                  size="1"
+                  color="red"
+                  mt="2"
+                >
+                  {mutation.error?.message}
+                </Text>
+              ) : null}
+
+              {isOverLimit ? (
+                <Text
+                  size="1"
+                  color="red"
+                  mt="2"
+                >
+                  Message is too long (140 characters max).
+                </Text>
+              ) : null}
+
+              <Flex
+                justify="end"
+                mt="3"
+              >
+                <Button
+                  type="submit"
+                  loading={mutation.isPending}
+                  disabled={isSubmitDisabled}
+                >
+                  Send
+                </Button>
+              </Flex>
+            </Card>
+          </form>
+        ) : (
+          <Button
+            variant="surface"
+            color="gray"
+            onClick={() => setIsComposerOpen(true)}
             style={{
-              borderRadius: 'var(--radius-3)',
-              border: '1px solid var(--gray-a6)',
-              backgroundColor: 'white',
-              overflow: 'hidden',
+              width: '100%',
+              justifyContent: 'flex-start',
+              pointerEvents: 'auto',
+              gap: 'var(--space-2)',
             }}
           >
-            <textarea
-              value={message}
-              onChange={(event) => {
-                const nextValue = event.target.value
-                if (nextValue.length <= MAX_LENGTH) {
-                  setMessage(nextValue)
-                }
-              }}
-              placeholder="Share an update with everyone"
-              rows={3}
-              style={{
-                width: '100%',
-                padding: 'var(--space-3)',
-                resize: 'none',
-                border: 'none',
-                outline: 'none',
-                background: 'transparent',
-              }}
-            />
-          </Box>
-
-          <Flex
-            justify="between"
-            align="center"
-          >
-            <Text
-              size="1"
-              color="gray"
-            >
-              {remaining} characters left
-            </Text>
-
-            <Button
-              type="submit"
-              loading={mutation.isPending}
-              disabled={isSubmitDisabled}
-            >
-              Send
-            </Button>
-          </Flex>
-
-          {mutation.isError ? (
-            <Text color="red">{mutation.error?.message}</Text>
-          ) : null}
-        </Flex>
-      </form>
+            <Pencil1Icon />
+            <Text size="1">Type…</Text>
+          </Button>
+        )}
+      </Box>
     </Flex>
   )
 }
