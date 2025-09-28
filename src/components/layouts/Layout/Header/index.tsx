@@ -133,6 +133,10 @@ export const Header = ({
       py="3"
       px="3"
       flexShrink="0"
+      style={{
+        backgroundColor: '#eae8ad',
+        zIndex: 9999,
+      }}
     >
       <Flex
         align="center"

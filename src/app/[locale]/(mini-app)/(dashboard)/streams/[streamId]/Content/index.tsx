@@ -17,13 +17,12 @@ export const Content = () => {
       direction="column"
       width="100%"
       height="100%"
-      gap="4"
     >
       <Box
         width="100%"
         style={{
           maxWidth: 720,
-          margin: '0 auto',
+          margin: '-3px auto 0',
         }}
       >
         <AssistantPlayer sources={assistantSources} />

@@ -7,6 +7,7 @@ import {
   SpeakerLoudIcon,
   SpeakerOffIcon,
   VideoIcon,
+  PersonIcon,
 } from '@radix-ui/react-icons'
 import {
   Badge,
@@ -299,7 +300,6 @@ export const ComputerUsePlayer = ({ sources }: BasePlayerProps) => {
         width="100%"
         overflow="hidden"
         style={{
-          borderRadius: 'var(--radius-4)',
           backgroundColor: '#fff',
           aspectRatio: '16 / 9',
         }}
@@ -379,7 +379,6 @@ export const AssistantPlayer = ({ sources }: BasePlayerProps) => {
         overflow="hidden"
         style={{
           aspectRatio: '16 / 9',
-          borderRadius: 'var(--radius-4)',
           backgroundColor: '#fff',
         }}
       >
@@ -417,7 +416,7 @@ export const AssistantPlayer = ({ sources }: BasePlayerProps) => {
         {showMuteToggle ? (
           <Box
             position="absolute"
-            top="var(--space-2)"
+            bottom="var(--space-2)"
             right="var(--space-2)"
           >
             <IconButton
@@ -433,38 +432,51 @@ export const AssistantPlayer = ({ sources }: BasePlayerProps) => {
         ) : null}
 
         {showLiveBadge ? (
-          <Box
+          <Flex
             position="absolute"
-            right="var(--space-2)"
-            top="var(--space-2)"
+            left="var(--space-2)"
+            bottom="var(--space-2)"
+            gap="1"
           >
             <Flex
               align="center"
               gap="2"
-              px="3"
+              px="2"
               py="1"
               style={{
                 borderRadius: '9999px',
-                backgroundColor: 'rgba(12, 12, 12, 0.8)',
+                backgroundColor: 'var(--red-10)',
                 color: 'white',
               }}
             >
-              <Box
-                style={{
-                  width: 8,
-                  height: 8,
-                  borderRadius: '9999px',
-                  backgroundColor: '#f53941',
-                }}
-              />
               <Text
-                size="2"
+                size="1"
                 weight="medium"
               >
-                LIVE {liveTime}
+                LIVE
               </Text>
             </Flex>
-          </Box>
+            <Flex
+              align="center"
+              gap="1"
+              px="2"
+              py="1"
+              style={{
+                borderRadius: '9999px',
+                backgroundColor: 'var(--gray-a10)',
+                color: 'white',
+              }}
+            >
+              <PersonIcon />
+
+              <Text
+                size="1"
+                weight="medium"
+              >
+                1
+              </Text>
+            </Flex>
+          </Flex>
         ) : null}
       </Box>
 
