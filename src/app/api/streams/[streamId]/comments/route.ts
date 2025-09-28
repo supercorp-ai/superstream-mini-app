@@ -61,6 +61,14 @@ export const GET = async (
     }
   }
 
+  const viewersCount = await prisma.user.count({
+    where: {
+      streamedMinutesCountLastUpdated: {
+        gte: dayjs().subtract(5, 'minute').toDate(),
+      },
+    },
+  })
+
   return NextResponse.json(
     {
       comments: await pMap(comments, async (comment) => ({
@@ -69,6 +77,7 @@ export const GET = async (
         createdAt: comment.createdAt,
         createdAtRelative: dayjs(comment.createdAt).fromNow(),
       })),
+      viewersCount,
     },
     { headers: cacheHeaders },
   )
