@@ -17,6 +17,7 @@ import {
   createStreamComment,
   listStreamComments,
 } from '@/lib/streams/comments/actions'
+import { MiniKit, VerificationLevel } from '@worldcoin/minikit-js'
 
 const MAX_LENGTH = 140
 const MAX_VISIBLE_COMMENTS = 8
@@ -72,7 +73,17 @@ const sendComment = async ({
   streamId: string
   content: string
 }) => {
-  const result = await createStreamComment({ streamId, content })
+  const { finalPayload: verifyPayload } = await MiniKit.commandsAsync.verify({
+    action: 'create-comment',
+    verification_level: VerificationLevel.Orb,
+  })
+
+  if (verifyPayload.status !== 'success') {
+    throw new Error('Verification failed')
+  }
+
+  const result = await createStreamComment({ streamId, content, verifyPayload })
+
   if (!result?.data) {
     throw new Error(result?.serverError ?? 'Failed to send comment')
   }
@@ -359,7 +370,7 @@ export const StreamComments = ({ streamId }: { streamId: string }) => {
     queryKey: ['usernames', participantAddresses.sort().join(',')],
     queryFn: () => fetchUsernames(participantAddresses),
     enabled: participantAddresses.length > 0,
-    staleTime: 60_000,
+    staleTime: 600_000,
   })
 
   const usernameMap = useMemo(() => {

@@ -7,6 +7,7 @@ import { getTranslations } from 'next-intl/server'
 import { routing } from '@/i18n/routing'
 import { findStreamConfig, streamConfigs } from '@/lib/streams/streamConfigs'
 import { ValidationError } from '@/lib/errors'
+import { verifyCloudProof } from '@worldcoin/minikit-js'
 
 const COMMENT_LIMIT = 20
 
@@ -62,6 +63,7 @@ const createCommentSchema = streamIdSchema.extend({
     .trim()
     .min(1, 'Comment cannot be empty')
     .max(140, 'Comment is too long'),
+  verifyPayload: z.any(),
 })
 
 export const listStreamComments = authActionClient
@@ -97,35 +99,47 @@ export const listStreamComments = authActionClient
 
 export const createStreamComment = authActionClient
   .schema(createCommentSchema)
-  .action(async ({ parsedInput: { streamId, content }, ctx }) => {
-    const { user } = ctx as { user: { id?: string } }
+  .action(
+    async ({ parsedInput: { streamId, content, verifyPayload }, ctx }) => {
+      const verifyResult = await verifyCloudProof(
+        verifyPayload,
+        process.env.NEXT_PUBLIC_MINIKIT_APP_ID as `app_${string}`,
+        'create-comment',
+      )
 
-    const streamConfig = await resolveStreamConfig(streamId)
+      if (!verifyResult.success) {
+        throw new ValidationError('Verification failed')
+      }
 
-    if (!streamConfig || streamConfig.id !== streamId) {
-      throw new ValidationError('Stream not found')
-    }
+      const { user } = ctx as { user: { id?: string } }
 
-    await ensureStreamExists(streamConfig.id)
+      const streamConfig = await resolveStreamConfig(streamId)
 
-    const comment = await prisma.comment.create({
-      data: {
-        content,
-        streamId: streamConfig.id,
-        userId: user.id!,
-      },
-      include: {
-        user: {
-          select: {
-            id: true,
-            name: true,
-            address: true,
+      if (!streamConfig || streamConfig.id !== streamId) {
+        throw new ValidationError('Stream not found')
+      }
+
+      await ensureStreamExists(streamConfig.id)
+
+      const comment = await prisma.comment.create({
+        data: {
+          content,
+          streamId: streamConfig.id,
+          userId: user.id!,
+        },
+        include: {
+          user: {
+            select: {
+              id: true,
+              name: true,
+              address: true,
+            },
           },
         },
-      },
-    })
+      })
 
-    return {
-      comment: serializeComment(comment),
-    }
-  })
+      return {
+        comment: serializeComment(comment),
+      }
+    },
+  )
