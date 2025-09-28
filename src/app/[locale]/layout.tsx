@@ -61,6 +61,7 @@ export default async function Layout({
             radius="large"
             accentColor="red"
             scaling="110%"
+            panelBackground="solid"
             style={{
               display: 'flex',
               flexDirection: 'column',

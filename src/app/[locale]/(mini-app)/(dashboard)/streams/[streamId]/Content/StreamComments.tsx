@@ -10,6 +10,7 @@ import {
   Flex,
   IconButton,
   Text,
+  TextArea,
 } from '@radix-ui/themes'
 import { Cross2Icon } from '@radix-ui/react-icons'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
@@ -199,47 +200,24 @@ const CommentComposer = ({
       }}
     >
       <Card
-        variant="surface"
         size="1"
         style={{ boxShadow: 'var(--shadow-4)' }}
       >
-        <Flex
-          justify="end"
-          mb="1"
-          position="absolute"
-          top="3"
-          right="3"
-        >
-          <IconButton
-            size="1"
-            variant="ghost"
-            color="gray"
-            onClick={onClose}
-            type="button"
-          >
-            <Cross2Icon />
-          </IconButton>
-        </Flex>
-
         <Box asChild>
-          <textarea
-            ref={textareaRef}
-            value={comment}
-            onChange={(e) => setComment(e.target.value)}
-            autoFocus
-            placeholder="Type…"
-            rows={1}
-            style={{
-              width: '100%',
-              resize: 'none',
-              border: isOverLimit
-                ? '1px solid var(--red-9)'
-                : '1px solid transparent',
-              outline: 'none',
-              background: 'transparent',
-              color: 'inherit',
-            }}
-          />
+          <Theme accentColor="gray">
+            <TextArea
+              ref={textareaRef}
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+              autoFocus
+              placeholder="Type…"
+              rows={1}
+              color="gray"
+              style={{
+                width: '100%',
+              }}
+            />
+          </Theme>
         </Box>
 
         {error && (
@@ -265,7 +243,16 @@ const CommentComposer = ({
         <Flex
           justify="end"
           mt="3"
+          gap="3"
         >
+          <Button
+            type="button"
+            onClick={onClose}
+            variant="soft"
+            color="gray"
+          >
+            Close
+          </Button>
           <Button
             type="submit"
             loading={isSubmitting}
