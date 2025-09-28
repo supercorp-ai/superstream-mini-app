@@ -1,3 +1,7 @@
+Other Superstream repositories:
+https://github.com/supercorp-ai/superstream-assistant
+https://github.com/supercorp-ai/computer-use-mcp
+
 Redeploy #2
 
 ## This template provides a minimal setup to get Next.js working with MiniKit
