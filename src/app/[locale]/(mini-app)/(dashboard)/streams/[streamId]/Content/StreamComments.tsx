@@ -215,6 +215,7 @@ const CommentComposer = ({
             ref={textareaRef}
             value={comment}
             onChange={(e) => setComment(e.target.value)}
+            autoFocus
             placeholder="Type…"
             rows={1}
             style={{
