@@ -151,262 +151,260 @@ export const StreamMessages = ({ streamId }: { streamId: string }) => {
       inset="0"
       direction="column"
       justify="end"
-      p="4"
-      style={{
-        pointerEvents: 'none',
-        position: 'absolute',
-        zIndex: 2,
-        flex: 1,
-      }}
+      style={{ pointerEvents: 'none', zIndex: 2 }}
     >
-      <Box
-        style={{
-          position: 'absolute',
-          inset: 0,
-          pointerEvents: 'none',
-          zIndex: 1,
-        }}
-      >
-        <Box
-          style={{
-            position: 'absolute',
-            inset: 0,
-            background:
-              'linear-gradient(to top, rgba(18,18,18,0.85) 0%, rgba(18,18,18,0.45) 45%, rgba(18,18,18,0.12) 70%, rgba(18,18,18,0) 100%)',
-            pointerEvents: 'none',
-          }}
-        />
-        <Box
-          style={{
-            position: 'absolute',
-            inset: '0',
-            maskImage:
-              'linear-gradient(to top, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 100%)',
-            background:
-              'linear-gradient(to top, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0) 60%)',
-            pointerEvents: 'none',
-          }}
-        />
-      </Box>
-
       <Flex
         direction="column"
         justify="end"
         gap="2"
         style={{
-          maxHeight: '30%',
-          overflow: 'hidden',
           pointerEvents: 'none',
-          position: 'relative',
-          zIndex: 2,
-          maskImage:
-            'linear-gradient(to top, rgba(0,0,0,1) 60%, rgba(0,0,0,0) 100%)',
-          WebkitMaskImage:
-            'linear-gradient(to top, rgba(0,0,0,1) 60%, rgba(0,0,0,0) 100%)',
+          padding: 'var(--space-4)',
+          paddingBottom: isComposerOpen
+            ? 'calc(var(--space-6) + var(--space-4))'
+            : 'var(--space-4)',
         }}
       >
-        {messagesQuery.isLoading ? (
+        <Box
+          style={{
+            position: 'relative',
+            pointerEvents: 'none',
+            maxHeight: '240px',
+            overflow: 'hidden',
+          }}
+        >
+          {!isComposerOpen && (
+            <Box
+              style={{
+                position: 'absolute',
+                inset: 0,
+                background:
+                  'linear-gradient(to top, rgba(18,18,18,0.85) 0%, rgba(18,18,18,0.45) 45%, rgba(18,18,18,0.12) 70%, rgba(18,18,18,0) 100%)',
+                pointerEvents: 'none',
+              }}
+            />
+          )}
+
           <Flex
-            align="center"
-            justify="center"
-            style={{ minHeight: 64 }}
+            direction="column"
+            gap="2"
+            style={{
+              position: 'relative',
+              zIndex: 1,
+              maskImage:
+                'linear-gradient(to top, rgba(0,0,0,1) 65%, rgba(0,0,0,0) 100%)',
+              WebkitMaskImage:
+                'linear-gradient(to top, rgba(0,0,0,1) 65%, rgba(0,0,0,0) 100%)',
+              pointerEvents: 'none',
+            }}
           >
-            <Spinner />
-          </Flex>
-        ) : messagesQuery.isError ? (
-          <Text color="red">Unable to load recent messages.</Text>
-        ) : messagesQuery.data && messagesQuery.data.length > 0 ? (
-          messagesQuery.data.map((item) => {
-            const lookup = usernameMap.get(item.user.address.toLowerCase())
-            const displayName =
-              lookup?.username ??
-              item.user.name ??
-              truncateAddress(item.user.address)
-            const avatarSrc =
-              lookup?.minimized_profile_picture_url ??
-              lookup?.profile_picture_url ??
-              undefined
-
-            return (
+            {messagesQuery.isLoading ? (
               <Flex
-                key={item.id}
-                align="start"
-                gap="2"
-                style={{
-                  alignSelf: 'flex-start',
-                  pointerEvents: 'none',
-                  maxWidth: '85%',
-                  flexShrink: 0,
-                }}
+                align="center"
+                justify="center"
+                style={{ minHeight: 64 }}
               >
-                <Avatar
-                  size="1"
-                  src={avatarSrc}
-                  radius="full"
-                  fallback={displayName[0]?.toUpperCase() ?? 'U'}
-                  style={{
-                    width: 'var(--space-4)',
-                    height: 'var(--space-4)',
-                    minWidth: 'var(--space-4)',
-                    flexShrink: 0,
-                    marginTop: 'var(--space-1)',
-                  }}
-                />
+                <Spinner />
+              </Flex>
+            ) : messagesQuery.isError ? (
+              <Text color="red">Unable to load recent messages.</Text>
+            ) : messagesQuery.data && messagesQuery.data.length > 0 ? (
+              messagesQuery.data.map((item) => {
+                const lookup = usernameMap.get(item.user.address.toLowerCase())
+                const displayName =
+                  lookup?.username ??
+                  item.user.name ??
+                  truncateAddress(item.user.address)
+                const avatarSrc =
+                  lookup?.minimized_profile_picture_url ??
+                  lookup?.profile_picture_url ??
+                  undefined
 
-                <Flex
-                  direction="column"
-                  gap="1"
-                  style={{
-                    flex: 1,
-                    minWidth: 0,
-                    color: 'white',
-                    textShadow: '0 1px 3px rgba(0,0,0,0.9)',
-                  }}
-                >
-                  <Text
-                    size="1"
-                    weight="medium"
+                return (
+                  <Flex
+                    key={item.id}
+                    align="start"
+                    gap="2"
                     style={{
-                      overflow: 'hidden',
-                      textOverflow: 'ellipsis',
-                      whiteSpace: 'nowrap',
+                      alignSelf: 'flex-start',
+                      pointerEvents: 'none',
+                      maxWidth: '80%',
+                      flexShrink: 0,
                     }}
                   >
-                    {displayName}
-                  </Text>
-                  <Text
-                    size="1"
-                    style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}
-                  >
-                    {item.content}
-                  </Text>
-                </Flex>
-              </Flex>
-            )
-          })
-        ) : (
-          <Text color="gray">No messages yet. Start the conversation.</Text>
-        )}
-      </Flex>
+                    <Avatar
+                      size="1"
+                      src={avatarSrc}
+                      radius="full"
+                      fallback={displayName[0]?.toUpperCase() ?? 'U'}
+                      style={{
+                        width: 'var(--space-4)',
+                        height: 'var(--space-4)',
+                        minWidth: 'var(--space-4)',
+                        flexShrink: 0,
+                        marginTop: 'var(--space-1)',
+                        boxShadow: '0 0 6px rgba(0,0,0,0.4)',
+                      }}
+                    />
 
-      <Box mt="3">
-        {isComposerOpen ? (
-          <form
-            onSubmit={(event) => {
-              event.preventDefault()
-              if (isSubmitDisabled) return
-              mutation.mutate({ content: trimmedMessage })
-            }}
-            style={{ pointerEvents: 'auto', position: 'relative', zIndex: 3 }}
-          >
-            <Card
-              variant="surface"
-              style={{
-                border: isOverLimit
-                  ? '1px solid var(--red-9)'
-                  : '1px solid var(--gray-a5)',
-                padding: 'var(--space-2) var(--space-3) var(--space-3)',
-                backgroundColor: 'white',
-                boxShadow: 'var(--shadow-4)',
+                    <Flex
+                      direction="column"
+                      gap="1"
+                      style={{
+                        flex: 1,
+                        minWidth: 0,
+                        color: 'white',
+                        textShadow: '0 1px 3px rgba(0,0,0,0.9)',
+                      }}
+                    >
+                      <Text
+                        size="1"
+                        weight="medium"
+                        style={{
+                          overflow: 'hidden',
+                          textOverflow: 'ellipsis',
+                          whiteSpace: 'nowrap',
+                        }}
+                      >
+                        {displayName}
+                      </Text>
+                      <Text
+                        size="1"
+                        style={{
+                          whiteSpace: 'pre-wrap',
+                          wordBreak: 'break-word',
+                        }}
+                      >
+                        {item.content}
+                      </Text>
+                    </Flex>
+                  </Flex>
+                )
+              })
+            ) : (
+              <Text color="gray">No messages yet. Start the conversation.</Text>
+            )}
+          </Flex>
+        </Box>
+
+        <Box style={{ width: '100%', pointerEvents: 'auto' }}>
+          {isComposerOpen ? (
+            <form
+              onSubmit={(event) => {
+                event.preventDefault()
+                if (isSubmitDisabled) return
+                mutation.mutate({ content: trimmedMessage })
               }}
             >
-              <Flex
-                justify="end"
-                mb="1"
-              >
-                <IconButton
-                  size="1"
-                  variant="ghost"
-                  color="gray"
-                  onClick={() => setIsComposerOpen(false)}
-                  type="button"
-                >
-                  <Cross2Icon />
-                </IconButton>
-              </Flex>
-
-              <Box
-                asChild
+              <Card
+                variant="surface"
                 style={{
-                  borderRadius: 'var(--radius-3)',
                   border: isOverLimit
                     ? '1px solid var(--red-9)'
-                    : '1px solid transparent',
-                  backgroundColor: 'var(--color-surface)',
-                  overflow: 'hidden',
+                    : '1px solid var(--gray-a5)',
+                  padding: 'var(--space-2) var(--space-3) var(--space-3)',
+                  backgroundColor: 'white',
+                  boxShadow: 'var(--shadow-4)',
                 }}
               >
-                <textarea
-                  ref={textareaRef}
-                  value={message}
-                  onChange={(event) => setMessage(event.target.value)}
-                  placeholder="Type…"
-                  rows={1}
+                <Flex
+                  justify="end"
+                  mb="1"
+                >
+                  <IconButton
+                    size="1"
+                    variant="ghost"
+                    color="gray"
+                    onClick={() => setIsComposerOpen(false)}
+                    type="button"
+                  >
+                    <Cross2Icon />
+                  </IconButton>
+                </Flex>
+
+                <Box
+                  asChild
                   style={{
-                    width: '100%',
-                    padding: 'var(--space-3)',
-                    resize: 'none',
-                    border: 'none',
-                    outline: 'none',
-                    background: 'transparent',
-                    color: 'inherit',
+                    borderRadius: 'var(--radius-3)',
+                    border: isOverLimit
+                      ? '1px solid var(--red-9)'
+                      : '1px solid transparent',
+                    backgroundColor: 'var(--color-surface)',
+                    overflow: 'hidden',
                   }}
-                />
-              </Box>
-
-              {mutation.isError ? (
-                <Text
-                  size="1"
-                  color="red"
-                  mt="2"
                 >
-                  {mutation.error?.message}
-                </Text>
-              ) : null}
+                  <textarea
+                    ref={textareaRef}
+                    value={message}
+                    onChange={(event) => setMessage(event.target.value)}
+                    placeholder="Type…"
+                    rows={1}
+                    style={{
+                      width: '100%',
+                      padding: 'var(--space-3)',
+                      resize: 'none',
+                      border: 'none',
+                      outline: 'none',
+                      background: 'transparent',
+                      color: 'inherit',
+                    }}
+                  />
+                </Box>
 
-              {isOverLimit ? (
-                <Text
-                  size="1"
-                  color="red"
-                  mt="2"
-                >
-                  Message is too long (140 characters max).
-                </Text>
-              ) : null}
+                {mutation.isError ? (
+                  <Text
+                    size="1"
+                    color="red"
+                    mt="2"
+                  >
+                    {mutation.error?.message}
+                  </Text>
+                ) : null}
 
-              <Flex
-                justify="end"
-                mt="3"
-              >
-                <Button
-                  type="submit"
-                  loading={mutation.isPending}
-                  disabled={isSubmitDisabled}
+                {isOverLimit ? (
+                  <Text
+                    size="1"
+                    color="red"
+                    mt="2"
+                  >
+                    Message is too long (140 characters max).
+                  </Text>
+                ) : null}
+
+                <Flex
+                  justify="end"
+                  mt="3"
                 >
-                  Send
-                </Button>
-              </Flex>
-            </Card>
-          </form>
-        ) : (
-          <Button
-            variant="surface"
-            color="gray"
-            onClick={() => setIsComposerOpen(true)}
-            style={{
-              width: '100%',
-              justifyContent: 'flex-start',
-              pointerEvents: 'auto',
-              gap: 'var(--space-2)',
-              backgroundColor: 'white',
-              boxShadow: 'var(--shadow-3)',
-            }}
-          >
-            <Pencil1Icon />
-            <Text size="1">Type…</Text>
-          </Button>
-        )}
-      </Box>
+                  <Button
+                    type="submit"
+                    loading={mutation.isPending}
+                    disabled={isSubmitDisabled}
+                  >
+                    Send
+                  </Button>
+                </Flex>
+              </Card>
+            </form>
+          ) : (
+            <Button
+              variant="surface"
+              color="gray"
+              onClick={() => setIsComposerOpen(true)}
+              style={{
+                width: '100%',
+                justifyContent: 'flex-start',
+                pointerEvents: 'auto',
+                gap: 'var(--space-2)',
+                backgroundColor: 'white',
+                boxShadow: 'var(--shadow-3)',
+              }}
+            >
+              <Pencil1Icon />
+              <Text size="1">Type…</Text>
+            </Button>
+          )}
+        </Box>
+      </Flex>
     </Flex>
   )
 }
