@@ -2,14 +2,20 @@ import { getCurrentUser } from '@/lib/users/getCurrentUser'
 import { getWorldcoinUser } from '@/lib/worldcoin/getWorldcoinUser'
 import type { Locale } from 'next-intl'
 import { WorldcoinUserNotFound } from '@/components/worldcoinUsers/WorldcoinUserNotFound'
-import { StreamNotFound } from '@/components/streams/StreamNotFound'
 import { redirect } from '@/i18n/navigation'
 import { Layout } from '@/components/layouts/Layout'
+import {
+  HeaderRoot,
+  LeftSection,
+  RightSectionRoot,
+  SupertokensButton,
+} from '@/components/layouts/Layout/Header'
 import { Sidebar } from '@/components/sidebars/Sidebar'
 import { streamConfigs, findStreamConfig } from '@/lib/streams/streamConfigs'
 import { hasLocale } from 'next-intl'
 import { getTranslations } from 'next-intl/server'
 import { routing } from '@/i18n/routing'
+import { UnclaimedSupertokens } from './UnclaimedSupertokens'
 
 type Props = {
   params: Promise<{
@@ -50,10 +56,15 @@ export default async function StreamLayout(props: Props) {
 
   return (
     <Layout.Root>
-      <Layout.Header
-        worldcoinUser={worldcoinUser}
-        backgroundColor={streamConfig?.backgroundColor}
-      />
+      <HeaderRoot backgroundColor={streamConfig?.backgroundColor}>
+        <LeftSection worldcoinUser={worldcoinUser} />
+
+        <RightSectionRoot>
+          <UnclaimedSupertokens />
+          <SupertokensButton />
+        </RightSectionRoot>
+      </HeaderRoot>
+
       <Layout.Content.Root>
         <Sidebar worldcoinUser={worldcoinUser} />
         {props.children}

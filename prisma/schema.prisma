@@ -25,6 +25,8 @@ model User {
   accounts      Account[]
   sessions      Session[]
   Authenticator Authenticator[]
+  streamedMinutesCount Int @default(0)
+  streamedMinutesCountLastUpdated DateTime?
   address String @unique
   comments Comment[]
   claimedSupertokensCount Int @default(0)

@@ -10,6 +10,7 @@ export const getUnclaimedSupertokensCount = async ({
       id: userId,
     },
     select: {
+      streamedMinutesCount: true,
       claimedSupertokensCount: true,
     },
   })
@@ -18,5 +19,5 @@ export const getUnclaimedSupertokensCount = async ({
     throw new Error('User not found')
   }
 
-  return 100 - user.claimedSupertokensCount
+  return user.streamedMinutesCount - user.claimedSupertokensCount
 }
