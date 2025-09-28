@@ -22,7 +22,7 @@ export const Content = () => {
         width="100%"
         style={{
           maxWidth: 720,
-          margin: '-3px auto 0',
+          margin: '-5px auto 0',
         }}
       >
         <AssistantPlayer sources={assistantSources} />

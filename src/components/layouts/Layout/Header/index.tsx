@@ -134,7 +134,7 @@ export const Header = ({
       px="3"
       flexShrink="0"
       style={{
-        backgroundColor: '#eae8ad',
+        backgroundColor: '#EAE8AD',
         zIndex: 9999,
       }}
     >
@@ -143,15 +143,6 @@ export const Header = ({
         gap="1"
       >
         <DialogAction worldcoinUser={worldcoinUser} />
-
-        <Box
-          display={{
-            initial: 'block',
-            md: 'none',
-          }}
-        >
-          <StreamsButton />
-        </Box>
 
         <Flex
           display={{
