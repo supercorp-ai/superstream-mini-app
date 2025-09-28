@@ -14,15 +14,15 @@ import {
 import { Cross2Icon, Pencil1Icon } from '@radix-ui/react-icons'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import {
-  createStreamMessage,
-  listStreamMessages,
-} from '@/lib/streams/messages/actions'
+  createStreamComment,
+  listStreamComments,
+} from '@/lib/streams/comments/actions'
 
 const MAX_LENGTH = 140
-const messagesQueryKey = (streamId: string) => ['streams', streamId, 'messages']
+const commentsQueryKey = (streamId: string) => ['streams', streamId, 'comments']
 const getRandomInterval = () => 10000 + Math.floor(Math.random() * 10000)
 
-export type MessagePayload = {
+export type CommentPayload = {
   id: string
   content: string
   createdAt: string
@@ -40,14 +40,14 @@ type UsernameResponse = {
   minimized_profile_picture_url?: string
 }
 
-const fetchMessages = async ({ streamId }: { streamId: string }) => {
-  const result = await listStreamMessages({ streamId })
+const fetchComments = async ({ streamId }: { streamId: string }) => {
+  const result = await listStreamComments({ streamId })
 
   if (!result?.data) {
-    throw new Error(result?.serverError ?? 'Failed to fetch messages')
+    throw new Error(result?.serverError ?? 'Failed to fetch comments')
   }
 
-  return result.data.messages as MessagePayload[]
+  return result.data.comments as CommentPayload[]
 }
 
 const fetchUsernames = async (addresses: string[]) => {
@@ -68,28 +68,28 @@ const fetchUsernames = async (addresses: string[]) => {
   return (await response.json()) as UsernameResponse[]
 }
 
-const sendMessage = async ({
+const sendComment = async ({
   streamId,
   content,
 }: {
   streamId: string
   content: string
 }) => {
-  const result = await createStreamMessage({ streamId, content })
+  const result = await createStreamComment({ streamId, content })
 
   if (!result?.data) {
-    throw new Error(result?.serverError ?? 'Failed to send message')
+    throw new Error(result?.serverError ?? 'Failed to send comment')
   }
 
-  return result.data.message as MessagePayload
+  return result.data.comment as CommentPayload
 }
 
 const truncateAddress = (address: string) =>
   address.length > 10 ? `${address.slice(0, 6)}…${address.slice(-4)}` : address
 
-export const StreamMessages = ({ streamId }: { streamId: string }) => {
+export const StreamComments = ({ streamId }: { streamId: string }) => {
   const queryClient = useQueryClient()
-  const [message, setMessage] = useState('')
+  const [comment, setComment] = useState('')
   const [isComposerOpen, setIsComposerOpen] = useState(false)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
 
@@ -99,9 +99,9 @@ export const StreamMessages = ({ streamId }: { streamId: string }) => {
     return () => window.clearTimeout(timeout)
   }, [isComposerOpen])
 
-  const messagesQuery = useQuery({
-    queryKey: messagesQueryKey(streamId),
-    queryFn: () => fetchMessages({ streamId }),
+  const commentsQuery = useQuery({
+    queryKey: commentsQueryKey(streamId),
+    queryFn: () => fetchComments({ streamId }),
     refetchInterval: () => getRandomInterval(),
     retry: 3,
     retryDelay: (attempt) => Math.min(1500 * 2 ** attempt, 15000),
@@ -110,21 +110,21 @@ export const StreamMessages = ({ streamId }: { streamId: string }) => {
 
   const mutation = useMutation({
     mutationFn: ({ content }: { content: string }) =>
-      sendMessage({ streamId, content }),
+      sendComment({ streamId, content }),
     onSuccess: () => {
-      setMessage('')
-      queryClient.invalidateQueries({ queryKey: messagesQueryKey(streamId) })
+      setComment('')
+      queryClient.invalidateQueries({ queryKey: commentsQueryKey(streamId) })
     },
   })
 
   const participantAddresses = useMemo(() => {
-    if (!messagesQuery.data) return [] as string[]
+    if (!commentsQuery.data) return [] as string[]
     return Array.from(
       new Set(
-        messagesQuery.data.map((item) => item.user.address.toLowerCase()),
+        commentsQuery.data.map((item) => item.user.address.toLowerCase()),
       ),
     )
-  }, [messagesQuery.data])
+  }, [commentsQuery.data])
 
   const usernamesQuery = useQuery({
     queryKey: ['usernames', participantAddresses.sort().join(',')],
@@ -140,10 +140,10 @@ export const StreamMessages = ({ streamId }: { streamId: string }) => {
     )
   }, [usernamesQuery.data])
 
-  const isOverLimit = message.length > MAX_LENGTH
-  const trimmedMessage = message.trim()
+  const isOverLimit = comment.length > MAX_LENGTH
+  const trimmedComment = comment.trim()
   const isSubmitDisabled =
-    mutation.isPending || trimmedMessage.length === 0 || isOverLimit
+    mutation.isPending || trimmedComment.length === 0 || isOverLimit
 
   return (
     <Flex
@@ -197,7 +197,7 @@ export const StreamMessages = ({ streamId }: { streamId: string }) => {
               pointerEvents: 'none',
             }}
           >
-            {messagesQuery.isLoading ? (
+            {commentsQuery.isLoading ? (
               <Flex
                 align="center"
                 justify="center"
@@ -205,10 +205,10 @@ export const StreamMessages = ({ streamId }: { streamId: string }) => {
               >
                 <Spinner />
               </Flex>
-            ) : messagesQuery.isError ? (
-              <Text color="red">Unable to load recent messages.</Text>
-            ) : messagesQuery.data && messagesQuery.data.length > 0 ? (
-              messagesQuery.data.map((item) => {
+            ) : commentsQuery.isError ? (
+              <Text color="red">Unable to load recent comments.</Text>
+            ) : commentsQuery.data && commentsQuery.data.length > 0 ? (
+              commentsQuery.data.map((item) => {
                 const lookup = usernameMap.get(item.user.address.toLowerCase())
                 const displayName =
                   lookup?.username ??
@@ -281,7 +281,7 @@ export const StreamMessages = ({ streamId }: { streamId: string }) => {
                 )
               })
             ) : (
-              <Text color="gray">No messages yet. Start the conversation.</Text>
+              <Text color="gray">No comments yet. Start the conversation.</Text>
             )}
           </Flex>
         </Box>
@@ -292,7 +292,7 @@ export const StreamMessages = ({ streamId }: { streamId: string }) => {
               onSubmit={(event) => {
                 event.preventDefault()
                 if (isSubmitDisabled) return
-                mutation.mutate({ content: trimmedMessage })
+                mutation.mutate({ content: trimmedComment })
               }}
             >
               <Card
@@ -334,8 +334,8 @@ export const StreamMessages = ({ streamId }: { streamId: string }) => {
                 >
                   <textarea
                     ref={textareaRef}
-                    value={message}
-                    onChange={(event) => setMessage(event.target.value)}
+                    value={comment}
+                    onChange={(event) => setComment(event.target.value)}
                     placeholder="Type…"
                     rows={1}
                     style={{
@@ -366,7 +366,7 @@ export const StreamMessages = ({ streamId }: { streamId: string }) => {
                     color="red"
                     mt="2"
                   >
-                    Message is too long (140 characters max).
+                    Comment is too long (140 characters max).
                   </Text>
                 ) : null}
 

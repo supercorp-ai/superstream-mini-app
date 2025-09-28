@@ -26,7 +26,7 @@ model User {
   sessions      Session[]
   Authenticator Authenticator[]
   address String @unique
-  messages Message[]
+  comments Comment[]
   claimedSupertokensCount Int @default(0)
   supertokenClaims SupertokenClaim[]
 
@@ -109,12 +109,12 @@ model SupertokenClaim {
 
 model Stream {
   id  String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  messages Message[]
+  comments Comment[]
   createdAt DateTime @default(now()) @db.Timestamptz(6)
   updatedAt DateTime @updatedAt @db.Timestamptz(6)
 }
 
-model Message {
+model Comment {
   id  String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   userId String
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)

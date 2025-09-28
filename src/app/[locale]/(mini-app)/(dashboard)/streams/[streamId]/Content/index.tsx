@@ -1,6 +1,6 @@
 import { Box, Flex } from '@radix-ui/themes'
 import { AssistantPlayer, ComputerUsePlayer } from './Player'
-import { StreamMessages } from './StreamMessages'
+import { StreamComments } from './StreamComments'
 
 export const Content = ({
   streamId,
@@ -58,7 +58,7 @@ export const Content = ({
         }}
       >
         <ComputerUsePlayer sources={computerSources} />
-        <StreamMessages streamId={streamId} />
+        <StreamComments streamId={streamId} />
       </Box>
     </Flex>
   )

@@ -8,7 +8,7 @@ import { routing } from '@/i18n/routing'
 import { findStreamConfig, streamConfigs } from '@/lib/streams/streamConfigs'
 import { ValidationError } from '@/lib/errors'
 
-const MESSAGE_LIMIT = 20
+const COMMENT_LIMIT = 20
 
 const resolveStreamConfig = async (streamId: string) => {
   const t = await getTranslations({
@@ -32,7 +32,7 @@ const ensureStreamExists = async (streamId: string) => {
   })
 }
 
-const serializeMessage = (message: {
+const serializeComment = (comment: {
   id: string
   content: string
   createdAt: Date
@@ -42,13 +42,13 @@ const serializeMessage = (message: {
     address: string
   }
 }) => ({
-  id: message.id,
-  content: message.content,
-  createdAt: message.createdAt.toISOString(),
+  id: comment.id,
+  content: comment.content,
+  createdAt: comment.createdAt.toISOString(),
   user: {
-    id: message.user.id,
-    name: message.user.name,
-    address: message.user.address,
+    id: comment.user.id,
+    name: comment.user.name,
+    address: comment.user.address,
   },
 })
 
@@ -56,15 +56,15 @@ const streamIdSchema = z.object({
   streamId: z.string().uuid('Invalid stream identifier'),
 })
 
-const createMessageSchema = streamIdSchema.extend({
+const createCommentSchema = streamIdSchema.extend({
   content: z
     .string()
     .trim()
-    .min(1, 'Message cannot be empty')
-    .max(140, 'Message is too long'),
+    .min(1, 'Comment cannot be empty')
+    .max(140, 'Comment is too long'),
 })
 
-export const listStreamMessages = authActionClient
+export const listStreamComments = authActionClient
   .schema(streamIdSchema)
   .action(async ({ parsedInput: { streamId } }) => {
     const streamConfig = await resolveStreamConfig(streamId)
@@ -75,10 +75,10 @@ export const listStreamMessages = authActionClient
 
     await ensureStreamExists(streamConfig.id)
 
-    const messages = await prisma.message.findMany({
+    const comments = await prisma.comment.findMany({
       where: { streamId: streamConfig.id },
       orderBy: { createdAt: 'desc' },
-      take: MESSAGE_LIMIT,
+      take: COMMENT_LIMIT,
       include: {
         user: {
           select: {
@@ -91,12 +91,12 @@ export const listStreamMessages = authActionClient
     })
 
     return {
-      messages: messages.map(serializeMessage).reverse(),
+      comments: comments.map(serializeComment).reverse(),
     }
   })
 
-export const createStreamMessage = authActionClient
-  .schema(createMessageSchema)
+export const createStreamComment = authActionClient
+  .schema(createCommentSchema)
   .action(async ({ parsedInput: { streamId, content }, ctx }) => {
     const { user } = ctx as { user: { id?: string } }
 
@@ -108,7 +108,7 @@ export const createStreamMessage = authActionClient
 
     await ensureStreamExists(streamConfig.id)
 
-    const message = await prisma.message.create({
+    const comment = await prisma.comment.create({
       data: {
         content,
         streamId: streamConfig.id,
@@ -126,6 +126,6 @@ export const createStreamMessage = authActionClient
     })
 
     return {
-      message: serializeMessage(message),
+      comment: serializeComment(comment),
     }
   })
