@@ -49,8 +49,8 @@
             "balanceValue": "{balance, number, ::precision-integer} SUPER",
             "noUnclaimedSupertokens": "No Supertokens to claim",
             "upgradeButtonLabel": "Upgrade to claim more",
-            "claimNote": "For every minute you watch the livestream, you can claim 1 <strong>SUPER</strong> token.",
-            "spendNote": "Use <strong>SUPER</strong> to get access to more powerful AI.",
+            "claimNote": "For each minute of livestream watched, you can claim 1 <strong>SUPER</strong> token.",
+            "spendNote": "Use <strong>SUPER</strong> to get access to more powerful AI in Superhero and Superstream (soon).",
             "pendingClaimMessage": "{pendingClaimQuantity, number} SUPER pending. {additionalClaimable, number} more after this claim.",
             "ClaimSupertokensButton": {
               "buttonLabel": "Claim {totalClaimable, number} Supertokens",

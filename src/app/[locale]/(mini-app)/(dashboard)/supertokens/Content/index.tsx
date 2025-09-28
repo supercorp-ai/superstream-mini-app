@@ -1,8 +1,4 @@
-import {
-  PaperPlaneIcon,
-  GlobeIcon,
-  DoubleArrowUpIcon,
-} from '@radix-ui/react-icons'
+import { VideoIcon, GlobeIcon, DoubleArrowUpIcon } from '@radix-ui/react-icons'
 import { Link } from '@/i18n/navigation'
 import { useTranslations } from 'next-intl'
 import { Flex, Strong, Card, Button, Heading, Text } from '@radix-ui/themes'
@@ -166,7 +162,7 @@ export const Content = ({
               gap="4"
             >
               <Flex flexShrink="0">
-                <PaperPlaneIcon
+                <VideoIcon
                   width="20px"
                   height="20px"
                 />
