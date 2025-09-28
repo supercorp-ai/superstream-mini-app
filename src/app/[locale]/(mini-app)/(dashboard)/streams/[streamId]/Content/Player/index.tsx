@@ -20,6 +20,8 @@ import {
   Text,
 } from '@radix-ui/themes'
 import { useHlsPlayer, type PlayerState } from '@/hooks/players/useHlsPlayer'
+import { StreamStatusBadge } from '@/components/streams/StreamStatusBadge'
+import type { StreamConfig } from '@/types'
 
 type BadgeColor = NonNullable<ComponentProps<typeof Badge>['color']>
 
@@ -35,7 +37,7 @@ type PlayerStateContent = {
 type StateDictionary = Record<PlayerState, PlayerStateContent>
 
 type BasePlayerProps = {
-  sources: readonly (string | null | undefined)[]
+  streamConfig: StreamConfig
 }
 
 const hexToRgba = (hex: string, alpha: number) => {
@@ -298,8 +300,10 @@ const assistantStateContent: StateDictionary = {
   },
 }
 
-export const ComputerUsePlayer = ({ sources }: BasePlayerProps) => {
-  const { videoRef, state, retry, resume } = useHlsPlayer({ sources })
+export const ComputerUsePlayer = ({ streamConfig }: BasePlayerProps) => {
+  const { videoRef, state, retry, resume } = useHlsPlayer({
+    sources: streamConfig.computerUseSources.map((s) => s.url),
+  })
 
   return (
     <Flex
@@ -357,11 +361,11 @@ export const ComputerUsePlayer = ({ sources }: BasePlayerProps) => {
   )
 }
 
-export const AssistantPlayer = ({
-  sources,
-  backgroundColor,
-}: BasePlayerProps & { backgroundColor: string }) => {
-  const { videoRef, state, retry, resume } = useHlsPlayer({ sources })
+export const AssistantPlayer = ({ streamConfig }: BasePlayerProps) => {
+  console.log('Rendering AssistantPlayer with streamConfig:', streamConfig)
+  const { videoRef, state, retry, resume } = useHlsPlayer({
+    sources: streamConfig.assistantSources.map((s) => s.url),
+  })
   const [muted, setMuted] = useState(true)
 
   useEffect(() => {
@@ -386,7 +390,7 @@ export const AssistantPlayer = ({
         overflow="hidden"
         style={{
           aspectRatio: '16 / 9',
-          backgroundColor,
+          backgroundColor: streamConfig.backgroundColor,
         }}
       >
         <Box
@@ -418,7 +422,7 @@ export const AssistantPlayer = ({
             resume()
             setMuted(false)
           }}
-          backgroundColor={backgroundColor}
+          backgroundColor={streamConfig.backgroundColor}
         />
 
         {showMuteToggle ? (
@@ -446,24 +450,8 @@ export const AssistantPlayer = ({
             bottom="var(--space-2)"
             gap="1"
           >
-            <Flex
-              align="center"
-              gap="2"
-              px="2"
-              py="1"
-              style={{
-                borderRadius: '9999px',
-                backgroundColor: 'var(--red-10)',
-                color: 'white',
-              }}
-            >
-              <Text
-                size="1"
-                weight="medium"
-              >
-                LIVE
-              </Text>
-            </Flex>
+            <StreamStatusBadge streamConfig={streamConfig} />
+
             <Flex
               align="center"
               gap="1"

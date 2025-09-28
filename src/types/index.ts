@@ -1,5 +1,6 @@
 import type { themePropDefs } from '@radix-ui/themes/props'
-import type { Currency } from '@/enums'
+import type { Currency, StreamStatus } from '@/enums'
+import type { Locale } from 'next-intl'
 
 export type Toast = {
   type: 'success' | 'error'
@@ -65,8 +66,28 @@ export type ToolConfig = {
 }
 
 export type AssistantConfig = {
+  slug: string
   superinterfaceAssistantId: string
   name: string
   description: string
   videoSrc: any
+}
+
+export type AssistantSource = {
+  locale: Locale
+  url: string
+}
+
+export type ComputerUseSource = {
+  url: string
+}
+
+export type StreamConfig = {
+  id: string
+  title: string
+  status: StreamStatus
+  backgroundColor: string
+  assistantSlug: string
+  assistantSources: AssistantSource[]
+  computerUseSources: ComputerUseSource[]
 }

@@ -17,30 +17,8 @@ import { SuperstreamLogo } from '@/components/logos/SuperstreamLogo'
 import { LocaleInput } from '@/components/locales/LocaleInput'
 import { SupertokensButton } from './SupertokensButton'
 export { SupertokensButton } from './SupertokensButton'
-// import { useRouter } from '@/i18n/navigation'
-// import { useTransition } from 'react'
+import { Streams } from '@/components/streams/Streams'
 
-// const StreamsButton = () => {
-//   const router = useRouter()
-//   const [isPending, startTransition] = useTransition()
-//
-//   return (
-//     <IconButton
-//       color="amber"
-//       variant="soft"
-//       highContrast
-//       loading={isPending}
-//       onClick={() => {
-//         startTransition(() => {
-//           router.push('/streams')
-//         })
-//       }}
-//     >
-//       <CalendarIcon />
-//     </IconButton>
-//   )
-// }
-//
 const DialogAction = ({ worldcoinUser }: { worldcoinUser: WorldcoinUser }) => {
   const t = useTranslations('components.layouts.Layout.Header.DialogAction')
   const [isOpen, setIsOpen] = useState(false)
@@ -99,7 +77,7 @@ const DialogAction = ({ worldcoinUser }: { worldcoinUser: WorldcoinUser }) => {
               <Menu.Content.Header.Content />
             </Flex>
           </Menu.Content.Header.Root>
-          Streams here possibly
+          <Streams />
           <Menu.Content.BottomMenu worldcoinUser={worldcoinUser} />
         </Menu.Root>
       </Dialog.Content>

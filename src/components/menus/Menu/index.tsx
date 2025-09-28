@@ -17,30 +17,7 @@ const HeaderRoot = ({ children }: { children: React.ReactNode }) => (
   </Flex>
 )
 
-const StreamsButton = () => {
-  const t = useTranslations('components.menus.Menu.Content.Header.TasksButton')
-
-  return (
-    <Button
-      color="amber"
-      highContrast
-      variant="soft"
-      size="3"
-      asChild
-    >
-      <Link href="/streams">
-        <CalendarIcon />
-        {t('label')}
-      </Link>
-    </Button>
-  )
-}
-
-const HeaderContent = () => (
-  <>
-    <StreamsButton />
-  </>
-)
+const HeaderContent = () => <></>
 
 const Header = () => (
   <HeaderRoot>

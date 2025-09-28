@@ -35,6 +35,7 @@ export const boardyAssistantConfig = ({
 }: {
   t: AssistantConfigsTranslations
 }) => ({
+  slug: 'boardy',
   name: 'Boardy',
   description: t('boardy.description'),
   superinterfaceAssistantId: boardySuperinterfaceAssistantId,
@@ -46,6 +47,7 @@ export const loganAssistantConfig = ({
 }: {
   t: AssistantConfigsTranslations
 }) => ({
+  slug: 'logan',
   name: 'Logan',
   description: t('logan.description'),
   superinterfaceAssistantId: 'c1acec4d-409e-47ba-bc0b-5edf55dbf5b4',
@@ -57,6 +59,7 @@ export const emmaAssistantConfig = ({
 }: {
   t: AssistantConfigsTranslations
 }) => ({
+  slug: 'emma',
   name: 'Emma',
   description: t('emma.description'),
   superinterfaceAssistantId: '72283bdb-9f18-40ee-87fc-c327e885673d',
@@ -68,6 +71,7 @@ export const supaAssistantConfig = ({
 }: {
   t: AssistantConfigsTranslations
 }) => ({
+  slug: 'supa',
   name: 'Supa',
   description: t('supa.description'),
   superinterfaceAssistantId: '667e81c1-dfd8-4e30-b92f-d91e4e817d67',
@@ -79,6 +83,7 @@ export const markAssistantConfig = ({
 }: {
   t: AssistantConfigsTranslations
 }) => ({
+  slug: 'mark',
   name: 'Mark',
   description: t('mark.description'),
   superinterfaceAssistantId: '3038e9c3-495a-4e0f-90cc-a72a6ee13445',
@@ -90,6 +95,7 @@ export const quillaAssistantConfig = ({
 }: {
   t: AssistantConfigsTranslations
 }) => ({
+  slug: 'quilla',
   name: 'Quilla',
   description: t('quilla.description'),
   superinterfaceAssistantId: '0713d463-d110-4f97-a4a9-a9118930dd0c',
@@ -101,6 +107,7 @@ export const parryAssistantConfig = ({
 }: {
   t: AssistantConfigsTranslations
 }) => ({
+  slug: 'parry',
   name: 'Parry',
   description: t('parry.description'),
   superinterfaceAssistantId: '9f50b4fd-13f8-47bf-81fc-339b82438b78',
@@ -112,6 +119,7 @@ export const charlieAssistantConfig = ({
 }: {
   t: AssistantConfigsTranslations
 }) => ({
+  slug: 'charlie',
   name: 'Charlie',
   description: t('charlie.description'),
   superinterfaceAssistantId: charlieSuperinterfaceAssistantId,
@@ -124,6 +132,7 @@ export const siaAssistantConfig = ({
   t: AssistantConfigsTranslations
 }) => ({
   name: 'Sia',
+  slug: 'sia',
   description: t('sia.description'),
   superinterfaceAssistantId: 'dac9a9bc-e45e-4663-905b-74870ff3688c',
   videoSrc: siaVideo,
@@ -134,6 +143,7 @@ export const sunnyAssistantConfig = ({
 }: {
   t: AssistantConfigsTranslations
 }) => ({
+  slug: 'sunny',
   name: 'Sunny',
   description: t('sunny.description'),
   superinterfaceAssistantId: '18231b8a-81e1-435b-b8cb-37a01409a656',
@@ -145,6 +155,7 @@ export const adamAssistantConfig = ({
 }: {
   t: AssistantConfigsTranslations
 }) => ({
+  slug: 'adam',
   name: 'Adam',
   description: t('adam.description'),
   superinterfaceAssistantId: 'db9f6b60-cff1-4ada-b277-85395211af48',
@@ -156,6 +167,7 @@ export const shoppyAssistantConfig = ({
 }: {
   t: AssistantConfigsTranslations
 }) => ({
+  slug: 'shoppy',
   name: 'Shoppy',
   description: t('shoppy.description'),
   superinterfaceAssistantId: 'ae76e808-3c68-4e4e-81fc-c305e76f9072',
@@ -167,6 +179,7 @@ export const vitaAssistantConfig = ({
 }: {
   t: AssistantConfigsTranslations
 }) => ({
+  slug: 'vita',
   name: 'Vita',
   description: t('vita.description'),
   superinterfaceAssistantId: '6c271a86-e585-4c84-bd7b-4ce549b674e9',
@@ -178,6 +191,7 @@ export const joboAssistantConfig = ({
 }: {
   t: AssistantConfigsTranslations
 }) => ({
+  slug: 'jobo',
   name: 'Jobo',
   description: t('jobo.description'),
   superinterfaceAssistantId: '621fe829-6b3a-4617-8d65-e7688a6d9869',
@@ -189,6 +203,7 @@ export const zenaAssistantConfig = ({
 }: {
   t: AssistantConfigsTranslations
 }) => ({
+  slug: 'zena',
   name: 'Zena',
   description: t('zena.description'),
   superinterfaceAssistantId: '09b10af2-2f49-43b2-86d8-bba7638280cd',
@@ -200,6 +215,7 @@ export const listaAssistantConfig = ({
 }: {
   t: AssistantConfigsTranslations
 }) => ({
+  slug: 'lista',
   name: 'Lista',
   description: t('lista.description'),
   superinterfaceAssistantId: 'a664297a-4d81-48ef-8d75-865f160801fd',
@@ -211,6 +227,7 @@ export const aidaAssistantConfig = ({
 }: {
   t: AssistantConfigsTranslations
 }) => ({
+  slug: 'aida',
   name: 'Aida',
   description: t('aida.description'),
   superinterfaceAssistantId: 'd9019d56-78e9-41cf-8206-4cbc9adb3d5f',
@@ -222,6 +239,7 @@ export const kairosAssistantConfig = ({
 }: {
   t: AssistantConfigsTranslations
 }) => ({
+  slug: 'kairos',
   name: 'Kairos',
   description: t('kairos.description'),
   superinterfaceAssistantId: '7592afd0-5878-4cfa-b41e-43ff0f179ec5',
@@ -233,6 +251,7 @@ export const reevAssistantConfig = ({
 }: {
   t: AssistantConfigsTranslations
 }) => ({
+  slug: 'reev',
   name: 'Reev',
   description: t('reev.description'),
   superinterfaceAssistantId: '1cd2f4cb-c1bf-4b77-92fa-963e6830ece6',
@@ -244,6 +263,7 @@ export const copiaAssistantConfig = ({
 }: {
   t: AssistantConfigsTranslations
 }) => ({
+  slug: 'copia',
   name: 'Copia',
   description: t('copia.description'),
   superinterfaceAssistantId: '8137f7a8-4671-4fc6-904b-a3e0b6247702',

@@ -1,6 +1,9 @@
+'use client'
+import { useMemo } from 'react'
 import { Box, Flex } from '@radix-ui/themes'
 import { AssistantPlayer, ComputerUsePlayer } from './Player'
 import { StreamComments } from './StreamComments'
+import { useStreamConfigs } from '@/hooks/streams/useStreamConfigs'
 
 export const Content = ({
   streamId,
@@ -9,15 +12,18 @@ export const Content = ({
   streamId: string
   backgroundColor: string
 }) => {
-  const computerSources = [
-    process.env.NEXT_PUBLIC_COMPUTER_USE_HLS_PRIMARY_URL!,
-    process.env.NEXT_PUBLIC_COMPUTER_USE_HLS_FALLBACK_URL!,
-  ] as const
+  const { streamConfigs } = useStreamConfigs()
 
-  const assistantSources = [
-    process.env.NEXT_PUBLIC_ASSISTANT_HLS_PRIMARY_URL!,
-    process.env.NEXT_PUBLIC_ASSISTANT_HLS_FALLBACK_URL!,
-  ] as const
+  const streamConfig = useMemo(
+    () => streamConfigs.find((config) => config.id === streamId),
+    [streamConfigs, streamId],
+  )
+
+  if (!streamConfig) {
+    return null
+  }
+
+  console.log('Rendering Content for streamId:', streamId)
 
   return (
     <Flex
@@ -37,10 +43,7 @@ export const Content = ({
           flexShrink: 0,
         }}
       >
-        <AssistantPlayer
-          sources={assistantSources}
-          backgroundColor={backgroundColor}
-        />
+        <AssistantPlayer streamConfig={streamConfig} />
       </Box>
 
       <Box
@@ -57,7 +60,7 @@ export const Content = ({
           overflow: 'hidden',
         }}
       >
-        <ComputerUsePlayer sources={computerSources} />
+        <ComputerUsePlayer streamConfig={streamConfig} />
         <StreamComments streamId={streamId} />
       </Box>
     </Flex>

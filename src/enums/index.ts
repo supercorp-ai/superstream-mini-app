@@ -3,3 +3,8 @@ export enum Currency {
   USD = 'USD',
   SUPER = 'SUPER',
 }
+
+export enum StreamStatus {
+  'LIVE' = 'LIVE',
+  'SOON' = 'SOON',
+}
