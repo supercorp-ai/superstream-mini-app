@@ -385,7 +385,12 @@ export const StreamComments = ({ streamId }: { streamId: string }) => {
         inset="0"
         direction="column"
         justify="end"
-        style={{ pointerEvents: 'none', zIndex: 2 }}
+        style={{
+          pointerEvents: 'none',
+          zIndex: 2,
+          backgroundImage:
+            'linear-gradient(to top, rgba(4,4,7,0.82) 0%, rgba(4,4,7,0.7) 30%, rgba(4,4,7,0) 65%)',
+        }}
       >
         <Box
           p="4"
@@ -427,7 +432,6 @@ export const StreamComments = ({ streamId }: { streamId: string }) => {
                     justifyContent: 'flex-start',
                     gap: 'var(--space-2)',
                     backgroundColor: 'var(--gray-4)',
-                    opacity: 0.5,
                   }}
                 >
                   <Text size="1">Type…</Text>
