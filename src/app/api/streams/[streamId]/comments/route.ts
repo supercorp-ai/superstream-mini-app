@@ -3,6 +3,7 @@ import pMap from 'p-map'
 import { prisma } from '@/lib/prisma'
 import { cacheHeaders } from '@/lib/cache/cacheHeaders'
 import { getWorldcoinUser } from '@/lib/worldcoin/getWorldcoinUser'
+import dayjs from 'dayjs'
 
 export const GET = async (
   _request: NextRequest,
@@ -17,7 +18,13 @@ export const GET = async (
   const { streamId } = params
 
   const comments = await prisma.comment.findMany({
-    where: { streamId },
+    where: {
+      streamId,
+      createdAt: {
+        // last 5 minnutes
+        gte: dayjs().subtract(5, 'minute').toDate(),
+      },
+    },
     orderBy: { createdAt: 'desc' },
     take: 20,
     include: {
