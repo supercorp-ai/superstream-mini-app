@@ -1,4 +1,5 @@
 import { NextResponse, NextRequest } from 'next/server'
+import type { User } from '@prisma/client'
 import pMap from 'p-map'
 import { prisma } from '@/lib/prisma'
 import { cacheHeaders } from '@/lib/cache/cacheHeaders'
@@ -37,23 +38,19 @@ export const GET = async (
 
   const worldcoinUserCache = new Map<string, { username: string }>()
 
-  const getUsername = async ({
-    comment,
-  }: {
-    comment: (typeof comments)[0]
-  }) => {
-    if (!comment.user?.address) {
+  const getUsername = async ({ user }: { user: User }) => {
+    if (!user?.address) {
       return 'Unknown'
     }
 
-    if (worldcoinUserCache.has(comment.user.address)) {
-      return worldcoinUserCache.get(comment.user.address)!.username
+    if (worldcoinUserCache.has(user.address)) {
+      return worldcoinUserCache.get(user.address)!.username
     } else {
       const { worldcoinUser } = await getWorldcoinUser({
-        address: comment.user.address,
+        address: user.address,
       })
 
-      worldcoinUserCache.set(comment.user.address, {
+      worldcoinUserCache.set(user.address, {
         username: worldcoinUser.username,
       })
 
@@ -69,15 +66,32 @@ export const GET = async (
     },
   })
 
+  const viewers = await prisma.user.findMany({
+    where: {
+      streamedMinutesCountLastUpdated: {
+        gte: dayjs().subtract(5, 'minute').toDate(),
+      },
+    },
+    orderBy: {
+      updatedAt: 'desc',
+    },
+    take: 10,
+  })
+
+  const viewerUsernames = await pMap(viewers, (viewer) =>
+    getUsername({ user: viewer }),
+  )
+
   return NextResponse.json(
     {
       comments: await pMap(comments, async (comment) => ({
-        username: await getUsername({ comment }),
+        username: await getUsername({ user: comment.user }),
         content: comment.content,
         createdAt: comment.createdAt,
         createdAtRelative: dayjs(comment.createdAt).fromNow(),
       })),
       viewersCount,
+      viewerUsernames,
     },
     { headers: cacheHeaders },
   )
