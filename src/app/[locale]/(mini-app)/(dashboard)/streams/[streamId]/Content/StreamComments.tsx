@@ -334,7 +334,7 @@ const CommentsList = ({
             <div ref={commentsEndRef} />
           </>
         ) : (
-          <Text color="gray">No comments yet. Start the conversation.</Text>
+          <></>
         )}
       </Flex>
     </Box>
