@@ -163,12 +163,31 @@ export const StreamMessages = ({ streamId }: { streamId: string }) => {
         style={{
           position: 'absolute',
           inset: 0,
-          background:
-            'linear-gradient(to top, rgba(12,12,12,0.72) 0%, rgba(12,12,12,0.45) 35%, rgba(12,12,12,0) 100%)',
           pointerEvents: 'none',
           zIndex: 1,
         }}
-      />
+      >
+        <Box
+          style={{
+            position: 'absolute',
+            inset: 0,
+            background:
+              'linear-gradient(to top, rgba(18,18,18,0.85) 0%, rgba(18,18,18,0.45) 45%, rgba(18,18,18,0.12) 70%, rgba(18,18,18,0) 100%)',
+            pointerEvents: 'none',
+          }}
+        />
+        <Box
+          style={{
+            position: 'absolute',
+            inset: '0',
+            maskImage:
+              'linear-gradient(to top, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 100%)',
+            background:
+              'linear-gradient(to top, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0) 60%)',
+            pointerEvents: 'none',
+          }}
+        />
+      </Box>
 
       <Flex
         direction="column"
@@ -180,6 +199,10 @@ export const StreamMessages = ({ streamId }: { streamId: string }) => {
           pointerEvents: 'none',
           position: 'relative',
           zIndex: 2,
+          maskImage:
+            'linear-gradient(to top, rgba(0,0,0,1) 60%, rgba(0,0,0,0) 100%)',
+          WebkitMaskImage:
+            'linear-gradient(to top, rgba(0,0,0,1) 60%, rgba(0,0,0,0) 100%)',
         }}
       >
         {messagesQuery.isLoading ? (
@@ -222,10 +245,11 @@ export const StreamMessages = ({ streamId }: { streamId: string }) => {
                   radius="full"
                   fallback={displayName[0]?.toUpperCase() ?? 'U'}
                   style={{
-                    width: 'var(--space-5)',
-                    height: 'var(--space-5)',
-                    minWidth: 'var(--space-5)',
+                    width: 'var(--space-4)',
+                    height: 'var(--space-4)',
+                    minWidth: 'var(--space-4)',
                     flexShrink: 0,
+                    marginTop: 'var(--space-1)',
                   }}
                 />
 
@@ -236,11 +260,7 @@ export const StreamMessages = ({ streamId }: { streamId: string }) => {
                     flex: 1,
                     minWidth: 0,
                     color: 'white',
-                    textShadow: '0 1px 3px rgba(0,0,0,0.85)',
-                    background: 'rgba(12,12,12,0.35)',
-                    backdropFilter: 'blur(6px)',
-                    padding: 'var(--space-2) var(--space-3)',
-                    borderRadius: 'var(--radius-3)',
+                    textShadow: '0 1px 3px rgba(0,0,0,0.9)',
                   }}
                 >
                   <Text
@@ -285,21 +305,15 @@ export const StreamMessages = ({ streamId }: { streamId: string }) => {
                 border: isOverLimit
                   ? '1px solid var(--red-9)'
                   : '1px solid var(--gray-a5)',
-                padding: 'var(--space-3)',
+                padding: 'var(--space-2) var(--space-3) var(--space-3)',
                 backgroundColor: 'white',
+                boxShadow: 'var(--shadow-4)',
               }}
             >
               <Flex
-                justify="between"
-                align="center"
-                mb="2"
+                justify="end"
+                mb="1"
               >
-                <Text
-                  size="1"
-                  color="gray"
-                >
-                  New message
-                </Text>
                 <IconButton
                   size="1"
                   variant="ghost"
@@ -384,6 +398,8 @@ export const StreamMessages = ({ streamId }: { streamId: string }) => {
               justifyContent: 'flex-start',
               pointerEvents: 'auto',
               gap: 'var(--space-2)',
+              backgroundColor: 'white',
+              boxShadow: 'var(--shadow-3)',
             }}
           >
             <Pencil1Icon />

@@ -481,7 +481,7 @@ export const AssistantPlayer = ({
                 size="1"
                 weight="medium"
               >
-                1
+                2
               </Text>
             </Flex>
           </Flex>
