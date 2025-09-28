@@ -4,14 +4,15 @@ type AssistantConfigsTranslations = ReturnType<
   typeof useTranslations<'lib.assistants.assistantConfigs'>
 >
 
-export const listaStreamConfig = ({
+export const adamStreamConfig = ({
   t,
 }: {
   t: AssistantConfigsTranslations
 }) => ({
-  title: 'Boardy',
+  streamId: 'a1c19514-7623-400e-abeb-7b4defeebdbb',
+  backgroundColor: '#EAE8AD',
 })
 
 export const streamConfigs = ({ t }: { t: AssistantConfigsTranslations }) => [
-  listaStreamConfig({ t }),
+  adamStreamConfig({ t }),
 ]

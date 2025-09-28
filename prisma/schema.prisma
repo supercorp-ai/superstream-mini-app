@@ -126,4 +126,5 @@ model Message {
 
   @@index([userId])
   @@index([streamId])
+  @@index([createdAt])
 }
