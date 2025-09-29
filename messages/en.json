@@ -11,7 +11,7 @@
     },
     "miniApp": {
       "Content": {
-        "heading": "Earn money with AI workers",
+        "heading": "24/7 livestream to earn money with AI",
         "AuthButton": {
           "text": "Sign in with your wallet"
         }
@@ -127,7 +127,7 @@
     },
     "layout": {
       "metadata": {
-        "description": "Earn money with AI workers"
+        "description": "24/7 livestream to earn money with AI"
       }
     }
   },

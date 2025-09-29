@@ -6,12 +6,14 @@ type AssistantConfigsTranslations = ReturnType<
   typeof useTranslations<'lib.assistants.assistantConfigs'>
 >
 
+export const adamStreamId = 'a1c19514-7623-400e-abeb-7b4defeebdbb'
+
 const adamStreamConfig = ({
   t,
 }: {
   t: AssistantConfigsTranslations
 }): StreamConfig => ({
-  id: 'a1c19514-7623-400e-abeb-7b4defeebdbb',
+  id: adamStreamId,
   title: 'Earning income on the internet with AI',
   status: StreamStatus.LIVE,
   backgroundColor: '#EAE8AD',

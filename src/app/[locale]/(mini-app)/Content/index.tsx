@@ -8,6 +8,7 @@ import { Button, Heading, Text, Flex, Box } from '@radix-ui/themes'
 import { walletAuth } from '@/lib/auth/walletAuth'
 import heroVideoSrc from '/videos/hero.mp4'
 import { LocaleInput } from '@/components/locales/LocaleInput'
+import { adamStreamId } from '@/lib/streams/streamConfigs'
 
 const AuthButton = () => {
   const router = useRouter()
@@ -35,7 +36,7 @@ const AuthButton = () => {
 
     setIsPendingManual(false)
     startTransition(() => {
-      router.push('/streams')
+      router.push(`/streams/${adamStreamId}`)
     })
   }, [router, startTransition])
 
