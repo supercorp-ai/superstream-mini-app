@@ -2,8 +2,7 @@ import type { Locale } from 'next-intl'
 import { redirect } from '@/i18n/navigation'
 import { getCurrentUser } from '@/lib/users/getCurrentUser'
 import { Content } from './Content'
-import { prisma } from '@/lib/prisma'
-import { boardySuperinterfaceAssistantId } from '@/lib/assistants/assistantConfigs'
+import { adamStreamId } from '@/lib/streams/streamConfigs'
 
 export const dynamic = 'force-dynamic'
 
@@ -19,7 +18,7 @@ export default async function Page(props: Props) {
 
   if (user) {
     return redirect({
-      href: '/streams',
+      href: `/streams/${adamStreamId}`,
       locale: params.locale,
     })
   }
