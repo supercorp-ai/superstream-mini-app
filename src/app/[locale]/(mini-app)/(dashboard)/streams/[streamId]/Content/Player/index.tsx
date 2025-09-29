@@ -188,7 +188,8 @@ const computerStateContent: StateDictionary = {
   idle: {
     badgeLabel: 'Browser feed offline',
     badgeColor: 'gray',
-    message: "We'll be back to streaming very soon.",
+    message:
+      'We’re not streaming to save money before we launch, but contact @domasbitvinskas on Telegram to demo the stream.',
     icon: (
       <VideoIcon
         width={36}
@@ -249,7 +250,8 @@ const assistantStateContent: StateDictionary = {
   idle: {
     badgeLabel: 'Assistant feed offline',
     badgeColor: 'gray',
-    message: "We'll be back to streaming very soon.",
+    message:
+      'We’re not streaming to save money before we launch, but contact @domasbitvinskas on Telegram to demo the stream.',
     icon: (
       <VideoIcon
         width={36}
